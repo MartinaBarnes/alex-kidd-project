@@ -1,10 +1,10 @@
 #include "raylib.h"
 #include "resource_dir.h" // utility header for SearchAndSetResourceDir
-#include "physicsserver.h"
-#include "renderingserver.h"
-#include "physicscharacter.h"
-#include "physicstilemap.h"
-#include "scene.h"
+#include "PhysicsServer.h"
+#include "RenderingServer.h"
+#include "PhysicsTileMap.h"
+#include "Player.h"
+#include "Scene.h"
 
 int main ()
 {
@@ -21,54 +21,23 @@ int main ()
 	Texture wabbit = LoadTexture("wabbit_alpha.png");
 
 	PhysicsTileMap* map = new PhysicsTileMap();
-	PhysicsCharacter* box0 = new PhysicsCharacter();
-	PhysicsCharacter* box1 = new PhysicsCharacter();
-
-	map->layer = 2;
-	map->mask = 0;
-	map->map[28][12] = true;
-
-	box0->layer = 1;
-	box0->mask = 2;
-	box0->aabb.position.x = 300.0f;
-	box0->aabb.position.y = 200.0f;
-	box0->aabb.size.x = 32.0f;
-	box0->aabb.size.y = 32.0f;
-
-	box1->layer = 2;
-	box1->mask = 0;
-	box1->aabb.position.x = 400.0f;
-	box1->aabb.position.y = 200.0f;
-	box1->aabb.size.x = 32.0f;
-	box1->aabb.size.y = 32.0f;
-
+	map->layer = 1;
+	for (int i = 0; i < 128; i++) {
+		map->map[i][32] = true;
+	}
 	PhysicsServer::components.push_back(map);
-	PhysicsServer::components.push_back(box0);
-	PhysicsServer::components.push_back(box1);
 
+	Player* player = new Player();
+
+	AABB* viewport = new AABB(0, 0, 1280, 800);
 	Scene* scene = new Scene();
-	AABB* viewport = new AABB( 0, 0, 1280, 800 );
-	bool reverse = false;
+	scene->entities.push_back(player);
 
 	// game loop
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
-	    if (reverse) {
-			if (box0->aabb.position.x < 300.0f) {
-			    reverse = false;
-			} else {
-			    box0->aabb.position.x -= 1.0f;
-			}
-		} else {
-		    if (box0->aabb.position.x > 500.0f ) {
-				reverse = true;
-			} else {
-			    box0->aabb.position.x += 1.0f;
-			}
-		}
-
-        PhysicsServer::update(viewport);
         scene->update(GetFrameTime());
+		PhysicsServer::update(viewport);
 
 		// drawing
 		BeginDrawing();
@@ -80,14 +49,7 @@ int main ()
 
 		// draw our texture to the screen
 		DrawTexture(wabbit, 400, 200, WHITE);
-
-		if (box0->colliders.size() > 0) {
-		    DrawTexture(wabbit, box0->aabb.position.x, box0->aabb.position.y, RED);
-		} else {
-		    DrawTexture(wabbit, box0->aabb.position.x, box0->aabb.position.y, WHITE);
-		}
-
-		DrawTexture(wabbit, 28 * 16, 12 * 16, GREEN);
+		DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, WHITE);
 
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();

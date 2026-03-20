@@ -25,19 +25,26 @@ bool PhysicsCharacter::testCollision(PhysicsComponent* collider)
         int x1 = std::clamp((int)std::floor((aabb.position.x + aabb.size.x) / TILE_SIZE), 0, TILEMAP_SIZE);
         int y1 = std::clamp((int)std::floor((aabb.position.y + aabb.size.y) / TILE_SIZE), 0, TILEMAP_SIZE);
 
+        onWall = false;
+        onGround = false;
+
         if (tilemap->map[x0][y0]) {
+            onWall = aabb.position.x <= x * TILE_SIZE;
             aabb.position.x = std::min(aabb.position.x, x * TILE_SIZE);
             aabb.position.y = std::min(aabb.position.y, y * TILE_SIZE);
             return true;
         } else if (tilemap->map[x1][y0]) {
+            onWall = aabb.position.x >= x1 * TILE_SIZE - aabb.size.x;
             aabb.position.x = std::min(aabb.position.x, x1 * TILE_SIZE - aabb.size.x);
             aabb.position.y = std::min(aabb.position.y, y * TILE_SIZE);
             return true;
         } else if (tilemap->map[x0][y1]) {
+            onGround = aabb.position.y >= y1 * TILE_SIZE - aabb.size.y;
             aabb.position.x = std::min(aabb.position.x, x * TILE_SIZE);
             aabb.position.y = std::min(aabb.position.y, y1 * TILE_SIZE - aabb.size.y);
             return true;
         } else if (tilemap->map[x1][y1]) {
+            onGround = aabb.position.y >= y1 * TILE_SIZE - aabb.size.y;
             aabb.position.x = std::min(aabb.position.x, x1 * TILE_SIZE - aabb.size.x);
             aabb.position.y = std::min(aabb.position.y, y1 * TILE_SIZE - aabb.size.y);
             return true;
