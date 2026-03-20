@@ -1,5 +1,5 @@
-#include "renderingserver.h"
-#include "rendercomponent.h"
+#include "RenderingServer.h"
+#include "RenderComponent.h"
 #include "raylib.h"
 #include <vector>
 

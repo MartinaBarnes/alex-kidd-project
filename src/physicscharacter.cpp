@@ -1,6 +1,6 @@
-#include "physicscharacter.h"
-#include "physicscomponent.h"
-#include "physicstilemap.h"
+#include "PhysicsCharacter.h"
+#include "PhysicsComponent.h"
+#include "PhysicsTileMap.h"
 #include "raylib.h"
 #include <cmath>
 #include <algorithm>

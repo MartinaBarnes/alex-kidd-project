@@ -1,5 +1,5 @@
 #pragma once
-#include "rendercomponent.h"
+#include "RenderComponent.h"
 #include <vector>
 
 class RenderingServer {

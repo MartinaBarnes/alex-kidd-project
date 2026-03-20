@@ -1,6 +1,6 @@
 #pragma once
-#include "physicscomponent.h"
-#include "aabb.h"
+#include "PhysicsComponent.h"
+#include "AABB.h"
 #include "raylib.h"
 
 class PhysicsCharacter : public PhysicsComponent {

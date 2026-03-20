@@ -1,5 +1,5 @@
 #pragma once
-#include "onscreenobject.h"
+#include "OnScreenObject.h"
 
 class RenderComponent : public OnScreenObject {
     public:

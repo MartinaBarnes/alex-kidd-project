@@ -1,5 +1,5 @@
 #include <vector>
-#include "entity.h"
+#include "Entity.h"
 
 class Scene {
   public:

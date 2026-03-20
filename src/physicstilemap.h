@@ -1,4 +1,4 @@
-#include "physicscomponent.h"
+#include "PhysicsComponent.h"
 #include "raylib.h"
 
 class PhysicsTileMap : public PhysicsComponent {
