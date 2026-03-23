@@ -5,6 +5,7 @@
 #include "PhysicsTileMap.h"
 #include "Player.h"
 #include "Scene.h"
+#include <cmath>
 
 int main ()
 {
@@ -22,6 +23,8 @@ int main ()
 
 	PhysicsTileMap* map = new PhysicsTileMap();
 	map->layer = 1;
+	map->map[1][31] = true;
+	map->map[16][31] = true;
 	for (int i = 0; i < 128; i++) {
 		map->map[i][32] = true;
 	}
@@ -47,9 +50,17 @@ int main ()
 
 		RenderingServer::update(viewport);
 
+
+		for (int i=0; i<128; i++) {
+		    DrawTexture(wabbit, i * TILE_SIZE, 32 * TILE_SIZE, GREEN);
+		}
+		DrawTexture(wabbit, TILE_SIZE, 31 * TILE_SIZE, GREEN);
+        DrawTexture(wabbit, 16 * TILE_SIZE, 31 * TILE_SIZE, GREEN);
+
 		// draw our texture to the screen
 		DrawTexture(wabbit, 400, 200, WHITE);
 		DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, WHITE);
+		DrawTexture(wabbit, std::floor(player->physics->aabb.position.x / TILE_SIZE) * TILE_SIZE, std::floor(player->physics->aabb.position.y / TILE_SIZE) * TILE_SIZE, BLUE);
 
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();

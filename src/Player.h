@@ -6,7 +6,6 @@ class Player : public Entity
 {
 	public:
 		PhysicsCharacter* physics;
-		Vector2 velocity;
 
 		void update(float) override;
 
