@@ -23,10 +23,10 @@ int main ()
 
 	PhysicsTileMap* map = new PhysicsTileMap();
 	map->layer = 1;
-	map->map[1][31] = true;
-	map->map[16][31] = true;
+	map->map[1][31] = 1;
+	map->map[16][31] = 1;
 	for (int i = 0; i < 128; i++) {
-		map->map[i][32] = true;
+		map->map[i][32] = 1;
 	}
 	PhysicsServer::components.push_back(map);
 
