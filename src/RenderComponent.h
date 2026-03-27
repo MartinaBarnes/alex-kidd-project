@@ -4,5 +4,5 @@
 class RenderComponent : public OnScreenObject {
     public:
         bool visible;
-        virtual void draw() = 0;
+        virtual void draw(float) = 0;
 };

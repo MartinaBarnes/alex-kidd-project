@@ -39,8 +39,9 @@ int main ()
 	// game loop
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
-        scene->update(GetFrameTime());
-		PhysicsServer::update(viewport);
+	    float dt = GetFrameTime();
+        scene->update(dt);
+		PhysicsServer::update(dt, viewport);
 
 		// drawing
 		BeginDrawing();
@@ -48,8 +49,7 @@ int main ()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(BLACK);
 
-		RenderingServer::update(viewport);
-
+		RenderingServer::update(dt, viewport);
 
 		for (int i=0; i<128; i++) {
 		    DrawTexture(wabbit, i * TILE_SIZE, 32 * TILE_SIZE, GREEN);
@@ -58,9 +58,11 @@ int main ()
         DrawTexture(wabbit, 16 * TILE_SIZE, 31 * TILE_SIZE, GREEN);
 
 		// draw our texture to the screen
-		DrawTexture(wabbit, 400, 200, WHITE);
-		DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, WHITE);
-		DrawTexture(wabbit, std::floor(player->physics->aabb.position.x / TILE_SIZE) * TILE_SIZE, std::floor(player->physics->aabb.position.y / TILE_SIZE) * TILE_SIZE, BLUE);
+		if (player->physics->onGround) {
+		    DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, RED);
+		} else {
+		    DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, WHITE);
+		}
 
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();

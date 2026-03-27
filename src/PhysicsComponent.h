@@ -7,8 +7,9 @@ class PhysicsComponent : public OnScreenObject {
         bool awake;
         int layer;
         int mask;
+        bool isColliding;
         std::vector<PhysicsComponent*> colliders = {};
 
-        virtual bool testCollision(PhysicsComponent*) { return false; };
+        virtual bool testCollision(float, PhysicsComponent*) { return false; };
         virtual void onCollision(PhysicsComponent*) {};
 };

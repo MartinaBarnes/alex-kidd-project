@@ -15,5 +15,5 @@ class PhysicsCharacter : public PhysicsComponent {
         Entity* owner;
 
         bool isOnScreen(const AABB*) const override;
-        bool testCollision(PhysicsComponent*) override;
+        bool testCollision(float, PhysicsComponent*) override;
 };

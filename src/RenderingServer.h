@@ -5,7 +5,7 @@
 class RenderingServer {
   public:
     static std::vector<RenderComponent*> components;
-    static void add(RenderComponent*);
-    static void remove(RenderComponent*);
-    static void update(const AABB*);
+    static void push(RenderComponent*);
+    static void pop(RenderComponent*);
+    static void update(float, const AABB*);
 };

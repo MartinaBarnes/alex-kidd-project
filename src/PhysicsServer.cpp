@@ -4,12 +4,12 @@
 
 std::vector<PhysicsComponent*> PhysicsServer::components = {};
 
-void PhysicsServer::add(PhysicsComponent* component)
+void PhysicsServer::push(PhysicsComponent* component)
 {
     PhysicsServer::components.push_back(component);
 }
 
-void PhysicsServer::remove(PhysicsComponent* component)
+void PhysicsServer::pop(PhysicsComponent* component)
 {
     int count = PhysicsServer::components.size();
     for (int i=0; i<count; i++) {
@@ -21,12 +21,13 @@ void PhysicsServer::remove(PhysicsComponent* component)
     }
 }
 
-void PhysicsServer::update(const AABB* viewport)
+void PhysicsServer::update(float dt, const AABB* viewport)
 {
     std::vector<PhysicsComponent*> components = {};
     for (int i=0; i<PhysicsServer::components.size(); i++) {
         PhysicsComponent* component = PhysicsServer::components[i];
         component->awake = component->isOnScreen(viewport);
+        component->isColliding = false;
         component->colliders.resize(0);
         if (!component->awake) {
             continue;
@@ -40,9 +41,10 @@ void PhysicsServer::update(const AABB* viewport)
                 continue;
             }
             PhysicsComponent* collided = components[j];
-            if ((collider->mask & collided->layer) == 0 || !collider->testCollision(collided)) {
+            if ((collider->mask & collided->layer) == 0 || !collider->testCollision(dt, collided)) {
                 continue;
             }
+            collider->isColliding = true;
             collider->colliders.push_back(collided);
             collider->onCollision(collided);
         }

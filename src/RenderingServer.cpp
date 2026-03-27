@@ -5,12 +5,12 @@
 
 std::vector<RenderComponent*> RenderingServer::components = {};
 
-void RenderingServer::add(RenderComponent* component)
+void RenderingServer::push(RenderComponent* component)
 {
     RenderingServer::components.push_back(component);
 }
 
-void RenderingServer::remove(RenderComponent* component)
+void RenderingServer::pop(RenderComponent* component)
 {
     int count = RenderingServer::components.size();
     for (int i=0; i<count; i++) {
@@ -22,7 +22,7 @@ void RenderingServer::remove(RenderComponent* component)
     }
 }
 
-void RenderingServer::update(const AABB* viewport)
+void RenderingServer::update(float dt, const AABB* viewport)
 {
     for (int i=0; i<RenderingServer::components.size(); i++) {
         RenderComponent* component = RenderingServer::components[i];
@@ -30,6 +30,6 @@ void RenderingServer::update(const AABB* viewport)
         if (!component->visible) {
             continue;
         }
-        component->draw();
+        component->draw(dt);
     }
 };

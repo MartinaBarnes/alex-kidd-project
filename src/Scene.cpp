@@ -1,7 +1,29 @@
 #include "Scene.h"
 
-void Scene::update(float delta) {
-    for (int i=0; i<entities.size(); i++) {
-        entities[i]->update(delta);
+void Scene::push(Entity* entity) {
+    entities.push_back(entity);
+}
+
+void Scene::pop(Entity* entity)
+{
+    int count = entities.size();
+    for (int i = 0; i < count; i++) {
+        if (entities[i] == entity) {
+            entities[i] = entities[count - 1];
+            entities.pop_back();
+            return;
+        }
+    }
+}
+
+void Scene::update(float dt) {
+    for (int i = 0; i < entities.size(); i++) {
+        entities[i]->update(dt);
+    }
+}
+
+Scene::~Scene() {
+    for (int i = 0; i < entities.size(); i++) {
+        delete entities[i];
     }
 }
