@@ -1,3 +1,4 @@
+#include "ResourceManager.h"
 #include "raylib.h"
 #include "resource_dir.h" // utility header for SearchAndSetResourceDir
 #include "PhysicsServer.h"
@@ -14,6 +15,8 @@ int main ()
 
 	// Create the window and OpenGL context
 	InitWindow(1280, 800, "Alex Kidd in Miracle World");
+
+	ResourceManager::loadResources();
 
 	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
 	SearchAndSetResourceDir("resources");
@@ -52,7 +55,7 @@ int main ()
 		RenderingServer::update(dt, viewport);
 
 		for (int i=0; i<128; i++) {
-		    DrawTexture(wabbit, i * TILE_SIZE, 32 * TILE_SIZE, GREEN);
+		    DrawTexture(ResourceManager::getTexture("wabbit_alpha"), i * TILE_SIZE, 32 * TILE_SIZE, GREEN);
 		}
 		DrawTexture(wabbit, TILE_SIZE, 31 * TILE_SIZE, GREEN);
         DrawTexture(wabbit, 16 * TILE_SIZE, 31 * TILE_SIZE, GREEN);
@@ -67,6 +70,9 @@ int main ()
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
 	}
+
+	// cleanup
+	ResourceManager::unloadResources();
 
 	// cleanup
 	// unload our texture so it can be cleaned up

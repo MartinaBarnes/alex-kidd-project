@@ -1,6 +1,4 @@
 #include "PhysicsServer.h"
-#include "raylib.h"
-#include <vector>
 
 std::vector<PhysicsComponent*> PhysicsServer::components = {};
 
