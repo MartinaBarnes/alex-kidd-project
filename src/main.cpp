@@ -22,7 +22,7 @@ int main ()
 	SearchAndSetResourceDir("resources");
 
 	// Load a texture from the resources directory
-	Texture wabbit = LoadTexture("wabbit_alpha.png");
+	Texture wabbit = LoadTexture("textures/wabbit_alpha.png");
 
 	PhysicsTileMap* map = new PhysicsTileMap();
 	map->layer = 1;
