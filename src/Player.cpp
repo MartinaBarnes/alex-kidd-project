@@ -2,23 +2,40 @@
 #include "PhysicsCharacter.h"
 #include "PhysicsServer.h"
 #include "raylib.h"
+#include <algorithm>
 
 void Player::update(float dt) {
-	if (!physics->onGround) {
-		physics->velocity.y += 400.0f * dt;
-	} else if (IsKeyDown(KEY_UP) && physics->onGround) {
-		physics->velocity.y = -150.0f;
-	}
+    float speed = walk_speed;
 
-	if (IsKeyDown(KEY_RIGHT)) {
-		physics->velocity.x = 100.0f;
-	}
-	else if (IsKeyDown(KEY_LEFT)) {
-		physics->velocity.x = -100.0f;
-	}
-	else {
-		physics->velocity.x = 0.0f;
-	}
+    if (IsKeyDown(KEY_RIGHT)) {
+        physics->velocity.x = std::min(physics->velocity.x + acceleration * dt, speed);
+    } else if (IsKeyDown(KEY_LEFT)) {
+        physics->velocity.x = std::max(physics->velocity.x - acceleration * dt, -speed);
+    } else {
+        if (physics->velocity.x < 0.0f) {
+            physics->velocity.x = std::min(physics->velocity.x + acceleration * dt, 0.0f);
+        } else {
+            physics->velocity.x = std::max(physics->velocity.x - acceleration * dt, 0.0f);
+        }
+    }
+
+    if (jumping) {
+        if (jump_time >= max_jump_time || !IsKeyDown(KEY_UP)) {
+            jumping = false;
+            jump_time = 0.0f;
+        } else {
+            jump_time += dt;
+            physics->velocity.y = -jump_force;
+        }
+    } else {
+        if (!physics->onGround) {
+            physics->velocity.y += gravity * dt;
+        } else {
+            if (IsKeyDown(KEY_UP)) {
+                jumping = true;
+            }
+        }
+    }
 }
 
 Player::Player() {

@@ -4,7 +4,16 @@
 
 class Player : public Entity
 {
+    private:
+        float jump_time = 0.0f;
+        bool jumping = false;
 	public:
+	    float acceleration = 800.0f;
+	    float walk_speed = 100.0f;
+		float jump_force = 80.0f;
+		float max_jump_time = 0.5f;
+		float gravity = 400.0f;
+
 		PhysicsCharacter* physics;
 
 		void update(float) override;
@@ -12,4 +21,3 @@ class Player : public Entity
 		Player();
 		~Player();
 };
-
