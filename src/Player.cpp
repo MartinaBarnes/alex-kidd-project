@@ -6,11 +6,16 @@
 
 void Player::update(float dt) {
     float speed = walk_speed;
+    float accel = acceleration;
+
+    if (!physics->onGround) {
+        accel = air_acceleration;
+    }
 
     if (IsKeyDown(KEY_RIGHT)) {
-        physics->velocity.x = std::min(physics->velocity.x + acceleration * dt, speed);
+        physics->velocity.x = std::min(physics->velocity.x + accel * dt, speed);
     } else if (IsKeyDown(KEY_LEFT)) {
-        physics->velocity.x = std::max(physics->velocity.x - acceleration * dt, -speed);
+        physics->velocity.x = std::max(physics->velocity.x - accel * dt, -speed);
     } else {
         if (physics->velocity.x < 0.0f) {
             physics->velocity.x = std::min(physics->velocity.x + acceleration * dt, 0.0f);
