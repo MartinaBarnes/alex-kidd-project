@@ -25,7 +25,7 @@ int main ()
 	Texture wabbit = LoadTexture("textures/wabbit_alpha.png");
 
 	PhysicsTileMap* map = new PhysicsTileMap();
-	map->layer = 1;
+	map->layer = LAYER_WORLD;
 	map->map[1][31] = 1;
 	map->map[16][31] = 1;
 	for (int i = 0; i < 128; i++) {
