@@ -19,12 +19,12 @@ void PhysicsServer::pop(PhysicsComponent* component)
     }
 }
 
-void PhysicsServer::update(float dt, const AABB* viewport)
+void PhysicsServer::update(float dt, const AABB* bounds)
 {
     std::vector<PhysicsComponent*> components = {};
     for (int i=0; i<PhysicsServer::components.size(); i++) {
         PhysicsComponent* component = PhysicsServer::components[i];
-        component->awake = component->isOnScreen(viewport);
+        component->awake = component->isOnScreen(bounds);
         component->isColliding = false;
         component->colliders.resize(0);
         if (!component->awake) {

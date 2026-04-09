@@ -1,11 +1,11 @@
 #include "PhysicsHitbox.h"
 
-bool PhysicsHitbox::isOnScreen(const AABB* viewport) const
+bool PhysicsHitbox::isOnScreen(const AABB* bounds) const
 {
-    return true;
+    return bounds->testAABB(aabb);
 }
 
 bool PhysicsHitbox::testCollision(float dt, PhysicsComponent* collider)
 {
-    return false;
+    return active;
 }

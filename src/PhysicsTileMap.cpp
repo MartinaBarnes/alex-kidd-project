@@ -1,6 +1,6 @@
 #include "PhysicsTileMap.h"
 
-bool PhysicsTileMap::isOnScreen(const AABB* viewport) const
+bool PhysicsTileMap::isOnScreen(const AABB* _) const
 {
     return true;
 }

@@ -4,9 +4,9 @@
 #include <algorithm>
 
 
-bool PhysicsCharacter::isOnScreen(const AABB* viewport) const
+bool PhysicsCharacter::isOnScreen(const AABB* bounds) const
 {
-    return true;
+    return bounds->testAABB(aabb);
 }
 
 bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
@@ -28,10 +28,10 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
                 onWall = true;
             } else {
                 for (int i = y0; i <= y1; i++) {
-                    if (tilemap->map[x0][i] == TILE_AIR) {
+                    if (tilemap->map[x0][i] == PHYSTILE_AIR) {
                         continue;
                     }
-                    if (x0 < TILEMAP_WIDTH && tilemap->map[x0 + 1][i] == TILE_SOLID) {
+                    if (x0 < TILEMAP_WIDTH && tilemap->map[x0 + 1][i] == PHYSTILE_SOLID) {
                         continue;
                     }
                     float limit = (x0 + 1) * TILE_SIZE;
@@ -50,10 +50,10 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
                 onWall = true;
             } else {
                 for (int i = y0; i <= y1; i++) {
-                    if (tilemap->map[x1][i] == TILE_AIR) {
+                    if (tilemap->map[x1][i] == PHYSTILE_AIR) {
                         continue;
                     }
-                    if (x1 > 0 && tilemap->map[x1 - 1][i] == TILE_SOLID) {
+                    if (x1 > 0 && tilemap->map[x1 - 1][i] == PHYSTILE_SOLID) {
                         continue;
                     }
                     float limit = x1 * TILE_SIZE - aabb.size.x;
@@ -84,10 +84,10 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
                 onCeiling = true;
             } else {
                 for (int i = x0; i <= x1; i++) {
-                    if (tilemap->map[i][y0] == TILE_AIR) {
+                    if (tilemap->map[i][y0] == PHYSTILE_AIR) {
                         continue;
                     }
-                    if (y0 < TILEMAP_HEIGHT && tilemap->map[i][y0 + 1] == TILE_SOLID) {
+                    if (y0 < TILEMAP_HEIGHT && tilemap->map[i][y0 + 1] == PHYSTILE_SOLID) {
                         continue;
                     }
                     float limit = (y0 + 1) * TILE_SIZE;
@@ -108,7 +108,7 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
                 onGround = true;
             } else {
                 for (int i = x0; i <= x1; i++) {
-                    if (tilemap->map[i][y1] == TILE_AIR) {
+                    if (tilemap->map[i][y1] == PHYSTILE_AIR) {
                         continue;
                     }
                     if (y1 > 0 && tilemap->map[i][y1 - 1]) {
@@ -127,7 +127,7 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
         } else {
             int y = std::clamp((int)std::floor((aabb.position.y + aabb.size.y) / TILE_SIZE), 0, TILEMAP_HEIGHT);
             for (int i = x0; i <= x1; i++) {
-                if (tilemap->map[i][y] != TILE_AIR) {
+                if (tilemap->map[i][y] != PHYSTILE_AIR) {
                     onGround = true;
                     break;
                 }

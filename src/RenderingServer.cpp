@@ -21,11 +21,11 @@ void RenderingServer::pop(RenderComponent* component)
     }
 }
 
-void RenderingServer::update(float dt, const AABB* viewport)
+void RenderingServer::update(float dt, const AABB* bounds)
 {
     for (int i=0; i<RenderingServer::components.size(); i++) {
         RenderComponent* component = RenderingServer::components[i];
-        component->visible = component->isOnScreen(viewport);
+        component->visible = component->isOnScreen(bounds);
         if (!component->visible) {
             continue;
         }

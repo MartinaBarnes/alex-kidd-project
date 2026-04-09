@@ -4,6 +4,8 @@
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "PhysicsTileMap.h"
+#include "RenderTileMap.h"
+#include "TileMap.h"
 #include "Player.h"
 #include "Scene.h"
 #include <cmath>
@@ -24,27 +26,37 @@ int main ()
 	// Load a texture from the resources directory
 	Texture wabbit = LoadTexture("textures/wabbit_alpha.png");
 
-	PhysicsTileMap* map = new PhysicsTileMap();
-	map->layer = LAYER_WORLD;
-	map->map[1][31] = 1;
-	map->map[16][31] = 1;
+	AABB* bounds = new AABB(0, 0, 1280, 800);
+
+	TileMap* tilemap = new TileMap();
+	tilemap->physics->map[1][31] = PHYSTILE_SOLID;
+	tilemap->physics->map[16][31] = PHYSTILE_SOLID;
+	tilemap->physics->map[16][30] = PHYSTILE_SOLID;
 	for (int i = 0; i < 128; i++) {
-		map->map[i][32] = 1;
+		tilemap->physics->map[i][32] = PHYSTILE_SOLID;
 	}
-	PhysicsServer::components.push_back(map);
+	tilemap->render->tileset[0] = "";
+	tilemap->render->tileset[1] = "wabbit_alpha";
+	tilemap->render->map[1][31] = 1;
+	tilemap->render->map[16][31] = 1;
+	tilemap->render->map[16][30] = 1;
+	for (int i = 0; i < 128; i++) {
+		tilemap->render->map[i][32] = 1;
+	}
+	tilemap->render->bounds = bounds;
 
 	Player* player = new Player();
 
-	AABB* viewport = new AABB(0, 0, 1280, 800);
 	Scene* scene = new Scene();
-	scene->entities.push_back(player);
+	scene->push(tilemap);
+	scene->push(player);
 
 	// game loop
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
 	    float dt = GetFrameTime();
         scene->update(dt);
-		PhysicsServer::update(dt, viewport);
+		PhysicsServer::update(dt, bounds);
 
 		// drawing
 		BeginDrawing();
@@ -52,13 +64,13 @@ int main ()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(BLACK);
 
-		RenderingServer::update(dt, viewport);
+		RenderingServer::update(dt, bounds);
 
-		for (int i=0; i<128; i++) {
+		/**for (int i=0; i<128; i++) {
 		    DrawTexture(ResourceManager::getTexture("wabbit_alpha"), i * TILE_SIZE, 32 * TILE_SIZE, GREEN);
 		}
 		DrawTexture(wabbit, TILE_SIZE, 31 * TILE_SIZE, GREEN);
-        DrawTexture(wabbit, 16 * TILE_SIZE, 31 * TILE_SIZE, GREEN);
+        DrawTexture(wabbit, 16 * TILE_SIZE, 31 * TILE_SIZE, GREEN);*/
 
 		// draw our texture to the screen
 		if (player->physics->onGround) {
