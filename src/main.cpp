@@ -7,6 +7,7 @@
 #include "RenderTileMap.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Scene.h"
 #include <cmath>
 
@@ -44,10 +45,14 @@ int main ()
 	tilemap->render->bounds = bounds;
 
 	Player* player = new Player();
+	Enemy* enemy = new Enemy();
+	enemy->physics->aabb.position.x = 17 * TILE_SIZE;
+	enemy->physics->aabb.position.y = 30 * TILE_SIZE;
 
 	Scene* scene = new Scene();
 	scene->push(tilemap);
 	scene->push(player);
+	scene->push(enemy);
 
 	// game loop
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
@@ -70,6 +75,8 @@ int main ()
 		} else {
 		    DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, WHITE);
 		}
+
+		DrawTexture(wabbit, enemy->physics->aabb.position.x, enemy->physics->aabb.position.y, WHITE);
 
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();

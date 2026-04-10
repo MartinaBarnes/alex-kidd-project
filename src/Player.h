@@ -22,7 +22,7 @@ class Player : public LivingEntity
 		float air_acceleration = 300.0f;
 		float gravity = 400.0f;
 		float hitbox_offset = 8.0f;
-		float max_attack_time = 0.3f;
+		float max_attack_time = 0.4f;
 
 		PhysicsCharacter* physics;
 		PhysicsHitbox* hitbox;

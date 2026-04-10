@@ -5,6 +5,11 @@
 #include "PhysicsServer.h"
 #include "raylib.h"
 #include <algorithm>
+#include <iostream>
+
+void Player::onKilled() {
+    scene->pop(this);
+}
 
 void Player::update(float dt) {
     for (int i = 0; i < physics->colliders.size(); i++) {
@@ -72,17 +77,14 @@ void Player::update(float dt) {
 
     hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f - hitbox->aabb.size.x / 2.0f + hitbox_offset * direction;
     hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y / 2.0f - hitbox->aabb.size.y / 2.0f;
+    std::cout << hitbox->aabb.position.x << " " << hitbox->aabb.position.y << std::endl;
     hitbox->active = attacking;
-}
-
-void Player::onKilled() {
-
 }
 
 Player::Player() {
 	physics = new PhysicsCharacter();
 	physics->layer = LAYER_PLAYER;
-	physics->mask = LAYER_WORLD;
+	physics->mask = LAYER_WORLD + LAYER_ENEMY;
 	physics->aabb = AABB(0, 0, 16, 32);
 	physics->owner = this;
 	PhysicsServer::push(physics);

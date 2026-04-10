@@ -10,7 +10,13 @@ char* ResourceManager::textureDir = "textures";
 char* ResourceManager::soundDir = "sounds";
 
 std::string ResourceManager::resourceNameFromPath(std::string path) {
-    int min = path.find_last_of("\\") + 1;
+    std::string slash = "/";
+
+    #ifdef _WIN32
+    slash = "\\";
+    #endif
+
+    int min = path.find_last_of(slash) + 1;
     int max = path.find_last_of(".");
     return path.substr(min, max - min);
 }

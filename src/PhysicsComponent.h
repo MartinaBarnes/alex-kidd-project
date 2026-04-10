@@ -5,8 +5,8 @@
 #define LAYER_NONE 0
 #define LAYER_WORLD 1
 #define LAYER_PLAYER 2
-#define LAYER_ENEMY 3
-#define LAYER_BREAKABLE 4
+#define LAYER_ENEMY 4
+#define LAYER_BREAKABLE 8
 
 class PhysicsComponent : public OnScreenObject {
     public:
