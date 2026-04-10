@@ -2,6 +2,7 @@
 
 void Scene::push(Entity* entity) {
     entities.push_back(entity);
+    entity->scene = this;
 }
 
 void Scene::pop(Entity* entity)
@@ -11,6 +12,7 @@ void Scene::pop(Entity* entity)
         if (entities[i] == entity) {
             entities[i] = entities[count - 1];
             entities.pop_back();
+            entity->scene = nullptr;
             return;
         }
     }

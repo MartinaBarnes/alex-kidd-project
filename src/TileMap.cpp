@@ -2,15 +2,6 @@
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 
-/**TileMap::TileMap(map_t const& physmap, tileset_t const& tileset, map_t const& rendermap) {
-    physics = new PhysicsTileMap();
-    for (int i=0; i<TILEMAP_WIDTH; i++) {
-        for (int j=0; j<TILEMAP_HEIGHT; j++) {
-            physics->map[i][j] = physmap[i][j];
-        }
-    }
-}*/
-
 TileMap::TileMap() {
     physics = new PhysicsTileMap();
     physics->layer = LAYER_WORLD;

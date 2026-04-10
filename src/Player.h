@@ -1,12 +1,12 @@
 #pragma once
-#include "Entity.h"
+#include "LivingEntity.h"
 #include "PhysicsCharacter.h"
 #include "PhysicsHitbox.h"
 
 #define DIRECTION_RIGHT 1.0f
 #define DIRECTION_LEFT -1.0f
 
-class Player : public Entity
+class Player : public LivingEntity
 {
     private:
         float direction = DIRECTION_RIGHT;
@@ -28,6 +28,7 @@ class Player : public Entity
 		PhysicsHitbox* hitbox;
 
 		void update(float) override;
+		void onKilled() override;
 
 		Player();
 		~Player();

@@ -7,6 +7,13 @@
 #include <algorithm>
 
 void Player::update(float dt) {
+    for (int i = 0; i < physics->colliders.size(); i++) {
+        if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(physics->colliders[i])) {
+            kill();
+            return;
+        }
+    }
+
     float speed = walk_speed;
     float accel = walk_acceleration;
 
@@ -68,6 +75,10 @@ void Player::update(float dt) {
     hitbox->active = attacking;
 }
 
+void Player::onKilled() {
+
+}
+
 Player::Player() {
 	physics = new PhysicsCharacter();
 	physics->layer = LAYER_PLAYER;
@@ -86,4 +97,7 @@ Player::Player() {
 Player::~Player() {
 	PhysicsServer::pop(physics);
 	delete physics;
+
+    PhysicsServer::pop(hitbox);
+    delete hitbox;
 }

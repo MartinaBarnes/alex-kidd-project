@@ -1,12 +1,13 @@
 #include "RenderTileMap.h"
 #include "PhysicsTileMap.h"
 #include "ResourceManager.h"
+#include <iostream>
 
 bool RenderTileMap::isOnScreen(const AABB* _) const {
     return true;
 }
 
-void RenderTileMap::draw(float delta) {
+void RenderTileMap::draw(float _) {
     int u = bounds->position.x / TILE_SIZE;
     int v = bounds->position.y / TILE_SIZE;
     float x = u * TILE_SIZE;

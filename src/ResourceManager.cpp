@@ -10,7 +10,7 @@ char* ResourceManager::textureDir = "textures";
 char* ResourceManager::soundDir = "sounds";
 
 std::string ResourceManager::resourceNameFromPath(std::string path) {
-    int min = path.find_last_of("/") + 1;
+    int min = path.find_last_of("\\") + 1;
     int max = path.find_last_of(".");
     return path.substr(min, max - min);
 }
@@ -22,6 +22,8 @@ void ResourceManager::loadResources() {
     FilePathList textureFiles = LoadDirectoryFiles(ResourceManager::textureDir);
     for (int i = 0; i < textureFiles.count; i++) {
         std::string path = textureFiles.paths[i];
+        std::string name = ResourceManager::resourceNameFromPath(path);
+        std::cout << "Registered texture '" << path << "' as '" << name << "'." << std::endl;
         textures[ResourceManager::resourceNameFromPath(path)] = LoadTexture(path.c_str());
     }
     UnloadDirectoryFiles(textureFiles);
@@ -29,6 +31,8 @@ void ResourceManager::loadResources() {
     FilePathList soundFiles = LoadDirectoryFiles(ResourceManager::soundDir);
     for (int i = 0; i < soundFiles.count; i++) {
         std::string path = soundFiles.paths[i];
+        std::string name = ResourceManager::resourceNameFromPath(path);
+        std::cout << "Registered sound '" << path << "' as '" << name << "'." << std::endl;
         sounds[ResourceManager::resourceNameFromPath(path)] = LoadSound(path.c_str());
     }
     UnloadDirectoryFiles(soundFiles);

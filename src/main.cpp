@@ -20,11 +20,7 @@ int main ()
 
 	ResourceManager::loadResources();
 
-	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
-	SearchAndSetResourceDir("resources");
-
-	// Load a texture from the resources directory
-	Texture wabbit = LoadTexture("textures/wabbit_alpha.png");
+	Texture2D wabbit = ResourceManager::getTexture("wabbit_alpha");
 
 	AABB* bounds = new AABB(0, 0, 1280, 800);
 
@@ -32,6 +28,7 @@ int main ()
 	tilemap->physics->map[1][31] = PHYSTILE_SOLID;
 	tilemap->physics->map[16][31] = PHYSTILE_SOLID;
 	tilemap->physics->map[16][30] = PHYSTILE_SOLID;
+	tilemap->physics->map[24][31] = PHYSTILE_SOLID;
 	for (int i = 0; i < 128; i++) {
 		tilemap->physics->map[i][32] = PHYSTILE_SOLID;
 	}
@@ -40,6 +37,7 @@ int main ()
 	tilemap->render->map[1][31] = 1;
 	tilemap->render->map[16][31] = 1;
 	tilemap->render->map[16][30] = 1;
+	tilemap->render->map[24][31] = 1;
 	for (int i = 0; i < 128; i++) {
 		tilemap->render->map[i][32] = 1;
 	}
@@ -65,12 +63,6 @@ int main ()
 		ClearBackground(BLACK);
 
 		RenderingServer::update(dt, bounds);
-
-		/**for (int i=0; i<128; i++) {
-		    DrawTexture(ResourceManager::getTexture("wabbit_alpha"), i * TILE_SIZE, 32 * TILE_SIZE, GREEN);
-		}
-		DrawTexture(wabbit, TILE_SIZE, 31 * TILE_SIZE, GREEN);
-        DrawTexture(wabbit, 16 * TILE_SIZE, 31 * TILE_SIZE, GREEN);*/
 
 		// draw our texture to the screen
 		if (player->physics->onGround) {

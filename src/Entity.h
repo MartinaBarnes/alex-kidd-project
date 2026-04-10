@@ -1,6 +1,9 @@
 #pragma once
+#include "Scene.h"
 
 class Entity {
-  public:
-    virtual void update(float) {};
+    public:
+        Scene* scene;
+
+        virtual void update(float) {};
 };
