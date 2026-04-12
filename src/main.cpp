@@ -34,8 +34,7 @@ int main ()
 		tilemap->physics->map[i][32] = PHYSTILE_SOLID;
 	}
 	tilemap->render->texture = ResourceManager::getTexture("tiles");
-	tilemap->render->tiles[0] = Rectangle { 48, 16, 16, 16 };
-	tilemap->render->tiles[1] = Rectangle { 48, 0, 16, 16 };
+	tilemap->render->tiles[0] = Rectangle { 48, 0, 16, 16 };
 	tilemap->render->map[1][31] = 1;
 	tilemap->render->map[16][31] = 1;
 	tilemap->render->map[16][30] = 1;

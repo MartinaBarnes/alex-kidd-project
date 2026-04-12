@@ -12,7 +12,11 @@ void RenderTileMap::draw(float _) {
     float y = v * TILE_SIZE;
     for (int i=0; i<bounds->size.x / TILE_SIZE; i++) {
         for (int j=0; j<bounds->size.y / TILE_SIZE; j++) {
-            DrawTextureRec(*texture, tiles[map[u + i][v + j]], Vector2 { x + i * TILE_SIZE, y + j * TILE_SIZE }, WHITE);
+            int tile = map[u + i][v + j] - 1;
+            if (tile < 0) {
+                continue;
+            }
+            DrawTextureRec(*texture, tiles[tile], Vector2 { x + i * TILE_SIZE, y + j * TILE_SIZE }, WHITE);
         }
     }
     /**Texture2D texture = ResourceManager::getTexture(tileset->texture);
