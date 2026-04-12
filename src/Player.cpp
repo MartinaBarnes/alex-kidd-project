@@ -86,7 +86,6 @@ Player::Player() {
 	physics->layer = LAYER_PLAYER;
 	physics->mask = LAYER_WORLD + LAYER_ENEMY;
 	physics->aabb = AABB(0, 0, 16, 32);
-	physics->owner = this;
 	PhysicsServer::push(physics);
 
 	hitbox = new PhysicsHitbox();

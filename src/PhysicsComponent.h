@@ -17,5 +17,4 @@ class PhysicsComponent : public OnScreenObject {
         std::vector<PhysicsComponent*> colliders = {};
 
         virtual bool testCollision(float, PhysicsComponent*) { return false; };
-        virtual void onCollision(PhysicsComponent*) {};
 };

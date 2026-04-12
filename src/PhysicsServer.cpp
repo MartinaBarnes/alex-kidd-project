@@ -44,7 +44,6 @@ void PhysicsServer::update(float dt, const AABB* bounds)
             }
             collider->isColliding = true;
             collider->colliders.push_back(collided);
-            collider->onCollision(collided);
         }
     }
 };

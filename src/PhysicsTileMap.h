@@ -4,7 +4,7 @@
 
 #define TILEMAP_WIDTH 128
 #define TILEMAP_HEIGHT 128
-#define TILE_SIZE 16.0f
+#define TILE_SIZE 16
 
 #define PHYSTILE_AIR 0
 #define PHYSTILE_SOLID 1

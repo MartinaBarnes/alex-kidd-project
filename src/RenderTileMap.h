@@ -1,10 +1,11 @@
 #pragma once
-#include "PhysicsTileMap.h"
 #include "RenderComponent.h"
+#include "PhysicsTileMap.h"
 
 class RenderTileMap : public RenderComponent {
     public:
-        char* tileset[64];
+        Texture2D* texture;
+        Rectangle tiles[64];
         int map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
         AABB* bounds;
 

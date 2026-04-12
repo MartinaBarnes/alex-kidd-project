@@ -21,7 +21,7 @@ int main ()
 
 	ResourceManager::loadResources();
 
-	Texture2D wabbit = ResourceManager::getTexture("wabbit_alpha");
+	Texture2D wabbit = *ResourceManager::getTexture("wabbit_alpha");
 
 	AABB* bounds = new AABB(0, 0, 1280, 800);
 
@@ -33,8 +33,9 @@ int main ()
 	for (int i = 0; i < 128; i++) {
 		tilemap->physics->map[i][32] = PHYSTILE_SOLID;
 	}
-	tilemap->render->tileset[0] = "";
-	tilemap->render->tileset[1] = "wabbit_alpha";
+	tilemap->render->texture = ResourceManager::getTexture("tiles");
+	tilemap->render->tiles[0] = Rectangle { 48, 16, 16, 16 };
+	tilemap->render->tiles[1] = Rectangle { 48, 0, 16, 16 };
 	tilemap->render->map[1][31] = 1;
 	tilemap->render->map[16][31] = 1;
 	tilemap->render->map[16][30] = 1;

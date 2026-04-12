@@ -55,10 +55,10 @@ void ResourceManager::unloadResources() {
     }
 }
 
-Texture2D ResourceManager::getTexture(std::string name) {
-    return textures[name];
+Texture2D* ResourceManager::getTexture(std::string name) {
+    return &textures[name];
 }
 
-Sound ResourceManager::getSound(std::string name) {
-    return sounds[name];
+Sound* ResourceManager::getSound(std::string name) {
+    return &sounds[name];
 }

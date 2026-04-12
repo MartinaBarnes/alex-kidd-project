@@ -15,6 +15,6 @@ class ResourceManager {
         static char* soundDir;
         static void loadResources();
         static void unloadResources();
-        static Texture2D getTexture(std::string);
-        static Sound getSound(std::string);
+        static Texture2D* getTexture(std::string);
+        static Sound* getSound(std::string);
 };
