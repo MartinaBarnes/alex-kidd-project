@@ -11,6 +11,7 @@ class Player : public LivingEntity
 {
     private:
         float direction = DIRECTION_RIGHT;
+        bool crouching = false;
         bool jumping = false;
         float jump_time = 0.0f;
         bool attacking = false;

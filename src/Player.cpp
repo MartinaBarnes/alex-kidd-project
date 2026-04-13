@@ -35,14 +35,19 @@ void Player::update(float dt) {
         accel = air_acceleration;
         sprite->animation = &animations[ANIM_JUMP];
     } else {
-        if (physics->velocity.x != 0.0f) {
-            sprite->animation = &animations[ANIM_WALK];
+        crouching = IsKeyDown(KEY_DOWN);
+        if (crouching) {
+            sprite->animation = &animations[ANIM_CROUCH];
         } else {
-            sprite->animation = &animations[ANIM_IDLE];
+            if (physics->velocity.x != 0.0f) {
+                sprite->animation = &animations[ANIM_WALK];
+            } else {
+                sprite->animation = &animations[ANIM_IDLE];
+            }
         }
     }
 
-    if (!physics->onGround || !attacking) {
+    if ((!physics->onGround || !attacking) && !crouching) {
         if (IsKeyDown(KEY_RIGHT)) {
             direction = DIRECTION_RIGHT;
             physics->velocity.x = std::min(physics->velocity.x + accel * dt, speed);
@@ -125,6 +130,7 @@ Player::Player() {
     } };
     animations[ANIM_JUMP] = Animation { texture, { { 44, 29, 16, 24 } } };
     animations[ANIM_ATTACK] = Animation { texture, { { 19, 28, 24, 24 } } };
+    animations[ANIM_CROUCH] = Animation { texture, { { 62, 32, 15, 20 } } };
 
     sprite = new AnimatedSprite();
     sprite->animation = &animations[0];
