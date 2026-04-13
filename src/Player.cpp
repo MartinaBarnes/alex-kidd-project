@@ -18,6 +18,14 @@ void Player::onKilled() {
     scene->pop(this);
 }
 
+void Player::decelerate(float dt) {
+    if (physics->velocity.x < 0.0f) {
+        physics->velocity.x = std::min(physics->velocity.x + walk_deceleration * dt, 0.0f);
+    } else {
+        physics->velocity.x = std::max(physics->velocity.x - walk_deceleration * dt, 0.0f);
+    }
+}
+
 void Player::update(float dt) {
     for (int i = 0; i < physics->colliders.size(); i++) {
         if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(physics->colliders[i])) {
@@ -26,8 +34,6 @@ void Player::update(float dt) {
         }
     }
 
-    sprite->position = physics->aabb.position;
-
     float speed = walk_speed;
     float accel = walk_acceleration;
 
@@ -35,7 +41,15 @@ void Player::update(float dt) {
         accel = air_acceleration;
         sprite->animation = &animations[ANIM_JUMP];
     } else {
+        bool last_crouching = crouching;
         crouching = IsKeyDown(KEY_DOWN);
+        if (last_crouching != crouching) {
+            if (last_crouching) {
+                physics->aabb.position.y -= crouch_offset;
+            } else {
+                physics->aabb.position.y += crouch_offset;
+            }
+        }
         if (crouching) {
             sprite->animation = &animations[ANIM_CROUCH];
         } else {
@@ -47,22 +61,23 @@ void Player::update(float dt) {
         }
     }
 
-    if ((!physics->onGround || !attacking) && !crouching) {
-        if (IsKeyDown(KEY_RIGHT)) {
-            direction = DIRECTION_RIGHT;
-            physics->velocity.x = std::min(physics->velocity.x + accel * dt, speed);
-        } else if (IsKeyDown(KEY_LEFT)) {
-            direction = DIRECTION_LEFT;
-            physics->velocity.x = std::max(physics->velocity.x - accel * dt, -speed);
+    if (!physics->onGround || !attacking) {
+        if (crouching) {
+            decelerate(dt);
         } else {
-            if (physics->velocity.x < 0.0f) {
-                physics->velocity.x = std::min(physics->velocity.x + walk_deceleration * dt, 0.0f);
+            if (IsKeyDown(KEY_RIGHT)) {
+                direction = DIRECTION_RIGHT;
+                physics->velocity.x = std::min(physics->velocity.x + accel * dt, speed);
+            } else if (IsKeyDown(KEY_LEFT)) {
+                direction = DIRECTION_LEFT;
+                physics->velocity.x = std::max(physics->velocity.x - accel * dt, -speed);
             } else {
-                physics->velocity.x = std::max(physics->velocity.x - walk_deceleration * dt, 0.0f);
+                decelerate(dt);
             }
         }
     }
 
+    sprite->position = physics->aabb.position;
     sprite->flipped = direction == DIRECTION_LEFT;
 
     if (jumping) {
