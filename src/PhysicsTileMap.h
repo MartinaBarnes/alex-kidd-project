@@ -8,6 +8,8 @@
 
 #define PHYSTILE_AIR 0
 #define PHYSTILE_SOLID 1
+#define PHYSTILE_WATER 2
+#define PHYSTILE_DEATHPIT 3
 
 class PhysicsTileMap : public PhysicsComponent {
     public:

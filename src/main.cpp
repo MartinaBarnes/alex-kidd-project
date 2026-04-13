@@ -69,13 +69,6 @@ int main ()
 
 		RenderingServer::update(dt, bounds);
 
-		// draw our texture to the screen
-		if (player->physics->onGround) {
-		    DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, RED);
-		} else {
-		    DrawTexture(wabbit, player->physics->aabb.position.x, player->physics->aabb.position.y, WHITE);
-		}
-
 		DrawTexture(wabbit, enemy->physics->aabb.position.x, enemy->physics->aabb.position.y, WHITE);
 
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)

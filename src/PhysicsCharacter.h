@@ -12,6 +12,8 @@ class PhysicsCharacter : public PhysicsComponent {
         bool onCeiling;
         bool onWall;
         bool onGround;
+        bool inWater;
+        bool inDeathPit;
 
         bool isOnScreen(const AABB*) const override;
         bool testCollision(float, PhysicsComponent*) override;

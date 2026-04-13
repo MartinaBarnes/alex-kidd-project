@@ -2,6 +2,7 @@
 #include "LivingEntity.h"
 #include "PhysicsCharacter.h"
 #include "PhysicsHitbox.h"
+#include "AnimatedSprite.h"
 
 #define DIRECTION_RIGHT 1.0f
 #define DIRECTION_LEFT -1.0f
@@ -14,6 +15,7 @@ class Player : public LivingEntity
         float jump_time = 0.0f;
         bool attacking = false;
         float attack_time = 0.0f;
+		Animation animations[4];
 	public:
 	    float walk_speed = 100.0f;
 	    float walk_acceleration = 1000.0f;
@@ -26,6 +28,7 @@ class Player : public LivingEntity
 
 		PhysicsCharacter* physics;
 		PhysicsHitbox* hitbox;
+		AnimatedSprite* sprite;
 
 		void update(float) override;
 		void onKilled() override;

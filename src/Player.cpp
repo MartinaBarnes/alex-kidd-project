@@ -3,9 +3,10 @@
 #include "PhysicsComponent.h"
 #include "PhysicsHitbox.h"
 #include "PhysicsServer.h"
+#include "RenderingServer.h"
+#include "ResourceManager.h"
 #include "raylib.h"
 #include <algorithm>
-#include <iostream>
 
 void Player::onKilled() {
     scene->pop(this);
@@ -75,9 +76,10 @@ void Player::update(float dt) {
         }
     }
 
+    sprite->position = physics->aabb.position;
+
     hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f - hitbox->aabb.size.x / 2.0f + hitbox_offset * direction;
     hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y / 2.0f - hitbox->aabb.size.y / 2.0f;
-    std::cout << hitbox->aabb.position.x << " " << hitbox->aabb.position.y << std::endl;
     hitbox->active = attacking;
 }
 
@@ -85,7 +87,7 @@ Player::Player() {
 	physics = new PhysicsCharacter();
 	physics->layer = LAYER_PLAYER;
 	physics->mask = LAYER_WORLD + LAYER_ENEMY;
-	physics->aabb = AABB(0, 0, 16, 32);
+	physics->aabb = AABB(0, 0, 16, 24);
 	PhysicsServer::push(physics);
 
 	hitbox = new PhysicsHitbox();
@@ -93,6 +95,13 @@ Player::Player() {
 	hitbox->mask = LAYER_ENEMY + LAYER_BREAKABLE;
 	hitbox->aabb = AABB(0, 0, 16, 16);
 	PhysicsServer::push(hitbox);
+
+    Texture2D* texture = ResourceManager::getTexture("alex");
+    animations[0] = Animation{ texture, { { 1, 28, 16, 24 } } };
+
+    sprite = new AnimatedSprite();
+    sprite->animation = &animations[0];
+    RenderingServer::push(sprite);
 }
 
 Player::~Player() {
@@ -101,4 +110,7 @@ Player::~Player() {
 
     PhysicsServer::pop(hitbox);
     delete hitbox;
+
+    RenderingServer::pop(sprite);
+    delete sprite;
 }
