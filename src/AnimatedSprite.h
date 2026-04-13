@@ -14,6 +14,7 @@ class AnimatedSprite : public RenderComponent {
 		float next_frame = 0.0f;
 		AABB aabb;
 	public:
+	    bool flipped;
 		Vector2 position;
 		float frame_rate = 0.0f;
 		Animation* animation;

@@ -35,12 +35,17 @@ int main ()
 	}
 	tilemap->render->texture = ResourceManager::getTexture("tiles");
 	tilemap->render->tiles[0] = Rectangle { 48, 0, 16, 16 };
+	tilemap->render->tiles[1] = Rectangle { 48, 32, 16, 16 };
 	tilemap->render->map[1][31] = 1;
-	tilemap->render->map[16][31] = 1;
+	tilemap->render->map[16][31] = 2;
 	tilemap->render->map[16][30] = 1;
 	tilemap->render->map[24][31] = 1;
 	for (int i = 0; i < 128; i++) {
 		tilemap->render->map[i][32] = 1;
+		if (i == 1 || i == 16 || i == 24) {
+		    tilemap->render->map[i][32] = 2;
+		}
+		tilemap->render->map[i][33] = 2;
 	}
 	tilemap->render->bounds = bounds;
 
@@ -52,7 +57,7 @@ int main ()
 	Scene* scene = new Scene();
 	scene->push(tilemap);
 	scene->push(player);
-	scene->push(enemy);
+	//scene->push(enemy);
 
 	// game loop
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
@@ -65,11 +70,11 @@ int main ()
 		BeginDrawing();
 
 		// Setup the back buffer for drawing (clear color and depth buffers)
-		ClearBackground(BLACK);
+		ClearBackground(BLUE);
 
 		RenderingServer::update(dt, bounds);
 
-		DrawTexture(wabbit, enemy->physics->aabb.position.x, enemy->physics->aabb.position.y, WHITE);
+		//DrawTexture(wabbit, enemy->physics->aabb.position.x, enemy->physics->aabb.position.y, WHITE);
 
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();

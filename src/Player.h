@@ -15,16 +15,17 @@ class Player : public LivingEntity
         float jump_time = 0.0f;
         bool attacking = false;
         float attack_time = 0.0f;
-		Animation animations[4];
+		Animation animations[5];
 	public:
 	    float walk_speed = 100.0f;
-	    float walk_acceleration = 1000.0f;
+	    float walk_acceleration = 900.0f;
+		float walk_deceleration = 600.0f;
 		float max_jump_time = 0.5f;
 		float jump_force = 80.0f;
 		float air_acceleration = 300.0f;
 		float gravity = 400.0f;
 		float hitbox_offset = 8.0f;
-		float max_attack_time = 0.4f;
+		float max_attack_time = 0.25f;
 
 		PhysicsCharacter* physics;
 		PhysicsHitbox* hitbox;

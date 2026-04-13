@@ -5,18 +5,20 @@ bool AnimatedSprite::isOnScreen(const AABB* bounds) const {
 }
 
 void AnimatedSprite::draw(float dt) {
-	float duration = 1.0f / frame_rate;
-	if (frame > animation->frames.size()) {
+	float frame_time = 1.0f / frame_rate;
+	if (frame >= animation->frames.size()) {
 		frame = 0;
 	}
-	Rectangle frameRec = animation->frames[frame];
-	DrawTextureRec(*animation->texture, frameRec, position, WHITE);
+	Rectangle source = animation->frames[frame];
+	if (flipped) {
+	    source.width = -source.width;
+	}
+	DrawTextureRec(*animation->texture, source, position, WHITE);
 	aabb.position = position;
-	aabb.size.x = frameRec.width;
-	aabb.size.y = frameRec.height;
-	frame_rate += dt;
-	if (next_frame >= duration) {
+	aabb.size = { source.width, source.height };
+	next_frame += dt;
+	if (next_frame >= frame_time) {
 		frame += 1;
-		next_frame -= duration;
+		next_frame -= frame_time;
 	}
 }
