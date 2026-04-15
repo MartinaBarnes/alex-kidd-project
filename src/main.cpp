@@ -78,7 +78,7 @@ int main ()
 	    // automatic resolution scaling
 	    short scnW = GetScreenWidth();
 		short scnH = GetScreenHeight();
-	    short resScale = (scnW > scnH) ? scnW / GAME_WIDTH : scnH / GAME_HEIGHT;
+	    short resScale = (scnW < scnH) ? scnW / GAME_WIDTH : scnH / GAME_HEIGHT;
 		targetDest.width = GAME_WIDTH * resScale;
 		targetDest.height = GAME_HEIGHT * resScale;
 		targetDest.x = scnW / 2 - targetDest.width / 2;
