@@ -1,7 +1,18 @@
 #include "raylib.h"
-#include "AABB.h"
+#include "Entity.h"
+#include "Player.h"
 
-class CameraController {
+enum CameraMode {
+    STATIC,
+    DOWN,
+    RIGHT,
+    ROOM
+};
+
+class CameraController : public Entity {
     public:
-        static Camera2D camera;
+        CameraMode mode = STATIC;
+        Player* player;
+
+        void update(float) override;
 };

@@ -1,9 +1,10 @@
 #include "RenderingServer.h"
 #include "RenderComponent.h"
 #include "raylib.h"
-#include <iostream>
 
+Camera2D RenderingServer::camera = Camera2D { 0 };
 std::vector<RenderComponent*> RenderingServer::components = {};
+std::vector<RenderComponent*> RenderingServer::overlay = {};
 
 void RenderingServer::push(RenderComponent* component)
 {
@@ -22,8 +23,26 @@ void RenderingServer::pop(RenderComponent* component)
     }
 }
 
+void RenderingServer::pushOverlay(RenderComponent* component)
+{
+    RenderingServer::overlay.push_back(component);
+}
+
+void RenderingServer::popOverlay(RenderComponent* component)
+{
+    int count = RenderingServer::overlay.size();
+    for (int i=0; i<count; i++) {
+        if (RenderingServer::overlay[i] == component) {
+            RenderingServer::overlay[i] = RenderingServer::overlay[count - 1];
+            RenderingServer::overlay.pop_back();
+            return;
+        }
+    }
+}
+
 void RenderingServer::update(float dt, const AABB* bounds)
 {
+    BeginMode2D(RenderingServer::camera);
     for (int i=0; i<RenderingServer::components.size(); i++) {
         RenderComponent* component = RenderingServer::components[i];
         component->visible = component->isOnScreen(bounds);
@@ -32,4 +51,5 @@ void RenderingServer::update(float dt, const AABB* bounds)
         }
         component->draw(dt);
     }
+    EndMode2D();
 };

@@ -25,6 +25,7 @@ int main ()
 	Rectangle targetSrc = Rectangle { 0, 0, GAME_WIDTH, -GAME_HEIGHT };
 	Rectangle targetDest = Rectangle { 0 };
 
+	RenderingServer::camera.offset = Vector2 { GAME_WIDTH / 2, GAME_HEIGHT / 2 };
 	AABB* bounds = new AABB(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
 	ResourceManager::loadResources();
