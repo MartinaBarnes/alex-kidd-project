@@ -46,9 +46,9 @@ void Player::update(float dt) {
         crouching = IsKeyDown(KEY_DOWN);
         if (last_crouching != crouching) {
             if (last_crouching) {
-                physics->aabb.position.y -= crouch_offset;
+                physics->aabb.position.y -= 8.0f;
             } else {
-                physics->aabb.position.y += crouch_offset;
+                physics->aabb.position.y += 8.0f;
             }
         }
         if (crouching) {
@@ -60,6 +60,11 @@ void Player::update(float dt) {
                 sprite->animation = &animations[ANIM_IDLE];
             }
         }
+    }
+
+    sprite->position = physics->aabb.position;
+    if (crouching) {
+        sprite->position.y -= 4.0f;
     }
 
     if (!physics->onGround || !attacking) {
@@ -78,7 +83,6 @@ void Player::update(float dt) {
         }
     }
 
-    sprite->position = physics->aabb.position;
     sprite->flipped = direction == DIRECTION_LEFT;
 
     if (jumping) {

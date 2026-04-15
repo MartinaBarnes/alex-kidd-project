@@ -20,7 +20,6 @@ class Player : public LivingEntity
 
 		void decelerate(float);
 	public:
-	    float crouch_offset = 4.0f; // TODO: sprite offset and physics offset is different
 	    float walk_speed = 100.0f;
 	    float walk_acceleration = 900.0f;
 		float walk_deceleration = 600.0f;
