@@ -1,14 +1,15 @@
-#include "ResourceManager.h"
 #include "raylib.h"
 #include "resource_dir.h" // utility header for SearchAndSetResourceDir
+#include "ResourceManager.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
+#include "CameraController.h"
+#include "Scene.h"
 #include "PhysicsTileMap.h"
 #include "RenderTileMap.h"
 #include "TileMap.h"
 #include "Player.h"
 #include "WanderingEnemy.h"
-#include "Scene.h"
 #include <cmath>
 
 #define GAME_WIDTH 256
@@ -69,24 +70,32 @@ int main ()
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
-	    int scnW = GetScreenWidth();
-		int scnH = GetScreenHeight();
-	    int scale = (scnW > scnH) ? scnW / GAME_WIDTH : scnH / GAME_HEIGHT;
-
+	    // automatic resolution scaling
+	    short scnW = GetScreenWidth();
+		short scnH = GetScreenHeight();
+	    short scale = (scnW > scnH) ? scnW / GAME_WIDTH : scnH / GAME_HEIGHT;
 		targetDest.width = GAME_WIDTH * scale;
 		targetDest.height = GAME_HEIGHT * scale;
 		targetDest.x = scnW / 2 - targetDest.width / 2;
 		targetDest.y = scnH / 2 - targetDest.height / 2;
 
+		// alt + enter toggles fullscreen
+		if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT))) {
+		    ToggleFullscreen();
+		}
+
+		// run logic and physics
 	    float dt = GetFrameTime();
         scene->update(dt);
 		PhysicsServer::update(dt, bounds);
 
+		// draw game onto render target
 		BeginTextureMode(target);
-		ClearBackground(BLUE);
+		ClearBackground(scene->background);
 		RenderingServer::update(dt, bounds);
 		EndTextureMode();
 
+		// draw render target
 		BeginDrawing();
 		ClearBackground(BLACK);
 		DrawTexturePro(target.texture, targetSrc, targetDest, Vector2 { 0, 0 }, 0.0f, WHITE);
