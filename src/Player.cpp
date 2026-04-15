@@ -16,6 +16,7 @@
 
 void Player::onKilled() {
     scene->pop(this);
+    delete this;
 }
 
 void Player::decelerate(float dt) {

@@ -2,7 +2,7 @@
 #include "Entity.h"
 
 class LivingEntity : public Entity {
-	private:
+	protected:
 		bool alive = true;
 	public:
 		void kill();

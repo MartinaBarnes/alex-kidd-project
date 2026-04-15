@@ -2,7 +2,7 @@
 
 class Sprite : public RenderComponent {
 	private:
-		AABB aabb;
+	    Vector2 size;
 	public:
 		Vector2 position;
 		Texture2D* texture;

@@ -7,5 +7,4 @@ class PhysicsHitbox : public PhysicsComponent {
         bool active = true;
 
         bool isOnScreen(const AABB*) const override;
-        bool testCollision(float, PhysicsComponent*) override;
 };

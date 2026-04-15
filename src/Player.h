@@ -20,14 +20,14 @@ class Player : public LivingEntity
 
 		void decelerate(float);
 	public:
-	    float crouch_offset = 4.0f;
+	    float crouch_offset = 4.0f; // TODO: sprite offset and physics offset is different
 	    float walk_speed = 100.0f;
 	    float walk_acceleration = 900.0f;
 		float walk_deceleration = 600.0f;
 		float max_jump_time = 0.5f;
 		float jump_force = 80.0f;
 		float air_acceleration = 300.0f;
-		float gravity = 400.0f;
+		float gravity = 500.0f;
 		float max_attack_time = 0.25f;
 		float hitbox_offset = 8.0f;
 

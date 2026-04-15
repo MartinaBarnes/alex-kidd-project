@@ -1,4 +1,5 @@
 #include "PhysicsCharacter.h"
+#include "PhysicsHitbox.h"
 #include "raylib.h"
 #include <cmath>
 #include <algorithm>
@@ -13,6 +14,8 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
 {
     if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(collider)) {
         return aabb.testAABB(character->aabb);
+    } else if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(collider)) {
+        return hitbox->active && aabb.testAABB(hitbox->aabb);
     } else if (PhysicsTileMap* tilemap = dynamic_cast<PhysicsTileMap*>(collider)) {
         float tilemap_width = TILEMAP_WIDTH * TILE_SIZE - aabb.size.x;
         aabb.position.x = std::clamp(aabb.position.x + velocity.x * dt, 0.0f, tilemap_width);

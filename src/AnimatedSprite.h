@@ -12,7 +12,7 @@ class AnimatedSprite : public RenderComponent {
 	private:
 		int frame = 0;
 		float next_frame = 0.0f;
-		AABB aabb;
+		Vector2 size;
 	public:
 	    bool flipped;
 		Vector2 position;

@@ -1,6 +1,7 @@
 #include "RenderingServer.h"
 #include "RenderComponent.h"
 #include "raylib.h"
+#include <iostream>
 
 std::vector<RenderComponent*> RenderingServer::components = {};
 

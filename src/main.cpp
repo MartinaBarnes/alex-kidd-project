@@ -7,7 +7,7 @@
 #include "RenderTileMap.h"
 #include "TileMap.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "WanderingEnemy.h"
 #include "Scene.h"
 #include <cmath>
 
@@ -20,8 +20,6 @@ int main ()
 	InitWindow(1280, 800, "Alex Kidd in Miracle World");
 
 	ResourceManager::loadResources();
-
-	Texture2D wabbit = *ResourceManager::getTexture("wabbit_alpha");
 
 	AABB* bounds = new AABB(0, 0, 1280, 800);
 
@@ -50,14 +48,19 @@ int main ()
 	tilemap->render->bounds = bounds;
 
 	Player* player = new Player();
-	Enemy* enemy = new Enemy();
-	enemy->physics->aabb.position.x = 17 * TILE_SIZE;
-	enemy->physics->aabb.position.y = 30 * TILE_SIZE;
+	WanderingEnemy* enemy = new WanderingEnemy();
+	enemy->walk_speed = 100.0f;
+	enemy->physics->aabb.size = { 16, 16 };
+	enemy->physics->aabb.position.x = 16 * TILE_SIZE;
+	enemy->physics->aabb.position.y = 31 * TILE_SIZE;
+	enemy->sprite->animation = new Animation();
+	enemy->sprite->animation->texture = ResourceManager::getTexture("wabbit_alpha");
+	enemy->sprite->animation->frames.push_back(Rectangle { 0, 0, 32, 32 });
 
 	Scene* scene = new Scene();
 	scene->push(tilemap);
 	scene->push(player);
-	//scene->push(enemy);
+	scene->push(enemy);
 
 	// game loop
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
@@ -74,18 +77,12 @@ int main ()
 
 		RenderingServer::update(dt, bounds);
 
-		//DrawTexture(wabbit, enemy->physics->aabb.position.x, enemy->physics->aabb.position.y, WHITE);
-
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
 	}
 
 	// cleanup
 	ResourceManager::unloadResources();
-
-	// cleanup
-	// unload our texture so it can be cleaned up
-	UnloadTexture(wabbit);
 
 	// destroy the window and cleanup the OpenGL context
 	CloseWindow();
