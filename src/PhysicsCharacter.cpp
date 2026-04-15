@@ -1,5 +1,6 @@
 #include "PhysicsCharacter.h"
 #include "PhysicsHitbox.h"
+#include "PhysicsSolid.h"
 #include "raylib.h"
 #include <cmath>
 #include <algorithm>
@@ -15,7 +16,29 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
     if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(collider)) {
         return aabb.testAABB(character->aabb);
     } else if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(collider)) {
-        return hitbox->active && aabb.testAABB(hitbox->aabb);
+        return aabb.testAABB(hitbox->aabb);
+    } else if (PhysicsSolid* solid = dynamic_cast<PhysicsSolid*>(collider)) {
+        if (!aabb.testAABB(solid->aabb)) {
+            return false;
+        }
+        if (velocity.x > 0.0f && aabb.position.x + aabb.size.x > solid->aabb.position.x) {
+            aabb.position.x = solid->aabb.position.x - aabb.size.x;
+        } else if (velocity.x < 0.0f && aabb.position.x < solid->aabb.position.x + solid->aabb.size.x) {
+            aabb.position.x = solid->aabb.position.x + solid->aabb.size.x;
+        }
+        velocity.x = 0.0f;
+        /**if (!aabb.testAABB(solid->aabb)) {
+            velocity.x = 0.0f;
+            return true;
+        }
+        if (velocity.y > 0.0f && aabb.position.y + aabb.size.y > solid->aabb.position.y) {
+            aabb.position.y = solid->aabb.position.y - aabb.size.y;
+            velocity.y = 0.0f;
+        } else if (velocity.y < 0.0f && aabb.position.y < solid->aabb.position.y + solid->aabb.size.y) {
+            aabb.position.y = solid->aabb.position.y + solid->aabb.size.y;
+            velocity.y = 0.0f;
+        }*/
+        return true;
     } else if (PhysicsTileMap* tilemap = dynamic_cast<PhysicsTileMap*>(collider)) {
         float tilemap_width = TILEMAP_WIDTH * TILE_SIZE - aabb.size.x;
         aabb.position.x = std::clamp(aabb.position.x + velocity.x * dt, 0.0f, tilemap_width);

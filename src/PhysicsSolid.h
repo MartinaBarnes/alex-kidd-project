@@ -1,9 +1,8 @@
 #pragma once
 #include "PhysicsComponent.h"
 
-class PhysicsHitbox : public PhysicsComponent {
+class PhysicsSolid : public PhysicsComponent {
     public:
         AABB aabb;
-
         bool isOnScreen(const AABB*) const override;
 };

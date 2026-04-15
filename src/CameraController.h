@@ -1,18 +1,24 @@
 #include "raylib.h"
 #include "Entity.h"
+#include "PhysicsSolid.h"
 #include "Player.h"
 
-enum CameraMode {
-    STATIC,
-    DOWN,
-    RIGHT,
-    ROOM
+enum {
+    CAM_STATIC,
+    CAM_DOWN,
+    CAM_RIGHT,
+    CAM_ROOM
 };
 
 class CameraController : public Entity {
+    protected:
+        PhysicsSolid* wall;
     public:
-        CameraMode mode = STATIC;
+        int mode = CAM_STATIC;
         Player* player;
 
         void update(float) override;
+
+        CameraController();
+        ~CameraController();
 };

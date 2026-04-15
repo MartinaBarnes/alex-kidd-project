@@ -4,14 +4,14 @@
 
 bool AABB::testPoint(const Vector2& point) const
 {
-    return (point.x >= position.x && point.x <= position.x + size.x &&
-        point.y >= position.y && point.y <= position.y + size.y);
+    return (point.x >= position.x && point.x < position.x + size.x &&
+        point.y >= position.y && point.y < position.y + size.y);
 }
 
 bool AABB::testAABB(const AABB& aabb) const
 {
-    return !(position.x + size.x < aabb.position.x || aabb.position.x + aabb.size.x < position.x ||
-        position.y + size.y < aabb.position.y || aabb.position.y + aabb.size.y < position.y);
+    return !(position.x + size.x <= aabb.position.x || aabb.position.x + aabb.size.x < position.x ||
+        position.y + size.y <= aabb.position.y || aabb.position.y + aabb.size.y < position.y);
 }
 
 bool AABB::testCircle(const Vector2& center, float radius) const

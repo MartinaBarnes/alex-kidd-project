@@ -1,5 +1,7 @@
 #include "RenderTileMap.h"
+#include "PhysicsTileMap.h"
 #include "ResourceManager.h"
+#include <cmath>
 
 bool RenderTileMap::isOnScreen(const AABB* _) const {
     return true;
@@ -10,9 +12,9 @@ void RenderTileMap::draw(float _) {
     int v = bounds->position.y / TILE_SIZE;
     float x = u * TILE_SIZE;
     float y = v * TILE_SIZE;
-    for (int i=0; i<bounds->size.x / TILE_SIZE; i++) {
-        for (int j=0; j<bounds->size.y / TILE_SIZE; j++) {
-            int tile = map[u + i][v + j] - 1;
+    for (int i=0; i<=bounds->size.x / TILE_SIZE; i++) {
+        for (int j=0; j<=bounds->size.y / TILE_SIZE; j++) {
+            int tile = map[std::min(u + i, TILEMAP_WIDTH)][std::min(v + j, TILEMAP_HEIGHT)] - 1;
             if (tile < 0) {
                 continue;
             }

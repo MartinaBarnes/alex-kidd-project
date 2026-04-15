@@ -120,13 +120,13 @@ void Player::update(float dt) {
 
     hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f - hitbox->aabb.size.x / 2.0f + hitbox_offset * direction;
     hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y / 2.0f - hitbox->aabb.size.y / 2.0f;
-    hitbox->active = attacking;
+    hitbox->enabled = attacking;
 }
 
 Player::Player() {
 	physics = new PhysicsCharacter();
 	physics->layer = LAYER_PLAYER;
-	physics->mask = LAYER_WORLD + LAYER_ENEMY;
+	physics->mask = LAYER_WORLD + LAYER_ENEMY + LAYER_BOUNDS;
 	physics->aabb = AABB(0, 0, 16, 24);
 	PhysicsServer::push(physics);
 

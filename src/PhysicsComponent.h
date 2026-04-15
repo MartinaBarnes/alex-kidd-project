@@ -7,9 +7,11 @@
 #define LAYER_PLAYER 2
 #define LAYER_ENEMY 4
 #define LAYER_BREAKABLE 8
+#define LAYER_BOUNDS 16
 
 class PhysicsComponent : public OnScreenObject {
     public:
+        bool enabled = true;
         bool awake;
         int layer;
         int mask;

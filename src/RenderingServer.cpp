@@ -2,7 +2,12 @@
 #include "RenderComponent.h"
 #include "raylib.h"
 
-Camera2D RenderingServer::camera = Camera2D { 0 };
+Camera2D RenderingServer::camera = Camera2D {
+    Vector2 { 0.0f, 0.0f },
+    Vector2 { 0.0f, 0.0f },
+    0.0f,
+    1.0f
+};
 std::vector<RenderComponent*> RenderingServer::components = {};
 std::vector<RenderComponent*> RenderingServer::overlay = {};
 
@@ -42,14 +47,24 @@ void RenderingServer::popOverlay(RenderComponent* component)
 
 void RenderingServer::update(float dt, const AABB* bounds)
 {
+    // draw world components
     BeginMode2D(RenderingServer::camera);
     for (int i=0; i<RenderingServer::components.size(); i++) {
         RenderComponent* component = RenderingServer::components[i];
-        component->visible = component->isOnScreen(bounds);
+        component->visible = component->enabled && component->isOnScreen(bounds);
         if (!component->visible) {
             continue;
         }
         component->draw(dt);
     }
     EndMode2D();
+
+    // draw overlay components
+    for (int i=0; i<RenderingServer::overlay.size(); i++) {
+        RenderComponent* component = RenderingServer::components[i];
+        if (!component->enabled) {
+            continue;
+        }
+        component->draw(dt);
+    }
 };
