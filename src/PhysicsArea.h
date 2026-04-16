@@ -1,7 +1,7 @@
 #pragma once
 #include "PhysicsComponent.h"
 
-class PhysicsHitbox : public PhysicsComponent {
+class PhysicsArea : public PhysicsComponent {
     public:
         AABB aabb;
 

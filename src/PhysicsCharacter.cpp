@@ -1,5 +1,5 @@
 #include "PhysicsCharacter.h"
-#include "PhysicsHitbox.h"
+#include "PhysicsArea.h"
 #include "PhysicsSolid.h"
 #include "raylib.h"
 #include <cmath>
@@ -15,7 +15,7 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
 {
     if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(collider)) {
         return aabb.testAABB(character->aabb);
-    } else if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(collider)) {
+    } else if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(collider)) {
         return aabb.testAABB(hitbox->aabb);
     } else if (PhysicsSolid* solid = dynamic_cast<PhysicsSolid*>(collider)) {
         if (!aabb.testAABB(solid->aabb)) {

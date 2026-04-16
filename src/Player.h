@@ -1,7 +1,7 @@
 #pragma once
 #include "LivingEntity.h"
 #include "PhysicsCharacter.h"
-#include "PhysicsHitbox.h"
+#include "PhysicsArea.h"
 #include "AnimatedSprite.h"
 
 #define DIRECTION_RIGHT 1.0f
@@ -31,7 +31,7 @@ class Player : public LivingEntity
 		float hitbox_offset = 8.0f;
 
 		PhysicsCharacter* physics;
-		PhysicsHitbox* hitbox;
+		PhysicsArea* hitbox;
 		AnimatedSprite* sprite;
 
 		void update(float) override;

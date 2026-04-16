@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "PhysicsCharacter.h"
 #include "PhysicsComponent.h"
-#include "PhysicsHitbox.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "ResourceManager.h"
@@ -134,7 +133,7 @@ Player::Player() {
 	physics->aabb = AABB(0, 0, 16, 24);
 	PhysicsServer::push(physics);
 
-	hitbox = new PhysicsHitbox();
+	hitbox = new PhysicsArea();
 	hitbox->layer = LAYER_PLAYER;
 	hitbox->mask = LAYER_ENEMY + LAYER_BREAKABLE;
 	hitbox->aabb = AABB(0, 0, 16, 16);

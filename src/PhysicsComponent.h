@@ -8,6 +8,7 @@
 #define LAYER_ENEMY 4
 #define LAYER_BREAKABLE 8
 #define LAYER_BOUNDS 16
+#define LAYER_TRIGGER 32
 
 class PhysicsComponent : public OnScreenObject {
     public:

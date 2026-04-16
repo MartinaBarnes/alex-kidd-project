@@ -4,5 +4,6 @@
 class PhysicsSolid : public PhysicsComponent {
     public:
         AABB aabb;
+
         bool isOnScreen(const AABB*) const override;
 };

@@ -1,6 +1,6 @@
 #include "Enemy.h"
 #include "PhysicsComponent.h"
-#include "PhysicsHitbox.h"
+#include "PhysicsArea.h"
 #include "PhysicsServer.h"
 #include "AnimatedSprite.h"
 #include "RenderingServer.h"
@@ -12,7 +12,7 @@ void Enemy::onKilled() {
 
 void Enemy::update(float dt) {
 	for (int i = 0; i < physics->colliders.size(); i++) {
-		if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(physics->colliders[i])) {
+		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(physics->colliders[i])) {
 			kill();
 			return;
 		}
