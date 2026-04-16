@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "SceneManager.h"
 
 void Scene::push(Entity* entity) {
     entities.push_back(entity);
@@ -20,7 +21,11 @@ void Scene::pop(Entity* entity)
 
 void Scene::update(float dt) {
     for (int i = 0; i < entities.size(); i++) {
-        entities[i]->update(dt);
+        Entity* entity = entities[i];
+        if (SceneManager::pause && !entity->pausable) {
+            continue;
+        }
+        entity->update(dt);
     }
 }
 

@@ -1,4 +1,5 @@
 #include "ParticleEmitter.h"
+#include "RenderingServer.h"
 #include <cmath>
 
 bool ParticleEmitter::isOnScreen(const AABB* _) const {
@@ -9,6 +10,10 @@ void ParticleEmitter::draw(float dt) {
     if (time >= LIFE_TIME) {
         time = 0.0f;
         active = false;
+        if (oneShot) {
+            RenderingServer::pop(this);
+            delete this;
+        }
         return;
     }
     float x = time * VELOCITY_X;

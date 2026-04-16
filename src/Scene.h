@@ -12,5 +12,6 @@ class Scene {
     void push(Entity*);
     void pop(Entity*);
     void update(float);
+
     ~Scene();
 };

@@ -7,6 +7,7 @@
 #include "CameraController.h"
 #include "Breakable.h"
 #include "Scene.h"
+#include "SceneManager.h"
 #include "PhysicsTileMap.h"
 #include "RenderTileMap.h"
 #include "TileMap.h"
@@ -26,6 +27,7 @@ int main ()
 	RenderTexture2D target = LoadRenderTexture(GAME_WIDTH, GAME_HEIGHT);
 	Rectangle targetSrc = Rectangle { 0, 0, GAME_WIDTH, -GAME_HEIGHT };
 	Rectangle targetDest = Rectangle { 0 };
+	Vector2 targetPos = Vector2 { 0 };
 
 	AABB* bounds = new AABB(0, 0, GAME_WIDTH + 32, GAME_HEIGHT + 32);
 
@@ -81,6 +83,8 @@ int main ()
 	scene->push(breakable);
 	scene->push(cameraController);
 
+	SceneManager::replace(scene);
+
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
 	    // automatic resolution scaling
@@ -97,9 +101,14 @@ int main ()
 		    ToggleFullscreen();
 		}
 
-		// run logic
-	    float dt = GetFrameTime();
-        scene->update(dt);
+		float dt = GetFrameTime();
+
+		// run scene logic
+		Color background = BLACK;
+		if (SceneManager::current != NULL) {
+		    SceneManager::current->update(dt);
+			background = SceneManager::current->background;
+		}
         bounds->position.x = RenderingServer::camera.target.x - 16;
         bounds->position.y = RenderingServer::camera.target.y - 16;
 
@@ -108,14 +117,14 @@ int main ()
 
 		// draw game onto render target
 		BeginTextureMode(target);
-		ClearBackground(scene->background);
+		ClearBackground(background);
 		RenderingServer::update(dt, bounds);
 		EndTextureMode();
 
 		// draw render target
 		BeginDrawing();
 		ClearBackground(BLACK);
-		DrawTexturePro(target.texture, targetSrc, targetDest, Vector2 { 0, 0 }, 0.0f, WHITE);
+		DrawTexturePro(target.texture, targetSrc, targetDest, targetPos, 0.0f, WHITE);
 		EndDrawing();
 	}
 

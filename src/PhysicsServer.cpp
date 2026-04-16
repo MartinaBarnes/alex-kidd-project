@@ -1,4 +1,5 @@
 #include "PhysicsServer.h"
+#include "SceneManager.h"
 
 std::vector<PhysicsComponent*> PhysicsServer::components = {};
 
@@ -24,6 +25,9 @@ void PhysicsServer::update(float dt, const AABB* bounds)
     std::vector<PhysicsComponent*> components = {};
     for (int i=0; i<PhysicsServer::components.size(); i++) {
         PhysicsComponent* component = PhysicsServer::components[i];
+        if (SceneManager::pause && !component->pausable) {
+            continue;
+        }
         component->awake = component->enabled && component->isOnScreen(bounds);
         component->isColliding = false;
         component->colliders.resize(0);

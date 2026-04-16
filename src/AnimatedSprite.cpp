@@ -19,7 +19,7 @@ void AnimatedSprite::draw(float dt) {
 	next_frame += dt;
 	float frame_time = 1.0f / frame_rate;
 	if (next_frame >= frame_time) {
-		frame += 1;
+		frame++;
 		next_frame -= frame_time;
 	}
 	size = { src.width, src.height };

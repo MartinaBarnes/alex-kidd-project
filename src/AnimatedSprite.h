@@ -16,7 +16,7 @@ class AnimatedSprite : public RenderComponent {
 	public:
 	    bool flipped;
 		Vector2 position;
-		float frame_rate = 0.0f;
+		float frame_rate = 12.0f;
 		Animation* animation;
 
 		bool isOnScreen(const AABB*) const override;

@@ -153,7 +153,6 @@ Player::Player() {
 
     sprite = new AnimatedSprite();
     sprite->animation = &animations[0];
-    sprite->frame_rate = 12.0f;
     RenderingServer::push(sprite);
 }
 

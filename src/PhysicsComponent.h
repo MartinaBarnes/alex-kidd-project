@@ -12,6 +12,7 @@
 
 class PhysicsComponent : public OnScreenObject {
     public:
+        bool pausable;
         bool enabled = true;
         bool awake;
         int layer;
