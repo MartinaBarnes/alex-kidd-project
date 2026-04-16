@@ -1,5 +1,15 @@
 #include "Trigger.h"
 #include "PhysicsServer.h"
+#include "PhysicsCharacter.h"
+
+void Trigger::update(float _) {
+    for (int i = 0; i < physics->colliders.size(); i++) {
+        if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(physics->colliders[i])) {
+            onTouch();
+            return;
+        }
+    }
+}
 
 Trigger::Trigger(Vector2 position, Vector2 size) {
     physics = new PhysicsArea();

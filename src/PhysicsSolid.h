@@ -6,4 +6,5 @@ class PhysicsSolid : public PhysicsComponent {
         AABB aabb;
 
         bool isOnScreen(const AABB*) const override;
+        bool testCollision(float, PhysicsComponent*);
 };

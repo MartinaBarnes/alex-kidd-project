@@ -4,6 +4,7 @@
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "CameraController.h"
+#include "Breakable.h"
 #include "Scene.h"
 #include "PhysicsTileMap.h"
 #include "RenderTileMap.h"
@@ -14,8 +15,8 @@
 
 int main ()
 {
-    short GAME_WIDTH = 256;
-    short GAME_HEIGHT = 192;
+    float GAME_WIDTH = 256.0f;
+    float GAME_HEIGHT = 192.0f;
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
 	InitWindow(GAME_WIDTH, GAME_HEIGHT, "Alex Kidd in Miracle World");
@@ -34,16 +35,19 @@ int main ()
 	tilemap->physics->map[5][9] = PHYSTILE_SOLID;
 	tilemap->physics->map[5][8] = PHYSTILE_SOLID;
 	tilemap->physics->map[12][9] = PHYSTILE_SOLID;
+	tilemap->physics->map[24][9] = PHYSTILE_SOLID;
 	for (int i = 0; i < 32; i++) {
 		tilemap->physics->map[i][10] = PHYSTILE_SOLID;
 	}
 	tilemap->render->texture = ResourceManager::getTexture("tiles");
 	tilemap->render->tiles[0] = Rectangle { 48, 0, 16, 16 };
 	tilemap->render->tiles[1] = Rectangle { 48, 32, 16, 16 };
+	tilemap->render->tiles[2] = Rectangle{ 0, 16, 16, 16 };
 	tilemap->render->map[1][9] = 1;
 	tilemap->render->map[5][9] = 2;
 	tilemap->render->map[5][8] = 1;
 	tilemap->render->map[12][9] = 1;
+	tilemap->render->map[24][9] = 3;
 	for (int i = 0; i < 32; i++) {
 		tilemap->render->map[i][10] = 1;
 		if (i == 1 || i == 5 || i == 12) {
@@ -63,6 +67,8 @@ int main ()
 	enemy->sprite->animation->texture = ResourceManager::getTexture("wabbit_alpha");
 	enemy->sprite->animation->frames.push_back(Rectangle { 0, 0, 32, 32 });
 
+	Breakable* breakable = new Breakable(tilemap, Vector2 { 24, 9 });
+
 	CameraController* cameraController = new CameraController();
 	cameraController->player = player;
 	cameraController->mode = CAM_RIGHT;
@@ -71,6 +77,7 @@ int main ()
 	scene->push(tilemap);
 	scene->push(player);
 	scene->push(enemy);
+	scene->push(breakable);
 	scene->push(cameraController);
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
