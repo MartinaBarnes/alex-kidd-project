@@ -19,9 +19,9 @@ void Breakable::doBreak() {
 	delete this;
 }
 
-Breakable::Breakable(TileMap* tileMap, Vector2 tileCoords) {
-	this->tileMap = tileMap;
-	this->tileCoords = tileCoords;
+Breakable::Breakable(TileMap* map, Vector2 coords) {
+	tileMap = map;
+	tileCoords = coords;
 	physics = new PhysicsArea();
 	physics->layer = LAYER_BREAKABLE;
 	physics->mask = LAYER_PLAYER;

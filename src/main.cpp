@@ -1,3 +1,4 @@
+#include "ParticleEmitter.h"
 #include "raylib.h"
 #include "resource_dir.h" // utility header for SearchAndSetResourceDir
 #include "ResourceManager.h"
@@ -30,32 +31,32 @@ int main ()
 
 	ResourceManager::loadResources();
 
-	TileMap* tilemap = new TileMap();
-	tilemap->physics->map[1][9] = PHYSTILE_SOLID;
-	tilemap->physics->map[5][9] = PHYSTILE_SOLID;
-	tilemap->physics->map[5][8] = PHYSTILE_SOLID;
-	tilemap->physics->map[12][9] = PHYSTILE_SOLID;
-	tilemap->physics->map[24][9] = PHYSTILE_SOLID;
+	TileMap* tileMap = new TileMap();
+	tileMap->physics->map[1][9] = PHYSTILE_SOLID;
+	tileMap->physics->map[5][9] = PHYSTILE_SOLID;
+	tileMap->physics->map[5][8] = PHYSTILE_SOLID;
+	tileMap->physics->map[12][9] = PHYSTILE_SOLID;
+	tileMap->physics->map[24][9] = PHYSTILE_SOLID;
 	for (int i = 0; i < 32; i++) {
-		tilemap->physics->map[i][10] = PHYSTILE_SOLID;
+		tileMap->physics->map[i][10] = PHYSTILE_SOLID;
 	}
-	tilemap->render->texture = ResourceManager::getTexture("tiles");
-	tilemap->render->tiles[0] = Rectangle { 48, 0, 16, 16 };
-	tilemap->render->tiles[1] = Rectangle { 48, 32, 16, 16 };
-	tilemap->render->tiles[2] = Rectangle{ 0, 16, 16, 16 };
-	tilemap->render->map[1][9] = 1;
-	tilemap->render->map[5][9] = 2;
-	tilemap->render->map[5][8] = 1;
-	tilemap->render->map[12][9] = 1;
-	tilemap->render->map[24][9] = 3;
+	tileMap->render->texture = ResourceManager::getTexture("tiles");
+	tileMap->render->tiles[0] = Rectangle { 48, 0, 16, 16 };
+	tileMap->render->tiles[1] = Rectangle { 48, 32, 16, 16 };
+	tileMap->render->tiles[2] = Rectangle{ 0, 16, 16, 16 };
+	tileMap->render->map[1][9] = 1;
+	tileMap->render->map[5][9] = 2;
+	tileMap->render->map[5][8] = 1;
+	tileMap->render->map[12][9] = 1;
+	tileMap->render->map[24][9] = 3;
 	for (int i = 0; i < 32; i++) {
-		tilemap->render->map[i][10] = 1;
+		tileMap->render->map[i][10] = 1;
 		if (i == 1 || i == 5 || i == 12) {
-		    tilemap->render->map[i][10] = 2;
+		    tileMap->render->map[i][10] = 2;
 		}
-		tilemap->render->map[i][11] = 2;
+		tileMap->render->map[i][11] = 2;
 	}
-	tilemap->render->bounds = bounds;
+	tileMap->render->bounds = bounds;
 
 	Player* player = new Player();
 	WanderingEnemy* enemy = new WanderingEnemy();
@@ -67,14 +68,14 @@ int main ()
 	enemy->sprite->animation->texture = ResourceManager::getTexture("wabbit_alpha");
 	enemy->sprite->animation->frames.push_back(Rectangle { 0, 0, 32, 32 });
 
-	Breakable* breakable = new Breakable(tilemap, Vector2 { 24, 9 });
+	Breakable* breakable = new Breakable(tileMap, Vector2 { 24, 9 });
 
 	CameraController* cameraController = new CameraController();
 	cameraController->player = player;
 	cameraController->mode = CAM_RIGHT;
 
 	Scene* scene = new Scene();
-	scene->push(tilemap);
+	scene->push(tileMap);
 	scene->push(player);
 	scene->push(enemy);
 	scene->push(breakable);
