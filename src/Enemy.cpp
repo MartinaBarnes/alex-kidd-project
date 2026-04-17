@@ -10,7 +10,7 @@ void Enemy::onKilled() {
     delete this;
 }
 
-void Enemy::update(float dt) {
+void Enemy::update(float _) {
 	for (int i = 0; i < physics->colliders.size(); i++) {
 		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(physics->colliders[i])) {
 			kill();

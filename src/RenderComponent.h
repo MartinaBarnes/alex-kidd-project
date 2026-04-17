@@ -3,8 +3,9 @@
 
 class RenderComponent : public OnScreenObject {
     public:
-        bool pausable;
+        bool pausable = false;
         bool enabled = true;
         bool visible;
+
         virtual void draw(float) = 0;
 };

@@ -20,6 +20,7 @@ class Player : public LivingEntity
 
 		void decelerate(float);
 	public:
+		bool onDeletion = false;
 	    float walk_speed = 100.0f;
 	    float walk_acceleration = 900.0f;
 		float walk_deceleration = 600.0f;

@@ -157,6 +157,8 @@ Player::Player() {
 }
 
 Player::~Player() {
+    onDeletion = true;
+
 	PhysicsServer::pop(physics);
 	delete physics;
 

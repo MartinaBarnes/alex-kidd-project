@@ -4,7 +4,7 @@
 class Scene;
 class Entity {
     public:
-        bool pausable;
+        bool pausable = false;
         Scene* scene;
         virtual void update(float) {};
 };
