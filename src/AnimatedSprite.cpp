@@ -1,4 +1,5 @@
 #include "AnimatedSprite.h"
+#include "SceneManager.h"
 
 bool AnimatedSprite::isOnScreen(const AABB* bounds) const {
     AABB aabb;
@@ -16,6 +17,9 @@ void AnimatedSprite::draw(float dt) {
 	    src.width = -src.width;
 	}
 	DrawTextureRec(*animation->texture, src, position, WHITE);
+	if (SceneManager::pause && !pausable) {
+	    return;
+	}
 	next_frame += dt;
 	float frame_time = 1.0f / frame_rate;
 	if (next_frame >= frame_time) {

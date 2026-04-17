@@ -16,8 +16,9 @@
 #define ANIM_DEATH 5
 
 void Player::onKilled() {
-    alive = false;
     pausable = true;
+    death_time = 0.0f;
+    attacking = false;
     physics->velocity = Vector2 { 0, 0 };
     SceneManager::pause = true;
 }
@@ -30,8 +31,37 @@ void Player::decelerate(float dt) {
     }
 }
 
+void Player::crouch(bool crouch) {
+    if (crouching == crouch) {
+        return;
+    }
+    if (crouching) {
+        physics->aabb.position.y -= 8.0f; // HACK
+    } else {
+        physics->aabb.position.y += 8.0f; // HACK
+    }
+    crouching = crouch;
+}
+
 void Player::update(float dt) {
     if (!alive) {
+        if (respawning) {
+            if (death_time < DEATH_ANIM_DELAY) {
+                death_time += dt;
+                if (death_time >= DEATH_ANIM_DELAY) {
+                    alive = true;
+                    pausable = false;
+                    sprite->pausable = false;
+                    physics->aabb.position = tileMap->findSpawnPoint(Vector2 { RenderingServer::camera.target.x + 1, RenderingServer::camera.target.y }); // HACK
+                    physics->aabb.position.y += 8.0f; // HACK: make it start on the ground
+                    physics->onGround = true;
+                    SceneManager::pause = false;
+                    RenderingServer::visible = true;
+                    respawning = false;
+                }
+            }
+            return;
+        }
         if (death_time < DEATH_ANIM_DELAY) {
             death_time += dt;
             if (death_time >= DEATH_ANIM_DELAY) {
@@ -41,6 +71,10 @@ void Player::update(float dt) {
         } else {
             if (sprite->position.y + sprite->animation->frames[0].height > RenderingServer::camera.target.y) {
                 sprite->position.y -= DEATH_ANIM_SPEED * dt;
+            } else {
+                death_time = 0.0f;
+                respawning = true;
+                RenderingServer::visible = false;
             }
         }
         return;
@@ -48,7 +82,7 @@ void Player::update(float dt) {
 
     for (int i = 0; i < physics->colliders.size(); i++) {
         if (physics->colliders[i]->layer & LAYER_ENEMY) {
-            kill();
+            LivingEntity::kill();
             return;
         }
     }
@@ -59,16 +93,9 @@ void Player::update(float dt) {
     if (!physics->onGround) {
         accel = AIR_ACCELERATION;
         sprite->animation = &animations[ANIM_JUMP];
+        crouch(false);
     } else {
-        bool last_crouching = crouching;
-        crouching = IsKeyDown(KEY_DOWN);
-        if (last_crouching != crouching) {
-            if (last_crouching) {
-                physics->aabb.position.y -= 8.0f;
-            } else {
-                physics->aabb.position.y += 8.0f;
-            }
-        }
+        crouch(IsKeyDown(KEY_DOWN));
         if (crouching) {
             sprite->animation = &animations[ANIM_CROUCH];
         } else {
@@ -82,7 +109,7 @@ void Player::update(float dt) {
 
     sprite->position = physics->aabb.position;
     if (crouching) {
-        sprite->position.y -= 4.0f;
+        sprite->position.y -= 4.0f; // HACK: the sprite height and the intended collision height are different
     }
 
     if (!physics->onGround || !attacking) {
@@ -128,7 +155,7 @@ void Player::update(float dt) {
             attacking = false;
         }
         if (sprite->flipped) {
-            sprite->position.x -= 8;
+            sprite->position.x -= 8; // HACK: offset the punching animation (for being wider than the rest)
         }
     } else {
         if (IsKeyPressed(KEY_SPACE)) {
@@ -140,7 +167,7 @@ void Player::update(float dt) {
         }
     }
 
-    hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f - hitbox->aabb.size.x / 2.0f + 8.0f * direction;
+    hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f + hitbox->aabb.size.x * direction;
     hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y / 2.0f - hitbox->aabb.size.y / 2.0f;
     hitbox->enabled = attacking;
 }

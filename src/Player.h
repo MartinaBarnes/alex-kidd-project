@@ -3,6 +3,7 @@
 #include "PhysicsCharacter.h"
 #include "PhysicsArea.h"
 #include "AnimatedSprite.h"
+#include "TileMap.h"
 
 #define DIRECTION_RIGHT 1.0f
 #define DIRECTION_LEFT -1.0f
@@ -18,8 +19,10 @@ class Player : public LivingEntity
         bool attacking = false;
         float attack_time = 0.0f;
         float death_time = 0.0f;
+        bool respawning = false;
 
 		void decelerate(float);
+		void crouch(bool);
 	public:
 	    const float WALK_SPEED          = 100.0f;
 		const float WALK_ACCELERATION   = 900.0f;
@@ -30,13 +33,12 @@ class Player : public LivingEntity
 		const float GRAVITY             = 500.0f;
 		const float ATTACK_DURATION     = 0.25f;
 		const float DEATH_ANIM_SPEED    = 80.0f;
-		const float DEATH_ANIM_DELAY    = 1.0f;
+		const float DEATH_ANIM_DELAY    = 0.5f;
 
-	    bool alive = true;
-
-		PhysicsCharacter* physics;
-		PhysicsArea* hitbox;
-		AnimatedSprite* sprite;
+        PhysicsCharacter* physics;
+        PhysicsArea* hitbox;
+        AnimatedSprite* sprite;
+		TileMap* tileMap;
 
 		void update(float) override;
 		void onKilled() override;

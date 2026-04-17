@@ -13,7 +13,6 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "WanderingEnemy.h"
-#include "ParticleEmitter.h"
 #include "TileAnimationController.h"
 #include <cmath>
 
@@ -72,6 +71,8 @@ int main ()
 	tileMap->render->bounds = bounds;
 
 	Player* player = new Player();
+	player->tileMap = tileMap;
+
 	WanderingEnemy* enemy = new WanderingEnemy();
 	enemy->walk_speed = 100.0f;
 	enemy->physics->aabb.size = { 16, 16 };

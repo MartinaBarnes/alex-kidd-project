@@ -8,6 +8,8 @@ class TileMap : public Entity {
         PhysicsTileMap* physics;
         RenderTileMap* render;
 
+        Vector2 findSpawnPoint(Vector2);
+
         TileMap();
 		~TileMap();
 };

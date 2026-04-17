@@ -2,9 +2,8 @@
 #include "Entity.h"
 
 class LivingEntity : public Entity {
-	protected:
-		bool alive = true;
 	public:
+	    bool alive = true;
 		void kill();
 		virtual void onKilled() = 0;
 };
