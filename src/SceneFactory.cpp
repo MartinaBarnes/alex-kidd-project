@@ -84,6 +84,7 @@ Scene* SceneFactory::level1() {
 
     // initialize scene
     Scene* scene = new Scene();
+    scene->background = Color { 0, 0, 255, 255 };
     scene->music = ResourceManager::getMusic("main_theme");
     scene->push(tileMap);
     scene->push(tileAnims);
