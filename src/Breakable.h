@@ -11,6 +11,7 @@ class Breakable : public Entity {
 	public:
 		TileMap* tileMap;
 		Vector2 tileCoords;
+		char* sound = "break";
 
 		void update(float) override;
 		virtual void onBreak() {};
@@ -18,5 +19,7 @@ class Breakable : public Entity {
 
 		Breakable(TileMap*, Vector2);
 		Breakable(TileMap*, Vector2, Texture2D*, Rectangle);
+		Breakable(TileMap*, Vector2, char*);
+		Breakable(TileMap*, Vector2, Texture2D*, Rectangle, char*);
 		~Breakable();
 };

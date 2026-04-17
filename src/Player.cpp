@@ -1,9 +1,9 @@
 #include "Player.h"
 #include "PhysicsCharacter.h"
 #include "PhysicsComponent.h"
+#include "ResourceManager.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
-#include "ResourceManager.h"
 #include "SceneManager.h"
 #include "raylib.h"
 #include <algorithm>
@@ -21,6 +21,7 @@ void Player::onKilled() {
     attacking = false;
     physics->velocity = Vector2 { 0, 0 };
     SceneManager::pause = true;
+    StopMusicStream(*scene->music);
 }
 
 void Player::decelerate(float dt) {
@@ -58,6 +59,8 @@ void Player::update(float dt) {
                     SceneManager::pause = false;
                     RenderingServer::visible = true;
                     respawning = false;
+                    StopSound(*ResourceManager::getSound("death"));
+                    PlayMusicStream(*scene->music);
                 }
             }
             return;
@@ -67,6 +70,7 @@ void Player::update(float dt) {
             if (death_time >= DEATH_ANIM_DELAY) {
                 sprite->pausable = true;
                 sprite->animation = &animations[ANIM_DEATH];
+                PlaySound(*ResourceManager::getSound("death"));
             }
         } else {
             if (sprite->position.y + sprite->animation->frames[0].height > RenderingServer::camera.target.y) {
@@ -82,7 +86,7 @@ void Player::update(float dt) {
 
     for (int i = 0; i < physics->colliders.size(); i++) {
         if (physics->colliders[i]->layer & LAYER_ENEMY) {
-            LivingEntity::kill();
+            kill();
             return;
         }
     }
@@ -144,6 +148,7 @@ void Player::update(float dt) {
         } else {
             if (IsKeyDown(KEY_UP) && !attacking) {
                 jumping = true;
+                PlaySound(*ResourceManager::getSound("jump"));
             }
         }
     }
@@ -164,6 +169,7 @@ void Player::update(float dt) {
             if (physics->onGround) {
                 physics->velocity.x = 0.0f;
             }
+            PlaySound(*ResourceManager::getSound("punch"));
         }
     }
 
@@ -182,7 +188,7 @@ Player::Player() {
 	hitbox = new PhysicsArea();
 	hitbox->layer = LAYER_PLAYER;
 	hitbox->mask = LAYER_ENEMY + LAYER_BREAKABLE;
-	hitbox->aabb = AABB(0, 0, 16, 16);
+	hitbox->aabb = AABB(0, 0, 8.0, 16);
 	PhysicsServer::push(hitbox);
 
     Texture2D* texture = ResourceManager::getTexture("alex");

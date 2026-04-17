@@ -20,6 +20,9 @@ void Scene::pop(Entity* entity)
 }
 
 void Scene::update(float dt) {
+    if (music) {
+        UpdateMusicStream(*music);
+    }
     bool markedForDeletion = false;
     for (int i = 0; i < entities.size(); i++) {
         Entity* entity = entities[i];

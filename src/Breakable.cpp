@@ -19,6 +19,7 @@ void Breakable::doBreak() {
 	markedForDeletion = true;
 	physics->enabled = false;
 	particles->active = true;
+	PlaySound(*ResourceManager::getSound(sound));
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords) {
@@ -43,6 +44,14 @@ Breakable::Breakable(TileMap* map, Vector2 coords) {
 Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle frame) : Breakable(map, coords) {
     particles->texture = texture;
     particles->frame = frame;
+}
+
+Breakable::Breakable(TileMap* map, Vector2 coords, char* snd) : Breakable(map, coords) {
+    sound = snd;
+}
+
+Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle frame, char* snd) : Breakable(map, coords, texture, frame) {
+    sound = snd;
 }
 
 Breakable::~Breakable() {

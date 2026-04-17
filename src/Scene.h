@@ -5,13 +5,14 @@
 
 class Entity;
 class Scene {
-  public:
-    Color background = BLUE;
-    std::vector<Entity*> entities = {};
+    public:
+        Color background = BLUE;
+        Music* music;
+        std::vector<Entity*> entities = {};
 
-    void push(Entity*);
-    void pop(Entity*);
-    void update(float);
+        void push(Entity*);
+        void pop(Entity*);
+        void update(float);
 
-    ~Scene();
+        ~Scene();
 };

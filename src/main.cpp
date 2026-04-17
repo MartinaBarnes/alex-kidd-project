@@ -15,15 +15,19 @@
 #include "WanderingEnemy.h"
 #include "TileAnimationController.h"
 #include <cmath>
+#include <iostream>
 
 int main ()
 {
-    float GAME_WIDTH = 256.0f;
-    float GAME_HEIGHT = 192.0f;
+    const float GAME_WIDTH = 256.0f;
+    const float GAME_HEIGHT = 192.0f;
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
 	InitWindow(GAME_WIDTH, GAME_HEIGHT, "Alex Kidd in Miracle World");
+	InitAudioDevice();
 	SetTargetFPS(60);
+	SetAudioStreamBufferSizeDefault(4096);
+	ResourceManager::loadResources();
 
 	RenderTexture2D target = LoadRenderTexture(GAME_WIDTH, GAME_HEIGHT);
 	Rectangle targetSrc = Rectangle { 0, 0, GAME_WIDTH, -GAME_HEIGHT };
@@ -31,8 +35,6 @@ int main ()
 	Vector2 targetPos = Vector2 { 0 };
 
 	AABB* bounds = new AABB(0, 0, GAME_WIDTH + 32, GAME_HEIGHT + 32);
-
-	ResourceManager::loadResources();
 
 	TileMap* tileMap = new TileMap();
 	tileMap->physics->map[1][9] = PHYSTILE_SOLID;
@@ -100,12 +102,15 @@ int main ()
 	PhysicsServer::push(lavaPit);
 
 	Scene* scene = new Scene();
+	scene->music = ResourceManager::getMusic("main_theme");
 	scene->push(tileMap);
 	scene->push(player);
 	scene->push(enemy);
 	scene->push(breakable);
 	scene->push(cameraController);
 	scene->push(tileAnims);
+	SetMusicVolume(*scene->music, 0.4f);
+	PlayMusicStream(*scene->music);
 
 	SceneManager::replace(scene);
 
@@ -153,7 +158,7 @@ int main ()
 	}
 
 	ResourceManager::unloadResources();
-
+	CloseAudioDevice();
 	CloseWindow();
 	return 0;
 }
