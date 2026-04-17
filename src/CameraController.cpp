@@ -3,7 +3,7 @@
 #include "RenderingServer.h"
 
 void CameraController::update(float dt) {
-    if (mode == CAM_STATIC || !player || player->onDeletion) {
+    if (mode == CAM_STATIC || !player) {
         wall->enabled = false;
         return;
     }

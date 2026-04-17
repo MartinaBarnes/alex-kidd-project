@@ -14,8 +14,8 @@
 #define ANIM_CROUCH 4
 
 void Player::onKilled() {
-    scene->pop(this);
-    delete this;
+    markedForDeletion = true;
+    hitbox->enabled = false;
 }
 
 void Player::decelerate(float dt) {
@@ -157,8 +157,6 @@ Player::Player() {
 }
 
 Player::~Player() {
-    onDeletion = true;
-
 	PhysicsServer::pop(physics);
 	delete physics;
 

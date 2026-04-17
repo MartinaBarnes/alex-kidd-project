@@ -15,8 +15,8 @@ void Breakable::doBreak() {
 	onBreak();
 	tileMap->physics->map[(int)tileCoords.x][(int)tileCoords.y] = PHYSTILE_AIR;
 	tileMap->render->map[(int)tileCoords.x][(int)tileCoords.y] = 0;
-	scene->pop(this);
-	delete this;
+	markedForDeletion = true;
+	physics->enabled = false;
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords) {

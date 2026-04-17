@@ -6,8 +6,8 @@
 #include "RenderingServer.h"
 
 void Enemy::onKilled() {
-    scene->pop(this);
-    delete this;
+    markedForDeletion = true;
+    physics->enabled = false;
 }
 
 void Enemy::update(float _) {

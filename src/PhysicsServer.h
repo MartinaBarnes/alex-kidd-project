@@ -4,8 +4,6 @@
 #include <vector>
 
 class PhysicsServer {
-    protected:
-        static bool hasDeletedComponents;
     public:
         static std::vector<PhysicsComponent*> components;
         static void push(PhysicsComponent*);
