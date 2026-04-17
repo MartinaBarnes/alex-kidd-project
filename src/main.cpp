@@ -1,4 +1,4 @@
-#include "ParticleEmitter.h"
+#include "PhysicsArea.h"
 #include "raylib.h"
 #include "resource_dir.h" // utility header for SearchAndSetResourceDir
 #include "ResourceManager.h"
@@ -13,6 +13,8 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "WanderingEnemy.h"
+#include "ParticleEmitter.h"
+#include "TileAnimationController.h"
 #include <cmath>
 
 int main ()
@@ -39,19 +41,28 @@ int main ()
 	tileMap->physics->map[5][8] = PHYSTILE_SOLID;
 	tileMap->physics->map[12][9] = PHYSTILE_SOLID;
 	tileMap->physics->map[24][9] = PHYSTILE_SOLID;
-	for (int i = 0; i < 32; i++) {
+	for (int i = 0; i <= 24; i++) {
 		tileMap->physics->map[i][10] = PHYSTILE_SOLID;
 	}
 	tileMap->render->texture = ResourceManager::getTexture("tiles");
 	tileMap->render->tiles[0] = Rectangle { 48, 0, 16, 16 };
 	tileMap->render->tiles[1] = Rectangle { 48, 32, 16, 16 };
 	tileMap->render->tiles[2] = Rectangle{ 0, 16, 16, 16 };
+	tileMap->render->tiles[3] = Rectangle{ 144, 16, 16, 16 };
+	tileMap->render->tiles[4] = Rectangle{ 160, 0, 16, 16 };
+	tileMap->render->tiles[5] = Rectangle{ 176, 0, 16, 16 };
+	tileMap->render->tiles[6] = Rectangle{ 192, 0, 16, 16 };
+	tileMap->render->tiles[7] = Rectangle{ 144, 0, 16, 16 };
 	tileMap->render->map[1][9] = 1;
 	tileMap->render->map[5][9] = 2;
 	tileMap->render->map[5][8] = 1;
 	tileMap->render->map[12][9] = 1;
 	tileMap->render->map[24][9] = 3;
 	for (int i = 0; i < 32; i++) {
+	    if (i > 24) {
+			tileMap->render->map[i][11] = 4;
+			continue;
+		}
 		tileMap->render->map[i][10] = 1;
 		if (i == 1 || i == 5 || i == 12) {
 		    tileMap->render->map[i][10] = 2;
@@ -76,12 +87,24 @@ int main ()
 	cameraController->player = player;
 	cameraController->mode = CAM_RIGHT;
 
+	TileAnimationController* tileAnims = new TileAnimationController(tileMap, { 4, 5, 6, 7 });
+	for (int i = 0; i < 7; i++) {
+	    tileAnims->tiles.push_back(Vector2 { i + 25, 10 });
+	}
+
+	PhysicsArea* lavaPit = new PhysicsArea();
+	lavaPit->layer = LAYER_ENEMY;
+	lavaPit->aabb.position = Vector2 { 25 * TILE_SIZE, 11 * TILE_SIZE };
+	lavaPit->aabb.size = Vector2 { 7 * TILE_SIZE, 1 * TILE_SIZE };
+	PhysicsServer::push(lavaPit);
+
 	Scene* scene = new Scene();
 	scene->push(tileMap);
 	scene->push(player);
 	scene->push(enemy);
 	scene->push(breakable);
 	scene->push(cameraController);
+	scene->push(tileAnims);
 
 	SceneManager::replace(scene);
 

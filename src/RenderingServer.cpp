@@ -2,6 +2,7 @@
 #include "RenderComponent.h"
 #include "raylib.h"
 
+bool RenderingServer::visible = true;
 Camera2D RenderingServer::camera = Camera2D {
     Vector2 { 0.0f, 0.0f },
     Vector2 { 0.0f, 0.0f },
@@ -47,6 +48,10 @@ void RenderingServer::popOverlay(RenderComponent* component)
 
 void RenderingServer::update(float dt, const AABB* bounds)
 {
+    if (!RenderingServer::visible) {
+        return;
+    }
+
     // draw world components
     BeginMode2D(RenderingServer::camera);
     for (int i=0; i<RenderingServer::components.size(); i++) {

@@ -10,27 +10,29 @@
 class Player : public LivingEntity
 {
     protected:
+        Animation animations[6];
         float direction = DIRECTION_RIGHT;
         bool crouching = false;
         bool jumping = false;
         float jump_time = 0.0f;
         bool attacking = false;
         float attack_time = 0.0f;
-		Animation animations[6];
+        float death_time = 0.0f;
 
 		void decelerate(float);
 	public:
+	    const float WALK_SPEED          = 100.0f;
+		const float WALK_ACCELERATION   = 900.0f;
+		const float WALK_DECELERATION   = 600.0f;
+		const float MAX_JUMP_TIME       = 0.5f;
+		const float JUMP_FORCE          = 80.0f;
+		const float AIR_ACCELERATION    = 300.0f;
+		const float GRAVITY             = 500.0f;
+		const float ATTACK_DURATION     = 0.25f;
+		const float DEATH_ANIM_SPEED    = 80.0f;
+		const float DEATH_ANIM_DELAY    = 1.0f;
+
 	    bool alive = true;
-	    float walk_speed = 100.0f;
-	    float walk_acceleration = 900.0f;
-		float walk_deceleration = 600.0f;
-		float max_jump_time = 0.5f;
-		float jump_force = 80.0f;
-		float air_acceleration = 300.0f;
-		float gravity = 500.0f;
-		float max_attack_time = 0.25f;
-		float hitbox_offset = 8.0f;
-		float death_sprite_speed = 120.0f;
 
 		PhysicsCharacter* physics;
 		PhysicsArea* hitbox;

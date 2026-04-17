@@ -1,6 +1,7 @@
 #include "Breakable.h"
-#include "PhysicsArea.h"
 #include "PhysicsServer.h"
+#include "RenderingServer.h"
+#include "ResourceManager.h"
 
 void Breakable::update(float _) {
 	for (int i = 0; i < physics->colliders.size(); i++) {
@@ -17,17 +18,31 @@ void Breakable::doBreak() {
 	tileMap->render->map[(int)tileCoords.x][(int)tileCoords.y] = 0;
 	markedForDeletion = true;
 	physics->enabled = false;
+	particles->active = true;
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords) {
 	tileMap = map;
 	tileCoords = coords;
+
 	physics = new PhysicsArea();
 	physics->layer = LAYER_BREAKABLE;
 	physics->mask = LAYER_PLAYER;
 	physics->aabb.position = Vector2 { tileCoords.x * TILE_SIZE, tileCoords.y * TILE_SIZE };
 	physics->aabb.size = Vector2 { TILE_SIZE, TILE_SIZE };
 	PhysicsServer::push(physics);
+
+	particles = new ParticleEmitter();
+	particles->origin = physics->aabb.position;
+	particles->texture = ResourceManager::getTexture("tiles");
+	particles->frame = Rectangle { 112, 16, 7, 7 };
+	particles->oneShot = true;
+	RenderingServer::push(particles);
+}
+
+Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle frame) : Breakable(map, coords) {
+    particles->texture = texture;
+    particles->frame = frame;
 }
 
 Breakable::~Breakable() {

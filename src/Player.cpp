@@ -4,6 +4,7 @@
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "ResourceManager.h"
+#include "SceneManager.h"
 #include "raylib.h"
 #include <algorithm>
 
@@ -16,35 +17,47 @@
 
 void Player::onKilled() {
     alive = false;
-    sprite->animation = &animations[ANIM_DEATH];
+    pausable = true;
+    physics->velocity = Vector2 { 0, 0 };
+    SceneManager::pause = true;
 }
 
 void Player::decelerate(float dt) {
     if (physics->velocity.x < 0.0f) {
-        physics->velocity.x = std::min(physics->velocity.x + walk_deceleration * dt, 0.0f);
+        physics->velocity.x = std::min(physics->velocity.x + WALK_DECELERATION * dt, 0.0f);
     } else {
-        physics->velocity.x = std::max(physics->velocity.x - walk_deceleration * dt, 0.0f);
+        physics->velocity.x = std::max(physics->velocity.x - WALK_DECELERATION * dt, 0.0f);
     }
 }
 
 void Player::update(float dt) {
     if (!alive) {
-
+        if (death_time < DEATH_ANIM_DELAY) {
+            death_time += dt;
+            if (death_time >= DEATH_ANIM_DELAY) {
+                sprite->pausable = true;
+                sprite->animation = &animations[ANIM_DEATH];
+            }
+        } else {
+            if (sprite->position.y + sprite->animation->frames[0].height > RenderingServer::camera.target.y) {
+                sprite->position.y -= DEATH_ANIM_SPEED * dt;
+            }
+        }
         return;
     }
 
     for (int i = 0; i < physics->colliders.size(); i++) {
-        if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(physics->colliders[i])) {
+        if (physics->colliders[i]->layer & LAYER_ENEMY) {
             kill();
             return;
         }
     }
 
-    float speed = walk_speed;
-    float accel = walk_acceleration;
+    float speed = WALK_SPEED;
+    float accel = WALK_ACCELERATION;
 
     if (!physics->onGround) {
-        accel = air_acceleration;
+        accel = AIR_ACCELERATION;
         sprite->animation = &animations[ANIM_JUMP];
     } else {
         bool last_crouching = crouching;
@@ -91,16 +104,16 @@ void Player::update(float dt) {
     sprite->flipped = direction == DIRECTION_LEFT;
 
     if (jumping) {
-        if (jump_time >= max_jump_time || !IsKeyDown(KEY_UP)) {
+        if (jump_time >= MAX_JUMP_TIME || !IsKeyDown(KEY_UP)) {
             jumping = false;
             jump_time = 0.0f;
         } else {
             jump_time += dt;
-            physics->velocity.y = -jump_force;
+            physics->velocity.y = -JUMP_FORCE;
         }
     } else {
         if (!physics->onGround) {
-            physics->velocity.y += gravity * dt;
+            physics->velocity.y += GRAVITY * dt;
         } else {
             if (IsKeyDown(KEY_UP) && !attacking) {
                 jumping = true;
@@ -111,7 +124,7 @@ void Player::update(float dt) {
     if (attacking) {
         sprite->animation = &animations[ANIM_ATTACK];
         attack_time += dt;
-        if (attack_time >= max_attack_time) {
+        if (attack_time >= ATTACK_DURATION) {
             attacking = false;
         }
         if (sprite->flipped) {
@@ -127,7 +140,7 @@ void Player::update(float dt) {
         }
     }
 
-    hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f - hitbox->aabb.size.x / 2.0f + hitbox_offset * direction;
+    hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f - hitbox->aabb.size.x / 2.0f + 8.0f * direction;
     hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y / 2.0f - hitbox->aabb.size.y / 2.0f;
     hitbox->enabled = attacking;
 }
@@ -157,9 +170,9 @@ Player::Player() {
     animations[ANIM_ATTACK] = Animation { texture, { { 19, 28, 24, 24 } } };
     animations[ANIM_CROUCH] = Animation { texture, { { 62, 32, 15, 20 } } };
     animations[ANIM_DEATH] = Animation { texture, {
-        { 1, 131, 16, 24 },
-        { 19, 131, 16, 24 },
-        { 37, 131, 16, 24 }
+        { 1, 131, 17, 24 },
+        { 19, 131, 17, 24 },
+        { 37, 131, 17, 24 }
     } };
 
     sprite = new AnimatedSprite();

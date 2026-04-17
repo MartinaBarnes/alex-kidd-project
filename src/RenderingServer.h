@@ -4,6 +4,7 @@
 
 class RenderingServer {
   public:
+    static bool visible;
     static Camera2D camera;
     static std::vector<RenderComponent*> components;
     static std::vector<RenderComponent*> overlay;
