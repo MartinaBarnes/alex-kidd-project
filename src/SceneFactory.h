@@ -2,5 +2,5 @@
 
 class SceneFactory {
     public:
-        Scene level1();
+        static Scene* level1();
 };

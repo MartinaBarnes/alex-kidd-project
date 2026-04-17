@@ -1,6 +1,7 @@
 #include "PhysicsCharacter.h"
 #include "PhysicsArea.h"
 #include "PhysicsSolid.h"
+#include "PhysicsTileMap.h"
 #include "raylib.h"
 #include <cmath>
 #include <algorithm>
@@ -48,6 +49,7 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
         int x1 = std::clamp((int)std::floor((aabb.position.x + aabb.size.x - 0.01f) / TILE_SIZE), 0, TILEMAP_WIDTH);
         int y1 = std::clamp((int)std::floor((aabb.position.y + aabb.size.y - 0.01f) / TILE_SIZE), 0, TILEMAP_HEIGHT);
 
+        inDeathPit = false;
         if (velocity.x < 0.0f) {
             onWall = false;
             if (aabb.position.x <= 0.0f) {
@@ -55,6 +57,10 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
             } else {
                 for (int i = y0; i <= y1; i++) {
                     if (tilemap->map[x0][i] == PHYSTILE_AIR) {
+                        continue;
+                    }
+                    if (tilemap->map[x0][i] == PHYSTILE_DEATHPIT) {
+                        inDeathPit = true;
                         continue;
                     }
                     if (x0 < TILEMAP_WIDTH && tilemap->map[x0 + 1][i] == PHYSTILE_SOLID) {
@@ -77,6 +83,10 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
             } else {
                 for (int i = y0; i <= y1; i++) {
                     if (tilemap->map[x1][i] == PHYSTILE_AIR) {
+                        continue;
+                    }
+                    if (tilemap->map[x1][i] == PHYSTILE_DEATHPIT) {
+                        inDeathPit = true;
                         continue;
                     }
                     if (x1 > 0 && tilemap->map[x1 - 1][i] == PHYSTILE_SOLID) {
@@ -113,6 +123,10 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
                     if (tilemap->map[i][y0] == PHYSTILE_AIR) {
                         continue;
                     }
+                    if (tilemap->map[i][y0] == PHYSTILE_DEATHPIT) {
+                        inDeathPit = true;
+                        continue;
+                    }
                     if (y0 < TILEMAP_HEIGHT && tilemap->map[i][y0 + 1] == PHYSTILE_SOLID) {
                         continue;
                     }
@@ -135,6 +149,10 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
             } else {
                 for (int i = x0; i <= x1; i++) {
                     if (tilemap->map[i][y1] == PHYSTILE_AIR) {
+                        continue;
+                    }
+                    if (tilemap->map[i][y1] == PHYSTILE_DEATHPIT) {
+                        inDeathPit = true;
                         continue;
                     }
                     if (y1 > 0 && tilemap->map[i][y1 - 1]) {

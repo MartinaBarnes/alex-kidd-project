@@ -15,6 +15,7 @@ class CameraController : public Entity {
         PhysicsSolid* wall;
     public:
         int mode = CAM_STATIC;
+        Vector2 limits;
         Player* player;
 
         void update(float) override;

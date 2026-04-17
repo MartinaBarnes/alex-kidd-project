@@ -7,7 +7,7 @@ void TileAnimationController::update(float dt) {
     int tile = frames[frame];
     for (int i = 0; i < tiles.size(); i++) {
         Vector2 coords = tiles[i];
-        tileMap->render->map[(int)coords.x][(int)coords.y] = tile + 1;
+        tileMap->render->map[(int)coords.x][(int)coords.y] = tile;
     }
     next_frame += dt;
 	float frame_time = 1.0f / frame_rate;

@@ -7,7 +7,6 @@ class RenderTileMap : public RenderComponent {
         Texture2D* texture;
         Rectangle tiles[64];
         short map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
-        AABB* bounds;
 
         bool isOnScreen(const AABB*) const override;
         void draw(float) override;

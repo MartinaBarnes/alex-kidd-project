@@ -1,6 +1,7 @@
 #include "CameraController.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
+#include <cmath>
 
 void CameraController::update(float dt) {
     if (mode == CAM_STATIC || !player) {
@@ -9,17 +10,23 @@ void CameraController::update(float dt) {
     }
     switch (mode) {
         case CAM_RIGHT:
-            if (player->physics->aabb.position.x - RenderingServer::camera.target.x < 120 || player->physics->velocity.x <= 0.0f) {
+            if (player->physics->aabb.position.x - RenderingServer::camera.target.x < 120.0f || player->physics->velocity.x <= 0.0f) {
                 break;
             }
             RenderingServer::camera.target.x += player->physics->velocity.x * dt;
+            if (limits.x > 0.0f) {
+                RenderingServer::camera.target.x = std::min(RenderingServer::camera.target.x, limits.x);
+            }
             wall->aabb.position.x = RenderingServer::camera.target.x - wall->aabb.size.x;
             break;
         case CAM_DOWN:
-            if (player->physics->aabb.position.y - RenderingServer::camera.target.y < 88 || player->physics->velocity.y <= 0.0f) {
+            if (player->physics->aabb.position.y - RenderingServer::camera.target.y < 88.0f || player->physics->velocity.y <= 0.0f) {
                 break;
             }
             RenderingServer::camera.target.y += player->physics->velocity.y * dt;
+            if (limits.y > 0.0f) {
+                RenderingServer::camera.target.y = std::min(RenderingServer::camera.target.y, limits.y);
+            }
             break;
     }
     wall->enabled = true;

@@ -84,10 +84,14 @@ void Player::update(float dt) {
         return;
     }
 
-    for (int i = 0; i < physics->colliders.size(); i++) {
-        if (physics->colliders[i]->layer & LAYER_ENEMY) {
-            kill();
-            return;
+    if (physics->inDeathPit) {
+        kill();
+    } else {
+        for (int i = 0; i < physics->colliders.size(); i++) {
+            if (physics->colliders[i]->layer & LAYER_ENEMY) {
+                kill();
+                return;
+            }
         }
     }
 

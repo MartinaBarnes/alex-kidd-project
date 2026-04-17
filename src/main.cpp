@@ -1,27 +1,15 @@
-#include "PhysicsArea.h"
 #include "raylib.h"
 #include "resource_dir.h" // utility header for SearchAndSetResourceDir
 #include "ResourceManager.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
-#include "CameraController.h"
-#include "Breakable.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "PhysicsTileMap.h"
-#include "RenderTileMap.h"
-#include "TileMap.h"
-#include "Player.h"
-#include "WanderingEnemy.h"
-#include "TileAnimationController.h"
+#include "SceneFactory.h"
 #include <cmath>
-#include <iostream>
 
 int main ()
 {
-    const float GAME_WIDTH = 256.0f;
-    const float GAME_HEIGHT = 192.0f;
-
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
 	InitWindow(GAME_WIDTH, GAME_HEIGHT, "Alex Kidd in Miracle World");
 	InitAudioDevice();
@@ -34,9 +22,7 @@ int main ()
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	AABB* bounds = new AABB(0, 0, GAME_WIDTH + 32, GAME_HEIGHT + 32);
-
-	TileMap* tileMap = new TileMap();
+	/**TileMap* tileMap = new TileMap();
 	tileMap->physics->map[1][9] = PHYSTILE_SOLID;
 	tileMap->physics->map[5][9] = PHYSTILE_SOLID;
 	tileMap->physics->map[5][8] = PHYSTILE_SOLID;
@@ -112,7 +98,8 @@ int main ()
 	SetMusicVolume(*scene->music, 0.4f);
 	PlayMusicStream(*scene->music);
 
-	SceneManager::replace(scene);
+	SceneManager::replace(scene);*/
+	SceneManager::replace(SceneFactory::level1());
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
@@ -138,16 +125,16 @@ int main ()
 		    SceneManager::current->update(dt);
 			background = SceneManager::current->background;
 		}
-        bounds->position.x = RenderingServer::camera.target.x - 16;
-        bounds->position.y = RenderingServer::camera.target.y - 16;
+        SceneManager::workspace->position.x = RenderingServer::camera.target.x - 16;
+        SceneManager::workspace->position.y = RenderingServer::camera.target.y - 16;
 
         // run physics
-		PhysicsServer::update(dt, bounds);
+		PhysicsServer::update(dt, SceneManager::workspace);
 
 		// draw game onto render target
 		BeginTextureMode(target);
 		ClearBackground(background);
-		RenderingServer::update(dt, bounds);
+		RenderingServer::update(dt, SceneManager::workspace);
 		EndTextureMode();
 
 		// draw render target
