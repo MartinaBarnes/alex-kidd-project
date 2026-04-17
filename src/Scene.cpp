@@ -1,7 +1,5 @@
 #include "Scene.h"
 #include "SceneManager.h"
-#include <map>
-#include <iostream>
 
 void Scene::push(Entity* entity) {
     entities.push_back(entity);

@@ -12,10 +12,11 @@
 #define ANIM_JUMP 2
 #define ANIM_ATTACK 3
 #define ANIM_CROUCH 4
+#define ANIM_DEATH 5
 
 void Player::onKilled() {
-    markedForDeletion = true;
-    hitbox->enabled = false;
+    alive = false;
+    sprite->animation = &animations[ANIM_DEATH];
 }
 
 void Player::decelerate(float dt) {
@@ -27,6 +28,11 @@ void Player::decelerate(float dt) {
 }
 
 void Player::update(float dt) {
+    if (!alive) {
+
+        return;
+    }
+
     for (int i = 0; i < physics->colliders.size(); i++) {
         if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(physics->colliders[i])) {
             kill();
@@ -150,6 +156,11 @@ Player::Player() {
     animations[ANIM_JUMP] = Animation { texture, { { 44, 29, 16, 24 } } };
     animations[ANIM_ATTACK] = Animation { texture, { { 19, 28, 24, 24 } } };
     animations[ANIM_CROUCH] = Animation { texture, { { 62, 32, 15, 20 } } };
+    animations[ANIM_DEATH] = Animation { texture, {
+        { 1, 131, 16, 24 },
+        { 19, 131, 16, 24 },
+        { 37, 131, 16, 24 }
+    } };
 
     sprite = new AnimatedSprite();
     sprite->animation = &animations[0];
