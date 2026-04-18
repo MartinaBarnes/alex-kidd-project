@@ -33,11 +33,13 @@ Scene* SceneFactory::level1() {
         TILE_BOXSTUN
     };
 
+    Texture2D* tiles = ResourceManager::getTexture("tiles");
+
     TileMap* tileMap = new TileMap();
     scene->push(tileMap);
 
     // tile set
-    tileMap->render->texture = ResourceManager::getTexture("tiles");
+    tileMap->render->texture = tiles;
     tileMap->render->tiles[TILE_GRASS] = Rectangle { 0, 48, 16, 16 };
     tileMap->render->tiles[TILE_TALLGRASS] = Rectangle { 0, 32, 16, 16 };
     tileMap->render->tiles[TILE_BLUEORB] = Rectangle { 96, 32, 16, 16 };
@@ -54,6 +56,9 @@ Scene* SceneFactory::level1() {
     tileMap->render->tiles[TILE_LAVA3] = Rectangle { 144, 0, 16, 16 };
     tileMap->render->tiles[TILE_BOXITEM] = Rectangle { 16, 0, 16, 16 };
     tileMap->render->tiles[TILE_BOXSTUN] = Rectangle { 16, 16, 16, 16 };
+
+    // blue orb particles
+    Rectangle blueParticles = Rectangle { 112, 24, 8, 8 };
 
     // tile map
     tileMap->render->map[0][1] = TILE_CLOUD0;
@@ -148,14 +153,14 @@ Scene* SceneFactory::level1() {
     for (int x = 2; x <= 3; x++) {
         for (int y = 8; y <= 9; y++) {
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }));
+            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
 
     for (int x = 6; x <= 7; x++) {
         for (int y = 7; y <= 9; y++) {
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }));
+            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
     tileMap->render->map[7][8] = TILE_BOXSTUN;
@@ -166,7 +171,7 @@ Scene* SceneFactory::level1() {
                 break;
             }
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }));
+            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
     tileMap->render->map[10][8] = TILE_BOXSTUN;
@@ -176,7 +181,7 @@ Scene* SceneFactory::level1() {
 
     for (int y = 5; y <= 8; y++) {
         tileMap->setTilePair(14, y, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { 14, y }));
+        scene->push(new Breakable(tileMap, Vector2 { 14, y }, tiles, blueParticles));
     }
     tileMap->setTilePair(14, 9, PHYSTILE_SOLID, TILE_REDORB);
     tileMap->setTilePair(15, 5, PHYSTILE_SOLID, TILE_BOXITEM);
@@ -187,10 +192,10 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(15, 8, PHYSTILE_SOLID, TILE_BOXSTUN);
     scene->push(new Breakable(tileMap, Vector2 { 15, 8 }));
     tileMap->setTilePair(15, 9, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 15, 9 }));
+    scene->push(new Breakable(tileMap, Vector2 { 15, 9 }, tiles, blueParticles));
 
     tileMap->setTilePair(17, 3, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 17, 3 }));
+    scene->push(new Breakable(tileMap, Vector2 { 17, 3 }, tiles, blueParticles));
 
     tileMap->setTilePair(17, 8, PHYSTILE_SOLID, TILE_BOXSTUN);
     scene->push(new Breakable(tileMap, Vector2 { 17, 8 }));
@@ -201,7 +206,7 @@ Scene* SceneFactory::level1() {
             continue;
         }
         tileMap->setTilePair(19, y, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { 19, y }));
+        scene->push(new Breakable(tileMap, Vector2 { 19, y }, tiles, blueParticles));
     }
 
     for (int x = 21; x <= 22; x++) {
@@ -211,26 +216,26 @@ Scene* SceneFactory::level1() {
                 continue;
             }
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }));
+            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
     tileMap->render->map[21][4] = TILE_BOXSTUN;
     tileMap->render->map[22][4] = TILE_BOXITEM;
 
     tileMap->setTilePair(24, 7, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 24, 7 }));
+    scene->push(new Breakable(tileMap, Vector2 { 24, 7 }, tiles, blueParticles));
 
     tileMap->setTilePair(26, 4, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 26, 4 }));
+    scene->push(new Breakable(tileMap, Vector2 { 26, 4 }, tiles, blueParticles));
 
     tileMap->setTilePair(29, 6, PHYSTILE_SOLID, TILE_REDORB);
     tileMap->setTilePair(30, 2, PHYSTILE_SOLID, TILE_REDORB);
 
     tileMap->setTilePair(32, 8, PHYSTILE_SOLID, TILE_REDORB);
     tileMap->setTilePair(32, 7, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 32, 7 }));
+    scene->push(new Breakable(tileMap, Vector2 { 32, 7 }, tiles, blueParticles));
     tileMap->setTilePair(32, 2, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 32, 2 }));
+    scene->push(new Breakable(tileMap, Vector2 { 32, 2 }, tiles, blueParticles));
 
     for (int x = 34; x <= 35; x++) {
         for (int y = 2; y <= 9; y++) {
@@ -239,7 +244,7 @@ Scene* SceneFactory::level1() {
                 continue;
             }
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }));
+            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
     tileMap->render->map[34][3] = TILE_BOXITEM;
