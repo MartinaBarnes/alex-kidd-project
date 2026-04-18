@@ -159,11 +159,15 @@ Scene* SceneFactory::level1() {
 
     for (int x = 6; x <= 7; x++) {
         for (int y = 7; y <= 9; y++) {
+            if (x == 7 && y == 8) {
+                tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BOXSTUN);
+                scene->push(new Breakable(tileMap, Vector2 { x, y }));
+                continue;
+            }
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
             scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
-    tileMap->render->map[7][8] = TILE_BOXSTUN;
 
     for (int x = 10; x <= 11; x++) {
         for (int y = 6; y <= 9; y++) {
@@ -171,6 +175,10 @@ Scene* SceneFactory::level1() {
                 break;
             }
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
+            if (x == 10 && y == 8) {
+                scene->push(new Breakable(tileMap, Vector2 { x, y }));
+                continue;
+            }
             scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
@@ -216,6 +224,10 @@ Scene* SceneFactory::level1() {
                 continue;
             }
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
+            if (y == 4) {
+                scene->push(new Breakable(tileMap, Vector2 { x, y }));
+                continue;
+            }
             scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
@@ -244,11 +256,18 @@ Scene* SceneFactory::level1() {
                 continue;
             }
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
+            if ((x == 34 && y == 3) || (x == 35 && y == 7)) {
+                scene->push(new Breakable(tileMap, Vector2 { x, y }));
+                continue;
+            }
             scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
     tileMap->render->map[34][3] = TILE_BOXITEM;
     tileMap->render->map[35][7] = TILE_BOXSTUN;
+
+    tileMap->setTilePair(37, 7, PHYSTILE_SOLID, TILE_BLUEORB);
+    scene->push(new Breakable(tileMap, Vector2 { 37, 7 }, tiles, blueParticles));
 
     // player
     Player* player = new Player();
