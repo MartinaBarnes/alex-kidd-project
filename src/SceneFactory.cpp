@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "CameraController.h"
 #include "Breakable.h"
+#include "Onigiri.h"
 
 Scene* SceneFactory::level1() {
     // initialize scene
@@ -30,7 +31,25 @@ Scene* SceneFactory::level1() {
         TILE_LAVA2,
         TILE_LAVA3,
         TILE_BOXITEM,
-        TILE_BOXSTUN
+        TILE_BOXSTUN,
+        TILE_TEMPLETOP0L,
+        TILE_TEMPLETOP0R,
+        TILE_TEMPLETOP1L,
+        TILE_TEMPLETOP1R,
+        TILE_TEMPLESIDE0L,
+        TILE_TEMPLESIDE1L,
+        TILE_TEMPLESIDE0R,
+        TILE_TEMPLESIDE1R,
+        TILE_TEMPLECENTER0,
+        TILE_TEMPLECENTER1,
+        TILE_TEMPLECENTER2,
+        TILE_TEMPLECENTER3,
+        TILE_TEMPLECENTER4,
+        TILE_TEMPLECENTER5,
+        TILE_TEMPLECENTER6,
+        TILE_TEMPLECENTER7,
+        TILE_TEMPLECENTER8,
+        TILE_TEMPLEGRASS,
     };
 
     Texture2D* tiles = ResourceManager::getTexture("tiles");
@@ -44,18 +63,35 @@ Scene* SceneFactory::level1() {
     tileMap->render->tiles[TILE_TALLGRASS] = Rectangle { 0, 32, 16, 16 };
     tileMap->render->tiles[TILE_BLUEORB] = Rectangle { 96, 32, 16, 16 };
     tileMap->render->tiles[TILE_REDORB] = Rectangle { 80, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TREETOP0] = Rectangle { 208, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TREETOP1] = Rectangle { 208, 16, 16, 16 };
-    tileMap->render->tiles[TILE_TREETRUNK] = Rectangle { 208, 32, 16, 16 };
+    tileMap->render->tiles[TILE_TREETOP0] = Rectangle { 176, 0, 16, 16 };
+    tileMap->render->tiles[TILE_TREETOP1] = Rectangle { 176, 16, 16, 16 };
+    tileMap->render->tiles[TILE_TREETRUNK] = Rectangle { 176, 32, 16, 16 };
     tileMap->render->tiles[TILE_CLOUD0] = Rectangle { 112, 0, 16, 16 };
     tileMap->render->tiles[TILE_CLOUD1] = Rectangle { 128, 0, 16, 16 };
-    tileMap->render->tiles[TILE_LAVASTILL] = Rectangle { 144, 16, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA0] = Rectangle { 160, 0, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA1] = Rectangle { 176, 0, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA2] = Rectangle { 192, 0, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA3] = Rectangle { 144, 0, 16, 16 };
+    tileMap->render->tiles[TILE_LAVASTILL] = Rectangle { 112, 48, 16, 16 };
+    tileMap->render->tiles[TILE_LAVA0] = Rectangle { 128, 32, 16, 16 };
+    tileMap->render->tiles[TILE_LAVA1] = Rectangle { 144, 32, 16, 16 };
+    tileMap->render->tiles[TILE_LAVA2] = Rectangle { 160, 32, 16, 16 };
+    tileMap->render->tiles[TILE_LAVA3] = Rectangle { 112, 32, 16, 16 };
     tileMap->render->tiles[TILE_BOXITEM] = Rectangle { 16, 0, 16, 16 };
     tileMap->render->tiles[TILE_BOXSTUN] = Rectangle { 16, 16, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLETOP0L] = Rectangle { 192, 0, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLETOP1L] = Rectangle { 192, 16, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLETOP0R] = Rectangle { 208, 0, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLETOP1R] = Rectangle { 208, 16, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLESIDE0L] = Rectangle { 192, 32, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLESIDE1L] = Rectangle { 192, 48, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLESIDE0R] = Rectangle { 208, 32, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLESIDE1R] = Rectangle { 208, 48, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER0] = Rectangle { 224, 0, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER1] = Rectangle { 240, 0, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER2] = Rectangle { 224, 16, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER3] = Rectangle { 240, 16, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER4] = Rectangle { 224, 32, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER5] = Rectangle { 240, 32, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER6] = Rectangle { 224, 48, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLECENTER7] = Rectangle { 240, 48, 16, 16 };
+    tileMap->render->tiles[TILE_TEMPLEGRASS] = Rectangle { 16, 32, 16, 16 };
 
     // blue orb particles
     Rectangle blueParticles = Rectangle { 112, 24, 8, 8 };
@@ -178,7 +214,7 @@ Scene* SceneFactory::level1() {
     tileMap->render->map[69][1] = TILE_CLOUD1;
 
     tileMap->render->map[73][2] = TILE_CLOUD0;
-    tileMap->render->map[73][2] = TILE_CLOUD1;
+    tileMap->render->map[74][2] = TILE_CLOUD1;
 
     tileMap->render->map[76][0] = TILE_CLOUD0;
     tileMap->render->map[77][0] = TILE_CLOUD1;
@@ -222,8 +258,8 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(4, 2, PHYSTILE_SOLID, TILE_BOXITEM);
     scene->push(new Breakable(tileMap, Vector2 { 4, 2 }));
 
-    tileMap->setTilePair(7, 1, PHYSTILE_SOLID, TILE_BOXITEM);
-    scene->push(new Breakable(tileMap, Vector2 { 7, 1 }));
+    tileMap->setTilePair(8, 1, PHYSTILE_SOLID, TILE_BOXITEM);
+    scene->push(new Breakable(tileMap, Vector2 { 8, 1 }));
 
     for (int x = 2; x <= 3; x++) {
         for (int y = 8; y <= 9; y++) {
@@ -312,8 +348,8 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(24, 7, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 24, 7 }, tiles, blueParticles));
 
-    tileMap->setTilePair(26, 4, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 26, 4 }, tiles, blueParticles));
+    tileMap->setTilePair(26, 3, PHYSTILE_SOLID, TILE_BLUEORB);
+    scene->push(new Breakable(tileMap, Vector2 { 26, 3 }, tiles, blueParticles));
 
     tileMap->setTilePair(29, 6, PHYSTILE_SOLID, TILE_REDORB);
     tileMap->setTilePair(30, 2, PHYSTILE_SOLID, TILE_REDORB);
@@ -360,11 +396,11 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(42, 5, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 42, 5 }, tiles, blueParticles));
 
-    tileMap->setTilePair(45, 4, PHYSTILE_SOLID, TILE_BLUEORB);
+    tileMap->setTilePair(45, 5, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 45, 4 }, tiles, blueParticles));
-    tileMap->setTilePair(45, 5, PHYSTILE_SOLID, TILE_REDORB);
+    tileMap->setTilePair(45, 6, PHYSTILE_SOLID, TILE_REDORB);
 
-    tileMap->setTilePair(48, 4, PHYSTILE_SOLID, TILE_BLUEORB);
+    tileMap->setTilePair(48, 5, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 47, 4 }, tiles, blueParticles));
 
     tileMap->setTilePair(50, 6, PHYSTILE_SOLID, TILE_REDORB);
@@ -375,7 +411,7 @@ Scene* SceneFactory::level1() {
     for (int x = 56; x <= 62; x++) {
         tileMap->setTilePair(x, 5, PHYSTILE_SOLID, TILE_REDORB);
         tileMap->setTilePair(x, 6, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { x, 5 }, tiles, blueParticles));
+        scene->push(new Breakable(tileMap, Vector2 { x, 6 }, tiles, blueParticles));
     }
 
     for (int x = 53; x <= 55; x++) {
@@ -402,6 +438,28 @@ Scene* SceneFactory::level1() {
         scene->push(new Breakable(tileMap, Vector2 { x, 8 }));
     }
 
+    tileMap->render->map[72][4] = TILE_TEMPLETOP0L;
+    tileMap->render->map[72][5] = TILE_TEMPLETOP1L;
+    tileMap->render->map[73][4] = TILE_TEMPLETOP0R;
+    tileMap->render->map[73][5] = TILE_TEMPLETOP1R;
+    tileMap->render->map[71][6] = TILE_TEMPLESIDE0L;
+    tileMap->render->map[74][6] = TILE_TEMPLESIDE0R;
+    for (int y = 7; y <= 9; y++) {
+        tileMap->render->map[71][y] = TILE_TEMPLESIDE1L;
+        tileMap->render->map[74][y] = TILE_TEMPLESIDE1R;
+    }
+    tileMap->render->map[72][6] = TILE_TEMPLECENTER0;
+    tileMap->render->map[73][6] = TILE_TEMPLECENTER1;
+    tileMap->render->map[72][7] = TILE_TEMPLECENTER2;
+    tileMap->render->map[73][7] = TILE_TEMPLECENTER3;
+    tileMap->render->map[72][8] = TILE_TEMPLECENTER4;
+    tileMap->render->map[73][8] = TILE_TEMPLECENTER5;
+    tileMap->render->map[72][9] = TILE_TEMPLECENTER6;
+    tileMap->render->map[73][9] = TILE_TEMPLECENTER7;
+    for (int x = 71; x <= 74; x++) {
+        tileMap->render->map[x][10] = TILE_TEMPLEGRASS;
+    }
+
     // player
     Player* player = new Player();
 	player->tileMap = tileMap;
@@ -414,6 +472,9 @@ Scene* SceneFactory::level1() {
 	cameraController->mode = CAM_RIGHT;
 	cameraController->limits.x = 992;
 	scene->push(cameraController);
+
+	// onigiri
+	scene->push(new Onigiri(Vector2 { 75 * TILE_SIZE, 7 * TILE_SIZE }));
 
     // play music
     SetMusicVolume(*scene->music, 0.5f);
