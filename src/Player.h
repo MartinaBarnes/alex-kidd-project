@@ -28,7 +28,7 @@ class Player : public LivingEntity
 		const float WALK_ACCELERATION   = 900.0f;
 		const float WALK_DECELERATION   = 600.0f;
 		const float MAX_JUMP_TIME       = 0.5f;
-		const float JUMP_FORCE          = 80.0f;
+		const float JUMP_FORCE          = 86.0f;
 		const float AIR_ACCELERATION    = 300.0f;
 		const float GRAVITY             = 500.0f;
 		const float ATTACK_DURATION     = 0.25f;

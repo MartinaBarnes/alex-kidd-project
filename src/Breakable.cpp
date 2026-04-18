@@ -1,11 +1,14 @@
 #include "Breakable.h"
+#include "PhysicsComponent.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "ResourceManager.h"
 
 void Breakable::update(float _) {
 	for (int i = 0; i < physics->colliders.size(); i++) {
-		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(physics->colliders[i])) {
+        PhysicsComponent* collider = physics->colliders[i];
+		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(collider)) {
+		    collider->enabled = false;
 			doBreak();
 			return;
 		}

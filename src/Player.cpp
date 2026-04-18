@@ -139,7 +139,7 @@ void Player::update(float dt) {
     sprite->flipped = direction == DIRECTION_LEFT;
 
     if (jumping) {
-        if (jump_time >= MAX_JUMP_TIME || !IsKeyDown(KEY_UP)) {
+        if (jump_time >= MAX_JUMP_TIME || !IsKeyDown(KEY_UP) || physics->onCeiling) {
             jumping = false;
             jump_time = 0.0f;
         } else {
@@ -162,6 +162,7 @@ void Player::update(float dt) {
         attack_time += dt;
         if (attack_time >= ATTACK_DURATION) {
             attacking = false;
+            hitbox->enabled = false;
         }
         if (sprite->flipped) {
             sprite->position.x -= 8; // HACK: offset the punching animation (for being wider than the rest)
@@ -170,6 +171,7 @@ void Player::update(float dt) {
         if (IsKeyPressed(KEY_SPACE)) {
             attack_time = 0.0f;
             attacking = true;
+            hitbox->enabled = true;
             if (physics->onGround) {
                 physics->velocity.x = 0.0f;
             }
@@ -178,8 +180,7 @@ void Player::update(float dt) {
     }
 
     hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f + hitbox->aabb.size.x * direction;
-    hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y / 2.0f - hitbox->aabb.size.y / 2.0f;
-    hitbox->enabled = attacking;
+    hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y - hitbox->aabb.size.y;
 }
 
 Player::Player() {
@@ -192,7 +193,8 @@ Player::Player() {
 	hitbox = new PhysicsArea();
 	hitbox->layer = LAYER_PLAYER;
 	hitbox->mask = LAYER_ENEMY + LAYER_BREAKABLE;
-	hitbox->aabb = AABB(0, 0, 8.0, 16);
+	hitbox->aabb = AABB(0, 0, 8, 8);
+	hitbox->enabled = false;
 	PhysicsServer::push(hitbox);
 
     Texture2D* texture = ResourceManager::getTexture("alex");

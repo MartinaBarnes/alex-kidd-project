@@ -18,6 +18,11 @@ Vector2 TileMap::findSpawnPoint(Vector2 origin) {
     return origin;
 }
 
+void TileMap::setTilePair(int x, int y, int physTile, int tile) {
+    physics->map[x][y] = physTile;
+    render->map[x][y] = tile;
+}
+
 TileMap::TileMap() {
     physics = new PhysicsTileMap();
     physics->layer = LAYER_WORLD;

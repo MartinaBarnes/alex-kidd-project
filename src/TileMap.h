@@ -9,6 +9,7 @@ class TileMap : public Entity {
         RenderTileMap* render;
 
         Vector2 findSpawnPoint(Vector2);
+        void setTilePair(int, int, int, int);
 
         TileMap();
 		~TileMap();
