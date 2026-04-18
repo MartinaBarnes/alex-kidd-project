@@ -121,6 +121,81 @@ Scene* SceneFactory::level1() {
     tileMap->render->map[33][8] = TILE_TREETRUNK;
     tileMap->render->map[33][9] = TILE_TREETRUNK;
 
+    tileMap->render->map[39][2] = TILE_CLOUD0;
+    tileMap->render->map[40][2] = TILE_CLOUD1;
+
+    tileMap->render->map[43][4] = TILE_TREETOP0;
+    tileMap->render->map[43][5] = TILE_TREETOP1;
+    tileMap->render->map[43][6] = TILE_TREETOP1;
+    tileMap->render->map[43][7] = TILE_TREETOP1;
+    tileMap->render->map[43][8] = TILE_TREETRUNK;
+    tileMap->render->map[43][9] = TILE_TREETRUNK;
+
+    tileMap->render->map[44][0] = TILE_CLOUD0;
+    tileMap->render->map[45][0] = TILE_CLOUD1;
+
+    tileMap->render->map[46][3] = TILE_TREETOP0;
+    tileMap->render->map[46][4] = TILE_TREETOP1;
+    tileMap->render->map[46][5] = TILE_TREETOP1;
+    tileMap->render->map[46][6] = TILE_TREETOP1;
+    tileMap->render->map[46][7] = TILE_TREETRUNK;
+    tileMap->render->map[46][8] = TILE_TREETRUNK;
+    tileMap->render->map[46][9] = TILE_TREETRUNK;
+
+    tileMap->render->map[49][5] = TILE_TREETOP0;
+    tileMap->render->map[49][6] = TILE_TREETOP1;
+    tileMap->render->map[49][7] = TILE_TREETOP1;
+    tileMap->render->map[49][8] = TILE_TREETRUNK;
+    tileMap->render->map[49][9] = TILE_TREETRUNK;
+
+    tileMap->render->map[50][2] = TILE_CLOUD0;
+    tileMap->render->map[51][2] = TILE_CLOUD1;
+
+    tileMap->render->map[58][1] = TILE_CLOUD0;
+    tileMap->render->map[59][1] = TILE_CLOUD1;
+
+    tileMap->render->map[63][3] = TILE_CLOUD0;
+    tileMap->render->map[64][3] = TILE_CLOUD1;
+
+    tileMap->render->map[63][5] = TILE_TREETOP0;
+    tileMap->render->map[63][6] = TILE_TREETOP1;
+    tileMap->render->map[63][7] = TILE_TREETOP1;
+    tileMap->render->map[63][8] = TILE_TREETRUNK;
+    tileMap->render->map[63][9] = TILE_TREETRUNK;
+
+    tileMap->render->map[64][6] = TILE_TREETOP0;
+    tileMap->render->map[64][7] = TILE_TREETOP1;
+    tileMap->render->map[64][8] = TILE_TREETOP1;
+    tileMap->render->map[64][9] = TILE_TREETRUNK;
+
+    tileMap->render->map[65][5] = TILE_TREETOP0;
+    tileMap->render->map[65][6] = TILE_TREETOP1;
+    tileMap->render->map[65][7] = TILE_TREETOP1;
+    tileMap->render->map[65][8] = TILE_TREETRUNK;
+    tileMap->render->map[65][9] = TILE_TREETRUNK;
+
+    tileMap->render->map[68][1] = TILE_CLOUD0;
+    tileMap->render->map[69][1] = TILE_CLOUD1;
+
+    tileMap->render->map[73][2] = TILE_CLOUD0;
+    tileMap->render->map[73][2] = TILE_CLOUD1;
+
+    tileMap->render->map[76][0] = TILE_CLOUD0;
+    tileMap->render->map[77][0] = TILE_CLOUD1;
+
+    tileMap->render->map[76][3] = TILE_TREETOP0;
+    tileMap->render->map[76][4] = TILE_TREETOP1;
+    tileMap->render->map[76][5] = TILE_TREETOP1;
+    tileMap->render->map[76][6] = TILE_TREETOP1;
+    tileMap->render->map[76][7] = TILE_TREETRUNK;
+    tileMap->render->map[76][8] = TILE_TREETRUNK;
+    tileMap->render->map[76][9] = TILE_TREETRUNK;
+
+    tileMap->render->map[77][6] = TILE_TREETOP0;
+    tileMap->render->map[77][7] = TILE_TREETOP1;
+    tileMap->render->map[77][8] = TILE_TREETOP1;
+    tileMap->render->map[77][9] = TILE_TREETRUNK;
+
     for (int i = 0; i < 78; i++) {
         tileMap->setTilePair(i, 10, PHYSTILE_SOLID, TILE_TALLGRASS);
         tileMap->setTilePair(i, 11, PHYSTILE_SOLID, TILE_GRASS);
@@ -289,10 +364,43 @@ Scene* SceneFactory::level1() {
     scene->push(new Breakable(tileMap, Vector2 { 45, 4 }, tiles, blueParticles));
     tileMap->setTilePair(45, 5, PHYSTILE_SOLID, TILE_REDORB);
 
-    tileMap->setTilePair(47, 4, PHYSTILE_SOLID, TILE_BLUEORB);
+    tileMap->setTilePair(48, 4, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 47, 4 }, tiles, blueParticles));
 
-    tileMap->setTilePair(49, 6, PHYSTILE_SOLID, TILE_REDORB);
+    tileMap->setTilePair(50, 6, PHYSTILE_SOLID, TILE_REDORB);
+
+    tileMap->setTilePair(54, 2, PHYSTILE_SOLID, TILE_BLUEORB);
+    scene->push(new Breakable(tileMap, Vector2 { 54, 2 }, tiles, blueParticles));
+
+    for (int x = 56; x <= 62; x++) {
+        tileMap->setTilePair(x, 5, PHYSTILE_SOLID, TILE_REDORB);
+        tileMap->setTilePair(x, 6, PHYSTILE_SOLID, TILE_BLUEORB);
+        scene->push(new Breakable(tileMap, Vector2 { x, 5 }, tiles, blueParticles));
+    }
+
+    for (int x = 53; x <= 55; x++) {
+        for (int y = 7; y <= 9; y++) {
+            if ((y == 7 && (x == 53 || x == 54)) || (y == 8 && x == 53)) {
+                continue;
+            }
+            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
+            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
+        }
+    }
+    for (int y = 7; y <= 8; y++) {
+        tileMap->setTilePair(56, y, PHYSTILE_SOLID, TILE_BLUEORB);
+        scene->push(new Breakable(tileMap, Vector2 { 57, y }, tiles, blueParticles));
+    }
+    tileMap->setTilePair(56, 9, PHYSTILE_SOLID, TILE_REDORB);
+    tileMap->setTilePair(62, 7, PHYSTILE_SOLID, TILE_BLUEORB);
+    scene->push(new Breakable(tileMap, Vector2 { 62, 7 }, tiles, blueParticles));
+    tileMap->setTilePair(62, 8, PHYSTILE_SOLID, TILE_REDORB);
+    tileMap->setTilePair(62, 9, PHYSTILE_SOLID, TILE_REDORB);
+
+    for (int x = 58; x <= 60; x++) {
+        tileMap->setTilePair(x, 8, PHYSTILE_SOLID, TILE_BOXITEM);
+        scene->push(new Breakable(tileMap, Vector2 { x, 8 }));
+    }
 
     // player
     Player* player = new Player();
