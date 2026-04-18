@@ -19,6 +19,7 @@ void Player::onKilled() {
     pausable = true;
     death_time = 0.0f;
     attacking = false;
+    hitbox->enabled = false;
     physics->velocity = Vector2 { 0, 0 };
     SceneManager::pause = true;
     StopMusicStream(*scene->music);
