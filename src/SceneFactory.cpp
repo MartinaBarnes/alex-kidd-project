@@ -269,6 +269,31 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(37, 7, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 37, 7 }, tiles, blueParticles));
 
+    for (int x = 39; x <= 40; x++) {
+        for (int y = 5; y <= 7; y++) {
+            if (x == 40 && (y != 7)) {
+                tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BOXITEM);
+                scene->push(new Breakable(tileMap, Vector2 { x, y }));
+                continue;
+            }
+            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
+            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
+        }
+    }
+
+    tileMap->setTilePair(42, 4, PHYSTILE_SOLID, TILE_REDORB);
+    tileMap->setTilePair(42, 5, PHYSTILE_SOLID, TILE_BLUEORB);
+    scene->push(new Breakable(tileMap, Vector2 { 42, 5 }, tiles, blueParticles));
+
+    tileMap->setTilePair(45, 4, PHYSTILE_SOLID, TILE_BLUEORB);
+    scene->push(new Breakable(tileMap, Vector2 { 45, 4 }, tiles, blueParticles));
+    tileMap->setTilePair(45, 5, PHYSTILE_SOLID, TILE_REDORB);
+
+    tileMap->setTilePair(47, 4, PHYSTILE_SOLID, TILE_BLUEORB);
+    scene->push(new Breakable(tileMap, Vector2 { 47, 4 }, tiles, blueParticles));
+
+    tileMap->setTilePair(49, 6, PHYSTILE_SOLID, TILE_REDORB);
+
     // player
     Player* player = new Player();
 	player->tileMap = tileMap;
