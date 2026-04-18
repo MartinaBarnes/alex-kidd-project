@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "CameraController.h"
 #include "Breakable.h"
+#include "WanderingEnemy.h"
 #include "Onigiri.h"
 
 Scene* SceneFactory::level1() {
@@ -472,6 +473,22 @@ Scene* SceneFactory::level1() {
 	cameraController->mode = CAM_RIGHT;
 	cameraController->limits.x = 992;
 	scene->push(cameraController);
+
+	// scorpion
+	WanderingEnemy* scorpion = new WanderingEnemy();
+	scorpion->physics->aabb.position = Vector2 { 62 * TILE_SIZE, 4 * TILE_SIZE }; // 62
+	scorpion->physics->aabb.size = Vector2 { 16, 16 };
+	scorpion->direction = -1;
+	scorpion->walk_speed = 40.0f;
+	scorpion->wander_distance = 6 * TILE_SIZE;
+	scorpion->sprite->animation = new Animation();
+	scorpion->sprite->animation->texture = ResourceManager::getTexture("scorpion");
+	scorpion->sprite->animation->frames = {
+	    Rectangle { 0, 0, 16, 16 },
+		Rectangle { 16, 0, 16, 16 }
+	};
+	scorpion->sprite->frame_rate = 2.0f;
+	scene->push(scorpion);
 
 	// onigiri
 	scene->push(new Onigiri(Vector2 { 75 * TILE_SIZE, 7 * TILE_SIZE }));
