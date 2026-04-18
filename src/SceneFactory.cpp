@@ -425,7 +425,7 @@ Scene* SceneFactory::level1() {
     }
     for (int y = 7; y <= 8; y++) {
         tileMap->setTilePair(56, y, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { 57, y }, tiles, blueParticles));
+        scene->push(new Breakable(tileMap, Vector2 { 56, y }, tiles, blueParticles));
     }
     tileMap->setTilePair(56, 9, PHYSTILE_SOLID, TILE_REDORB);
     tileMap->setTilePair(62, 7, PHYSTILE_SOLID, TILE_BLUEORB);
