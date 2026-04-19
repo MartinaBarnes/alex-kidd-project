@@ -1,6 +1,10 @@
 #pragma once
 #include "PhysicsComponent.h"
 
+/**
+ * Physics rectangle class.
+ * A physics object with an axis aligned bounding box.
+ */
 class PhysicsRect : public PhysicsComponent {
     public:
         AABB aabb;

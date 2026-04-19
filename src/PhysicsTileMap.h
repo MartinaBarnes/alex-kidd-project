@@ -11,6 +11,10 @@
 #define PHYSTILE_WATER 2
 #define PHYSTILE_DEATHPIT 3
 
+/**
+ * Physics tile map class.
+ * Contains the physics data of a tile map.
+ */
 class PhysicsTileMap : public PhysicsComponent {
     public:
         int map[TILEMAP_WIDTH][TILEMAP_HEIGHT];

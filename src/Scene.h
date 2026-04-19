@@ -3,7 +3,12 @@
 #include "Entity.h"
 #include <vector>
 
-class Entity;
+class Entity; // HACK: solves circular dependency
+
+/**
+ * Scene class.
+ * Contains a level's entities.
+ */
 class Scene {
     public:
         Color background = BLUE;

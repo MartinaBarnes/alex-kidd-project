@@ -4,14 +4,20 @@
 #include "ParticleEmitter.h"
 #include "TileMap.h"
 
+/**
+ * Breakable entity class.
+ * Allows for the destruction of a tile in a TileMap.
+ * It both resets a physics map and rendered map tile, while emiting a sound
+ * and activating a particle system.
+ */
 class Breakable : public Entity {
 	protected:
 		PhysicsArea* physics;
 		ParticleEmitter* particles;
 	public:
 		TileMap* tileMap;
-		Vector2 tileCoords;
-		char* sound = "break";
+		Vector2 tileCoords; // tile to reset
+		char* sound = "break"; // breaking sound
 
 		void update(float) override;
 		virtual void onBreak() {};

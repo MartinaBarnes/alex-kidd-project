@@ -3,6 +3,7 @@
 #include "PhysicsSolid.h"
 #include "Player.h"
 
+// camera controller modes
 enum {
     CAM_STATIC,
     CAM_DOWN,
@@ -10,6 +11,10 @@ enum {
     CAM_ROOM
 };
 
+/**
+ * Camera controller class.
+ * Moves the camera according to player movement, while not letting the player go back.
+ */
 class CameraController : public Entity {
     protected:
         PhysicsSolid* wall;

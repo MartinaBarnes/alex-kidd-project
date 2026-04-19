@@ -1,6 +1,11 @@
 #pragma once
 #include "RenderComponent.h"
 
+/**
+ * Particle emitter class.
+ * A basic component that renders the block breaking
+ * particles.
+ */
 class ParticleEmitter : public RenderComponent {
     protected:
         const float LIFE_TIME = 2.0f;
@@ -12,7 +17,7 @@ class ParticleEmitter : public RenderComponent {
 		Rectangle frame;
 		bool active;
 		float time;
-		bool oneShot;
+		bool oneShot; // whether this should be deleted upon finishing
 
 		bool isOnScreen() const override;
 		void draw(float) override;

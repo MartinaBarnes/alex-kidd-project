@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "PhysicsComponent.h"
 #include "PhysicsArea.h"
+#include "PhysicsHitbox.h"
 #include "PhysicsServer.h"
 #include "AnimatedSprite.h"
 #include "RenderingServer.h"
@@ -14,6 +15,7 @@ void Enemy::onKilled() {
 }
 
 void Enemy::update(float dt) {
+    // if we're dead, do the death sequence
     if (!alive) {
         if (deathTime < DEATH_TIME) {
             deathTime += dt;
@@ -24,12 +26,16 @@ void Enemy::update(float dt) {
         }
         return;
     }
+
+    // otherwise, check if we should die
 	for (int i = 0; i < physics->colliders.size(); i++) {
-		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(physics->colliders[i])) {
+		if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(physics->colliders[i])) {
 			kill();
 			return;
 		}
 	}
+
+	// update sprite position
 	sprite->position = physics->aabb.position;
 }
 

@@ -4,6 +4,11 @@
 #include <unordered_map>
 #include <string>
 
+/**
+ * Resource manager class.
+ * Static class that loads and stores all media resources
+ * of the game, such as textures, sound and music.
+ */
 class ResourceManager {
     private:
         static std::unordered_map<std::string, Texture2D> textures;

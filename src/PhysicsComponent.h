@@ -10,15 +10,19 @@
 #define LAYER_TRIGGER   16
 #define LAYER_BREAKABLE 32
 
+/**
+ * Physics component class.
+ * Base for all physics objects that interact with the PhysicsServer.
+ */
 class PhysicsComponent : public OnScreenObject {
     public:
         bool pausable = false;
         bool enabled = true;
-        bool awake;
-        int layer;
-        int mask;
-        bool isColliding;
-        std::vector<PhysicsComponent*> colliders = {};
+        bool awake; // whether the object is enabled and on screen
+        int layer; // what physics layer this object belongs to
+        int mask; // what layers of physics object this collides with
+        bool isColliding; // did it collide in the last frame
+        std::vector<PhysicsComponent*> colliders = {}; // objects collided in the last frame
 
         virtual bool testCollision(float, PhysicsComponent*) { return false; };
         virtual void onCollision(PhysicsComponent*) {};

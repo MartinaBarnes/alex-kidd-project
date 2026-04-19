@@ -22,6 +22,7 @@ void PhysicsServer::pop(PhysicsComponent* component)
 
 void PhysicsServer::update(float dt)
 {
+    // count how many physics objects are interacting on a frame
     std::vector<PhysicsComponent*> components = {};
     for (int i=0; i<PhysicsServer::components.size(); i++) {
         PhysicsComponent* component = PhysicsServer::components[i];
@@ -36,15 +37,17 @@ void PhysicsServer::update(float dt)
         }
         components.push_back(component);
     }
+
+    // run physics interactions
     for (int i=0; i<components.size(); i++) {
         PhysicsComponent* collider = components[i];
         for (int j=0; j<components.size(); j++) {
             if (i == j) {
-                continue;
+                continue; // do not collide with self
             }
             PhysicsComponent* collided = components[j];
             if (!collided->enabled || (collider->mask & collided->layer) == 0 || !collider->testCollision(dt, collided)) {
-                continue;
+                continue; // filter the physics layers based on the mask
             }
             collider->isColliding = true;
             collider->colliders.push_back(collided);

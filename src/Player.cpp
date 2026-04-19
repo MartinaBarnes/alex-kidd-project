@@ -38,7 +38,7 @@ void Player::crouch(bool crouch) {
         return;
     }
     if (crouching) {
-        physics->aabb.position.y -= 8.0f; // HACK
+        physics->aabb.position.y -= 8.0f; // HACK: should use a variable or constant
     } else {
         physics->aabb.position.y += 8.0f; // HACK
     }
@@ -46,7 +46,9 @@ void Player::crouch(bool crouch) {
 }
 
 void Player::update(float dt) {
+    // run the death sequence when dead
     if (!alive) {
+        // wait a bit before respawning
         if (respawning) {
             if (death_time < DEATH_ANIM_DELAY) {
                 death_time += dt;
@@ -66,6 +68,7 @@ void Player::update(float dt) {
             }
             return;
         }
+        // after dying, freeze the screen a bit before showing the sequence
         if (death_time < DEATH_ANIM_DELAY) {
             death_time += dt;
             if (death_time >= DEATH_ANIM_DELAY) {
@@ -74,6 +77,7 @@ void Player::update(float dt) {
                 PlaySound(*ResourceManager::getSound("death"));
             }
         } else {
+            // the death sequence lasts until the sprite exits the screen
             if (sprite->position.y + sprite->animation->frames[0].height > RenderingServer::camera.target.y) {
                 sprite->position.y -= DEATH_ANIM_SPEED * dt;
             } else {
@@ -86,11 +90,11 @@ void Player::update(float dt) {
     }
 
     if (physics->inDeathPit) {
-        kill();
+        kill(); // kill player after touching a death pit
     } else {
         for (int i = 0; i < physics->colliders.size(); i++) {
             if (physics->colliders[i]->layer & LAYER_ENEMY) {
-                kill();
+                kill(); // kill player after touching an enemy
                 return;
             }
         }
@@ -99,6 +103,7 @@ void Player::update(float dt) {
     float speed = WALK_SPEED;
     float accel = WALK_ACCELERATION;
 
+    // are we jumping or crouching?
     if (!physics->onGround) {
         accel = AIR_ACCELERATION;
         sprite->animation = &animations[ANIM_JUMP];
@@ -116,11 +121,13 @@ void Player::update(float dt) {
         }
     }
 
+    // update sprite position
     sprite->position = physics->aabb.position;
     if (crouching) {
         sprite->position.y -= 4.0f; // HACK: the sprite height and the intended collision height are different
     }
 
+    // ground movement
     if (!physics->onGround || !attacking) {
         if (crouching) {
             decelerate(dt);
@@ -139,6 +146,7 @@ void Player::update(float dt) {
 
     sprite->flipped = direction == DIRECTION_LEFT;
 
+    // jumping and falling
     if (jumping) {
         if (jump_time >= MAX_JUMP_TIME || !IsKeyDown(KEY_UP) || physics->onCeiling) {
             jumping = false;
@@ -158,6 +166,7 @@ void Player::update(float dt) {
         }
     }
 
+    // punching
     if (attacking) {
         sprite->animation = &animations[ANIM_ATTACK];
         attack_time += dt;
@@ -180,6 +189,7 @@ void Player::update(float dt) {
         }
     }
 
+    // place the punch hitbox on the side the player is facing
     hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f + hitbox->aabb.size.x * direction;
     hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y - hitbox->aabb.size.y;
 }

@@ -3,11 +3,12 @@
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "ResourceManager.h"
+#include "PhysicsHitbox.h"
 
 void Breakable::update(float _) {
 	for (int i = 0; i < physics->colliders.size(); i++) {
-		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(physics->colliders[i])) {
-			doBreak();
+		if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(physics->colliders[i])) {
+			doBreak(); // break if we detect a hitbox hitting us
 			return;
 		}
 	}
@@ -17,10 +18,10 @@ void Breakable::doBreak() {
 	onBreak();
 	tileMap->physics->map[(int)tileCoords.x][(int)tileCoords.y] = PHYSTILE_AIR;
 	tileMap->render->map[(int)tileCoords.x][(int)tileCoords.y] = 0;
-	markedForDeletion = true;
 	physics->enabled = false;
 	particles->active = true;
 	PlaySound(*ResourceManager::getSound(sound));
+	markedForDeletion = true;
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords) {

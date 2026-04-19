@@ -8,6 +8,11 @@
 #define DIRECTION_RIGHT 1.0f
 #define DIRECTION_LEFT -1.0f
 
+/**
+ * Player class.
+ * Implements all player related systems, such as movement, combat
+ * and death sequence.
+ */
 class Player : public LivingEntity
 {
     protected:

@@ -9,14 +9,21 @@ bool AnimatedSprite::isOnScreen() const {
 }
 
 void AnimatedSprite::draw(float dt) {
+    // if we reached the end of animation (or we changed to a shorter animation) reset
 	if (frame >= animation->frames.size()) {
 		frame = 0;
 	}
+
+	// get the frame to draw
 	Rectangle src = animation->frames[frame];
 	if (flipped) {
 	    src.width = -src.width;
 	}
+
+	// draw frame
 	DrawTextureRec(*animation->texture, src, position, WHITE);
+
+	// run animation (if not paused or pausable)
 	if (SceneManager::pause && !pausable) {
 	    return;
 	}
@@ -26,5 +33,5 @@ void AnimatedSprite::draw(float dt) {
 		frame++;
 		next_frame -= frame_time;
 	}
-	size = { src.width, src.height };
+	size = { src.width, src.height }; // store last frame size
 }

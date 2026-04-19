@@ -1,6 +1,10 @@
 #pragma once
 #include "raylib.h"
 
+/**
+ * Axis aligned bounding box class.
+ * Used for primitive collision detection.
+ */
 class AABB {
     public:
         Vector2 position;

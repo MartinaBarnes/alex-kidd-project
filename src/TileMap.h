@@ -3,6 +3,10 @@
 #include "PhysicsTileMap.h"
 #include "RenderTileMap.h"
 
+/**
+ * Tile map class.
+ * Handles the physics and rendering data of a tile map.
+ */
 class TileMap : public Entity {
     public:
         PhysicsTileMap* physics;

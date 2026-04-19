@@ -8,6 +8,7 @@ bool ParticleEmitter::isOnScreen() const {
 }
 
 void ParticleEmitter::draw(float dt) {
+    // kill the particle system when it finishes
     if (time >= LIFE_TIME) {
         time = 0.0f;
         active = false;
@@ -17,12 +18,16 @@ void ParticleEmitter::draw(float dt) {
         }
         return;
     }
+
+    // draw the particles
     float x = time * VELOCITY_X;
     float y = std::pow(time, 2.0f) * VELOCITY_Y;
     DrawTextureRec(*texture, frame, Vector2 { origin.x + x, origin.y + y }, WHITE);
     DrawTextureRec(*texture, frame, Vector2 { origin.x - x, origin.y + y }, WHITE);
     DrawTextureRec(*texture, frame, Vector2 { origin.x + x, origin.y + y + frame.height }, WHITE);
     DrawTextureRec(*texture, frame, Vector2 { origin.x - x, origin.y + y + frame.height }, WHITE);
+
+    // run the timer
     if (SceneManager::pause && !pausable) {
 	    return;
 	}

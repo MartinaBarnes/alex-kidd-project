@@ -1,5 +1,9 @@
 #include "Enemy.h"
 
+/**
+ * Wandering enemy class.
+ * An enemy that moves from side to side.
+ */
 class WanderingEnemy : public Enemy {
     protected:
         float wandered = 0.0f;

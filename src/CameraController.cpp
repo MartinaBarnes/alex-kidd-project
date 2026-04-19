@@ -4,10 +4,13 @@
 #include <cmath>
 
 void CameraController::update(float dt) {
+    // if the camera is static (or we have to valid player) do nothing
     if (mode == CAM_STATIC || !player) {
         wall->enabled = false;
         return;
     }
+
+    // move camera (either right or down) according to mode
     switch (mode) {
         case CAM_RIGHT:
             if (player->physics->aabb.position.x - RenderingServer::camera.target.x < 120.0f || player->physics->velocity.x <= 0.0f) {
@@ -18,6 +21,7 @@ void CameraController::update(float dt) {
                 RenderingServer::camera.target.x = std::min(RenderingServer::camera.target.x, limits.x);
             }
             wall->aabb.position.x = RenderingServer::camera.target.x - wall->aabb.size.x;
+            wall->enabled = true;
             break;
         case CAM_DOWN:
             if (player->physics->aabb.position.y - RenderingServer::camera.target.y < 88.0f || player->physics->velocity.y <= 0.0f) {
@@ -27,9 +31,9 @@ void CameraController::update(float dt) {
             if (limits.y > 0.0f) {
                 RenderingServer::camera.target.y = std::min(RenderingServer::camera.target.y, limits.y);
             }
+            wall->enabled = false;
             break;
     }
-    wall->enabled = true;
 }
 
 CameraController::CameraController() {

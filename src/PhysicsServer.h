@@ -3,6 +3,10 @@
 #include "AABB.h"
 #include <vector>
 
+/**
+ * Physics server class.
+ * Handles all physics interactions.
+ */
 class PhysicsServer {
     public:
         static std::vector<PhysicsComponent*> components;

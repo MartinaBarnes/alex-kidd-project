@@ -16,6 +16,6 @@ bool PhysicsRect::testCollision(float _, PhysicsComponent* collider) {
 
 void PhysicsRect::onCollision(PhysicsComponent* collider) {
     if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(collider)) {
-        hitbox->enabled = false;
+        hitbox->enabled = false; // HACK: makes the player punch one element per frame
     }
 }

@@ -2,6 +2,10 @@
 #include "TileMap.h"
 #include <vector>
 
+/**
+ * Tile animation controller class.
+ * Animates a group of tiles from a TileMap.
+ */
 class TileAnimationController : public Entity {
     protected:
         int frame = 0;

@@ -3,6 +3,11 @@
 #include "PhysicsCharacter.h"
 #include "AnimatedSprite.h"
 
+/**
+ * Enemy class.
+ * Base for all enemies in the game.
+ * It implements physics, a sprite, and an effect upon dying.
+ */
 class Enemy : public LivingEntity {
     protected:
         const float DEATH_TIME = 0.5f;
