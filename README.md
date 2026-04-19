@@ -27,9 +27,12 @@ You must traverse the level jumping over obstacles, avoiding death pits and avoi
 | UP ARROW    | Jump                          |
 | DOWN ARROW  | Crouch                        |
 | SPACE BAR   | Attack                        |
+| ALT + ENTER | Toggle fullscreen             |
 
 ## Features implemented
 
++   Fullscreen toggle.
++   Viewport scaling.
 +   World rendering and physics via tile grid
 +   Player accelerated movement
 +   Player jumping
