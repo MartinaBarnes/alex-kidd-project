@@ -1,24 +1,13 @@
 #include "PhysicsCharacter.h"
-#include "PhysicsArea.h"
 #include "PhysicsSolid.h"
 #include "PhysicsTileMap.h"
 #include "raylib.h"
 #include <cmath>
 #include <algorithm>
 
-
-bool PhysicsCharacter::isOnScreen(const AABB* bounds) const
-{
-    return bounds->testAABB(aabb);
-}
-
 bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
 {
-    if (PhysicsCharacter* character = dynamic_cast<PhysicsCharacter*>(collider)) {
-        return aabb.testAABB(character->aabb);
-    } else if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(collider)) {
-        return aabb.testAABB(hitbox->aabb);
-    } else if (PhysicsSolid* solid = dynamic_cast<PhysicsSolid*>(collider)) {
+    if (PhysicsSolid* solid = dynamic_cast<PhysicsSolid*>(collider)) {
         if (!aabb.testAABB(solid->aabb)) {
             return false;
         }
@@ -40,7 +29,9 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
             velocity.y = 0.0f;
         }*/
         return true;
-    } else if (PhysicsTileMap* tilemap = dynamic_cast<PhysicsTileMap*>(collider)) {
+    }
+
+    if (PhysicsTileMap* tilemap = dynamic_cast<PhysicsTileMap*>(collider)) {
         float tilemap_width = TILEMAP_WIDTH * TILE_SIZE - aabb.size.x;
         aabb.position.x = std::clamp(aabb.position.x + velocity.x * dt, 0.0f, tilemap_width);
 
@@ -181,5 +172,5 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
         return onCeiling || onWall || onGround;
     }
 
-    return false;
+    return PhysicsRect::testCollision(dt, collider);
 }

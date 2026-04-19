@@ -8,6 +8,6 @@ class RenderTileMap : public RenderComponent {
         Rectangle tiles[64];
         short map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
 
-        bool isOnScreen(const AABB*) const override;
+        bool isOnScreen() const override;
         void draw(float) override;
 };

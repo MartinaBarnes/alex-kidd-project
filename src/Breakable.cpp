@@ -6,9 +6,7 @@
 
 void Breakable::update(float _) {
 	for (int i = 0; i < physics->colliders.size(); i++) {
-        PhysicsComponent* collider = physics->colliders[i];
-		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(collider)) {
-		    collider->enabled = false;
+		if (PhysicsArea* hitbox = dynamic_cast<PhysicsArea*>(physics->colliders[i])) {
 			doBreak();
 			return;
 		}

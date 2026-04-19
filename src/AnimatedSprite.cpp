@@ -1,11 +1,11 @@
 #include "AnimatedSprite.h"
 #include "SceneManager.h"
 
-bool AnimatedSprite::isOnScreen(const AABB* bounds) const {
+bool AnimatedSprite::isOnScreen() const {
     AABB aabb;
     aabb.position = position;
     aabb.size = size;
-	return bounds->testAABB(aabb);
+	return SceneManager::workspace->testAABB(aabb);
 }
 
 void AnimatedSprite::draw(float dt) {

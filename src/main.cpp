@@ -22,83 +22,6 @@ int main ()
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	/**TileMap* tileMap = new TileMap();
-	tileMap->physics->map[1][9] = PHYSTILE_SOLID;
-	tileMap->physics->map[5][9] = PHYSTILE_SOLID;
-	tileMap->physics->map[5][8] = PHYSTILE_SOLID;
-	tileMap->physics->map[12][9] = PHYSTILE_SOLID;
-	tileMap->physics->map[24][9] = PHYSTILE_SOLID;
-	for (int i = 0; i <= 24; i++) {
-		tileMap->physics->map[i][10] = PHYSTILE_SOLID;
-	}
-	tileMap->render->texture = ResourceManager::getTexture("tiles");
-	tileMap->render->tiles[0] = Rectangle { 48, 0, 16, 16 };
-	tileMap->render->tiles[1] = Rectangle { 48, 32, 16, 16 };
-	tileMap->render->tiles[2] = Rectangle{ 0, 16, 16, 16 };
-	tileMap->render->tiles[3] = Rectangle{ 144, 16, 16, 16 };
-	tileMap->render->tiles[4] = Rectangle{ 160, 0, 16, 16 };
-	tileMap->render->tiles[5] = Rectangle{ 176, 0, 16, 16 };
-	tileMap->render->tiles[6] = Rectangle{ 192, 0, 16, 16 };
-	tileMap->render->tiles[7] = Rectangle{ 144, 0, 16, 16 };
-	tileMap->render->map[1][9] = 1;
-	tileMap->render->map[5][9] = 2;
-	tileMap->render->map[5][8] = 1;
-	tileMap->render->map[12][9] = 1;
-	tileMap->render->map[24][9] = 3;
-	for (int i = 0; i < 32; i++) {
-	    if (i > 24) {
-			tileMap->render->map[i][11] = 4;
-			continue;
-		}
-		tileMap->render->map[i][10] = 1;
-		if (i == 1 || i == 5 || i == 12) {
-		    tileMap->render->map[i][10] = 2;
-		}
-		tileMap->render->map[i][11] = 2;
-	}
-	tileMap->render->bounds = bounds;
-
-	Player* player = new Player();
-	player->tileMap = tileMap;
-
-	WanderingEnemy* enemy = new WanderingEnemy();
-	enemy->walk_speed = 100.0f;
-	enemy->physics->aabb.size = { 16, 16 };
-	enemy->physics->aabb.position.x = 6 * TILE_SIZE;
-	enemy->physics->aabb.position.y = 9 * TILE_SIZE;
-	enemy->sprite->animation = new Animation();
-	enemy->sprite->animation->texture = ResourceManager::getTexture("wabbit_alpha");
-	enemy->sprite->animation->frames.push_back(Rectangle { 0, 0, 32, 32 });
-
-	Breakable* breakable = new Breakable(tileMap, Vector2 { 24, 9 });
-
-	CameraController* cameraController = new CameraController();
-	cameraController->player = player;
-	cameraController->mode = CAM_RIGHT;
-
-	TileAnimationController* tileAnims = new TileAnimationController(tileMap, { 4, 5, 6, 7 });
-	for (int i = 0; i < 7; i++) {
-	    tileAnims->tiles.push_back(Vector2 { i + 25, 10 });
-	}
-
-	PhysicsArea* lavaPit = new PhysicsArea();
-	lavaPit->layer = LAYER_ENEMY;
-	lavaPit->aabb.position = Vector2 { 25 * TILE_SIZE, 11 * TILE_SIZE };
-	lavaPit->aabb.size = Vector2 { 7 * TILE_SIZE, 1 * TILE_SIZE };
-	PhysicsServer::push(lavaPit);
-
-	Scene* scene = new Scene();
-	scene->music = ResourceManager::getMusic("main_theme");
-	scene->push(tileMap);
-	scene->push(player);
-	scene->push(enemy);
-	scene->push(breakable);
-	scene->push(cameraController);
-	scene->push(tileAnims);
-	SetMusicVolume(*scene->music, 0.4f);
-	PlayMusicStream(*scene->music);
-
-	SceneManager::replace(scene);*/
 	SceneManager::replace(SceneFactory::level1());
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
@@ -125,16 +48,16 @@ int main ()
 		    SceneManager::current->update(dt);
 			background = SceneManager::current->background;
 		}
-        SceneManager::workspace->position.x = RenderingServer::camera.target.x - 16;
-        SceneManager::workspace->position.y = RenderingServer::camera.target.y - 16;
+        SceneManager::workspace->position.x = RenderingServer::camera.target.x - 32;
+        SceneManager::workspace->position.y = RenderingServer::camera.target.y - 32;
 
         // run physics
-		PhysicsServer::update(dt, SceneManager::workspace);
+		PhysicsServer::update(dt);
 
 		// draw game onto render target
 		BeginTextureMode(target);
 		ClearBackground(background);
-		RenderingServer::update(dt, SceneManager::workspace);
+		RenderingServer::update(dt);
 		EndTextureMode();
 
 		// draw render target

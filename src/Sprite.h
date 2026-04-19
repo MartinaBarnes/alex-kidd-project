@@ -8,6 +8,6 @@ class Sprite : public RenderComponent {
 		Texture2D* texture;
 		Rectangle frame;
 
-		bool isOnScreen(const AABB*) const override;
+		bool isOnScreen() const override;
 		void draw(float) override;
 };

@@ -1,10 +1,4 @@
 #pragma once
-#include "PhysicsComponent.h"
+#include "PhysicsRect.h"
 
-class PhysicsSolid : public PhysicsComponent {
-    public:
-        AABB aabb;
-
-        bool isOnScreen(const AABB*) const override;
-        bool testCollision(float, PhysicsComponent*);
-};
+class PhysicsSolid : public PhysicsRect {};

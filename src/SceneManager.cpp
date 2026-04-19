@@ -2,7 +2,7 @@
 
 bool SceneManager::pause = false;
 Scene* SceneManager::current = NULL;
-AABB* SceneManager::workspace = new AABB(0, 0, GAME_WIDTH + 32, GAME_HEIGHT + 32);
+AABB* SceneManager::workspace = new AABB(-32, -32, GAME_WIDTH + 64, GAME_HEIGHT + 64);
 
 void SceneManager::replace(Scene* scene) {
     if (SceneManager::current != NULL) {

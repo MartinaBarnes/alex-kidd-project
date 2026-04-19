@@ -1,5 +1,6 @@
 #include "RenderingServer.h"
 #include "RenderComponent.h"
+#include "SceneManager.h"
 #include "raylib.h"
 
 bool RenderingServer::visible = true;
@@ -46,7 +47,7 @@ void RenderingServer::popOverlay(RenderComponent* component)
     }
 }
 
-void RenderingServer::update(float dt, const AABB* bounds)
+void RenderingServer::update(float dt)
 {
     if (!RenderingServer::visible) {
         return;
@@ -56,7 +57,7 @@ void RenderingServer::update(float dt, const AABB* bounds)
     BeginMode2D(RenderingServer::camera);
     for (int i=0; i<RenderingServer::components.size(); i++) {
         RenderComponent* component = RenderingServer::components[i];
-        component->visible = component->enabled && component->isOnScreen(bounds);
+        component->visible = component->enabled && component->isOnScreen();
         if (!component->visible) {
             continue;
         }

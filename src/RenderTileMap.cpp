@@ -4,7 +4,7 @@
 #include "SceneManager.h"
 #include <cmath>
 
-bool RenderTileMap::isOnScreen(const AABB* _) const {
+bool RenderTileMap::isOnScreen() const {
     return true;
 }
 

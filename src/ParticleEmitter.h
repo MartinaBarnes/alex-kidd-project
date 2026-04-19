@@ -14,6 +14,6 @@ class ParticleEmitter : public RenderComponent {
 		float time;
 		bool oneShot;
 
-		bool isOnScreen(const AABB*) const override;
+		bool isOnScreen() const override;
 		void draw(float) override;
 };

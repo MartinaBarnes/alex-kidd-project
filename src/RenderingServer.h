@@ -13,5 +13,5 @@ class RenderingServer {
     static void pop(RenderComponent*);
     static void pushOverlay(RenderComponent*);
     static void popOverlay(RenderComponent*);
-    static void update(float, const AABB*);
+    static void update(float);
 };

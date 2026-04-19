@@ -8,5 +8,5 @@ class PhysicsServer {
         static std::vector<PhysicsComponent*> components;
         static void push(PhysicsComponent*);
         static void pop(PhysicsComponent*);
-        static void update(float, const AABB*);
+        static void update(float);
 };

@@ -191,10 +191,10 @@ Player::Player() {
 	physics->aabb = AABB(0, 0, 16, 24);
 	PhysicsServer::push(physics);
 
-	hitbox = new PhysicsArea();
+	hitbox = new PhysicsHitbox();
 	hitbox->layer = LAYER_PLAYER;
 	hitbox->mask = LAYER_ENEMY + LAYER_BREAKABLE;
-	hitbox->aabb = AABB(0, 0, 8, 8);
+	hitbox->aabb = AABB(0, 0, 8, 16);
 	hitbox->enabled = false;
 	PhysicsServer::push(hitbox);
 

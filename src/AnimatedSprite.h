@@ -19,6 +19,6 @@ class AnimatedSprite : public RenderComponent {
 		float frame_rate = 12.0f;
 		Animation* animation;
 
-		bool isOnScreen(const AABB*) const override;
+		bool isOnScreen() const override;
 		void draw(float) override;
 };

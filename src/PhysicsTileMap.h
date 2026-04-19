@@ -15,5 +15,5 @@ class PhysicsTileMap : public PhysicsComponent {
     public:
         int map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
 
-        bool isOnScreen(const AABB*) const override;
+        bool isOnScreen() const override;
 };

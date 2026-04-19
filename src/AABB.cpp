@@ -10,8 +10,8 @@ bool AABB::testPoint(const Vector2& point) const
 
 bool AABB::testAABB(const AABB& aabb) const
 {
-    return !(position.x + size.x <= aabb.position.x || aabb.position.x + aabb.size.x < position.x ||
-        position.y + size.y <= aabb.position.y || aabb.position.y + aabb.size.y < position.y);
+    return (position.y < aabb.position.y + aabb.size.y && aabb.position.y < position.y + size.y) &&
+           (position.x < aabb.position.x + aabb.size.x && aabb.position.x < position.x + size.x);
 }
 
 bool AABB::testCircle(const Vector2& center, float radius) const

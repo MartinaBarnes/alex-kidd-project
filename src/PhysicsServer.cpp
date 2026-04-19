@@ -20,7 +20,7 @@ void PhysicsServer::pop(PhysicsComponent* component)
     }
 }
 
-void PhysicsServer::update(float dt, const AABB* bounds)
+void PhysicsServer::update(float dt)
 {
     std::vector<PhysicsComponent*> components = {};
     for (int i=0; i<PhysicsServer::components.size(); i++) {
@@ -28,7 +28,7 @@ void PhysicsServer::update(float dt, const AABB* bounds)
         if (SceneManager::pause && !component->pausable) {
             continue;
         }
-        component->awake = component->enabled && component->isOnScreen(bounds);
+        component->awake = component->enabled && component->isOnScreen();
         component->isColliding = false;
         component->colliders.resize(0);
         if (!component->awake) {
@@ -43,11 +43,16 @@ void PhysicsServer::update(float dt, const AABB* bounds)
                 continue;
             }
             PhysicsComponent* collided = components[j];
-            if ((collider->mask & collided->layer) == 0 || !collider->testCollision(dt, collided)) {
+            if (!collided->enabled || (collider->mask & collided->layer) == 0 || !collider->testCollision(dt, collided)) {
                 continue;
             }
             collider->isColliding = true;
             collider->colliders.push_back(collided);
+            collider->onCollision(collided);
+            if (!collider->enabled) {
+                collider->awake = false;
+                break;
+            }
         }
     }
 };

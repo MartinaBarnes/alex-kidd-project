@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 #include <cmath>
 
-bool ParticleEmitter::isOnScreen(const AABB* _) const {
+bool ParticleEmitter::isOnScreen() const {
     return active;
 }
 

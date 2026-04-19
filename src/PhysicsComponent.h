@@ -2,12 +2,12 @@
 #include "OnScreenObject.h"
 #include <vector>
 
-#define LAYER_NONE 0
-#define LAYER_WORLD 1
-#define LAYER_PLAYER 2
-#define LAYER_ENEMY 4
-#define LAYER_BOUNDS 8
-#define LAYER_TRIGGER 16
+#define LAYER_NONE      0
+#define LAYER_WORLD     1
+#define LAYER_PLAYER    2
+#define LAYER_ENEMY     4
+#define LAYER_BOUNDS    8
+#define LAYER_TRIGGER   16
 #define LAYER_BREAKABLE 32
 
 class PhysicsComponent : public OnScreenObject {
@@ -21,4 +21,5 @@ class PhysicsComponent : public OnScreenObject {
         std::vector<PhysicsComponent*> colliders = {};
 
         virtual bool testCollision(float, PhysicsComponent*) { return false; };
+        virtual void onCollision(PhysicsComponent*) {};
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "LivingEntity.h"
 #include "PhysicsCharacter.h"
-#include "PhysicsArea.h"
+#include "PhysicsHitbox.h"
 #include "AnimatedSprite.h"
 #include "TileMap.h"
 
@@ -36,7 +36,7 @@ class Player : public LivingEntity
 		const float DEATH_ANIM_DELAY    = 0.5f;
 
         PhysicsCharacter* physics;
-        PhysicsArea* hitbox;
+        PhysicsHitbox* hitbox;
         AnimatedSprite* sprite;
 		TileMap* tileMap;
 

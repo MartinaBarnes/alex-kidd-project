@@ -1,13 +1,12 @@
 #pragma once
-#include "PhysicsComponent.h"
+#include "PhysicsRect.h"
 #include "AABB.h"
 #include "Entity.h"
 #include "PhysicsTileMap.h"
 #include "raylib.h"
 
-class PhysicsCharacter : public PhysicsComponent {
+class PhysicsCharacter : public PhysicsRect {
     public:
-        AABB aabb;
         Vector2 velocity = { 0, 0 };
         bool onCeiling;
         bool onWall;
@@ -15,6 +14,5 @@ class PhysicsCharacter : public PhysicsComponent {
         bool inWater;
         bool inDeathPit;
 
-        bool isOnScreen(const AABB*) const override;
         bool testCollision(float, PhysicsComponent*) override;
 };
