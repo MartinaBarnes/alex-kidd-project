@@ -6,6 +6,7 @@
 #include "RenderingServer.h"
 #include "SceneManager.h"
 #include "GameState.h"
+#include "SceneFactory.h"
 #include "raylib.h"
 #include <algorithm>
 
@@ -55,14 +56,18 @@ void Player::update(float dt) {
             if (death_time < DEATH_ANIM_DELAY) {
                 death_time += dt;
                 if (death_time >= DEATH_ANIM_DELAY) {
+                    SceneManager::pause = false;
+                    RenderingServer::visible = true;
+                    if (GameState::lives <= 0) {
+                        SceneManager::replace(SceneFactory::gameOver());
+                        return;
+                    }
                     alive = true;
                     pausable = false;
                     sprite->pausable = false;
                     physics->aabb.position = tileMap->findSpawnPoint(Vector2 { RenderingServer::camera.target.x + 1, RenderingServer::camera.target.y }); // HACK
                     physics->aabb.position.y += 8.0f; // HACK: make it start on the ground
                     physics->onGround = true;
-                    SceneManager::pause = false;
-                    RenderingServer::visible = true;
                     respawning = false;
                     StopSound(*ResourceManager::getSound("death"));
                     PlayMusicStream(*scene->music);

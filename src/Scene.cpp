@@ -52,6 +52,12 @@ void Scene::update(float dt) {
 }
 
 Scene::~Scene() {
+    // stop scene music
+    if (music && IsMusicValid(*music) && IsMusicStreamPlaying(*music)) {
+        StopMusicStream(*music);
+    }
+
+    // delete all entities
     for (int i = 0; i < entities.size(); i++) {
         delete entities[i];
     }

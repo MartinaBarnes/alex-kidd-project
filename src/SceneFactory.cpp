@@ -9,6 +9,7 @@
 #include "WanderingEnemy.h"
 #include "Onigiri.h"
 #include "GameState.h"
+#include "GameOverScreen.h"
 
 Scene* SceneFactory::level1() {
     // first level -- reset lives
@@ -500,6 +501,22 @@ Scene* SceneFactory::level1() {
     // play music
     SetMusicVolume(*scene->music, 0.5f);
     PlayMusicStream(*scene->music);
+
+    return scene;
+}
+
+Scene* SceneFactory::gameOver() {
+    // initialize scene
+    Scene* scene = new Scene();
+    scene->background = BLACK;
+
+    // instance screen
+    scene->push(new GameOverScreen());
+
+    // play music
+    Sound* jingle = ResourceManager::getSound("game_over");
+    SetSoundVolume(*jingle, 0.5f);
+    PlaySound(*jingle);
 
     return scene;
 }

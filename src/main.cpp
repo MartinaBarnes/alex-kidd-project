@@ -22,7 +22,7 @@ int main ()
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	SceneManager::replace(SceneFactory::level1());
+	SceneManager::replace(SceneFactory::gameOver());
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{

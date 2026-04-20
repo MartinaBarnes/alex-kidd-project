@@ -68,7 +68,7 @@ void RenderingServer::update(float dt)
 
     // draw overlay components
     for (int i=0; i<RenderingServer::overlay.size(); i++) {
-        RenderComponent* component = RenderingServer::components[i];
+        RenderComponent* component = RenderingServer::overlay[i];
         if (!component->enabled) {
             continue;
         }
