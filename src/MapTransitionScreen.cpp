@@ -20,7 +20,7 @@ void MapTransitionScreen::update(float dt) {
 
 MapTransitionScreen::MapTransitionScreen() {
     preview = new MapPreview();
-    preview->position = Vector2{ 28, 24 };
+    preview->position = Vector2{ 27, 24 };
     preview->arrowPosition = Vector2 { 140, 72 };
     RenderingServer::pushOverlay(preview);
 

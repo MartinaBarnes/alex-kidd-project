@@ -28,6 +28,8 @@ void StatusScreen::draw(float dt) {
     // draw item selection
     DrawTexture(arrow, INVENTORY_X + INVENTORY_SLOT_SIZE * item, INVENTORY_Y, WHITE);
 
+    Color yellow = Color { 255, 255, 170, 255 };
+
     // draw coins
     const char* coins = "0";
     float coinsSize = MeasureText(coins, FONT_SIZE);
@@ -36,10 +38,10 @@ void StatusScreen::draw(float dt) {
     // draw lives
     const char* lives = std::to_string(GameState::lives).c_str();
     float livesSize = MeasureText(lives, FONT_SIZE);
-    DrawText(lives, LIVES_X - livesSize, LIVES_Y, FONT_SIZE, WHITE);
+    DrawText(lives, LIVES_X - livesSize, LIVES_Y, FONT_SIZE, yellow);
 
     // draw score
     const char* score = "0";
     float scoreSize = MeasureText(score, FONT_SIZE);
-    DrawText(score, SCORE_X - scoreSize, LIVES_Y, FONT_SIZE, WHITE);
+    DrawText(score, SCORE_X - scoreSize, LIVES_Y, FONT_SIZE, yellow);
 }

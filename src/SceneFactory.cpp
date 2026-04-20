@@ -11,9 +11,26 @@
 #include "GameState.h"
 #include "GameOverScreen.h"
 #include "MapTransitionScreen.h"
+#include "TitleScreen.h"
+
+Scene* SceneFactory::title() {
+    // initialize scene
+    Scene* scene = new Scene();
+    scene->background = Color { 255, 255, 170, 255 };
+
+    // instance screen
+    scene->push(new TitleScreen());
+
+    // play music
+    Sound* jingle = ResourceManager::getSound("title_screen");
+    SetSoundVolume(*jingle, 0.5f);
+    PlaySound(*jingle);
+
+    return scene;
+}
 
 Scene* SceneFactory::intro1() {
-    // initialize screen
+    // initialize scene
     Scene* scene = new Scene();
     scene->background = BLACK;
 
