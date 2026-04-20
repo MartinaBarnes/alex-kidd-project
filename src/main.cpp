@@ -75,16 +75,6 @@ int main ()
 		ClearBackground(BLACK);
 		DrawTexturePro(target.texture, targetSrc, targetDest, targetPos, 0.0f, WHITE);
 		EndDrawing();
-
-        if (IsKeyPressed(KEY_F1)) {
-            SceneManager::replace(SceneFactory::title());
-        } else if (IsKeyPressed(KEY_F2)) {
-            SceneManager::replace(SceneFactory::preview1());
-        } else if (IsKeyPressed(KEY_F3)) {
-            SceneManager::replace(SceneFactory::level1());
-        } else if (IsKeyPressed(KEY_F4)) {
-            SceneManager::replace(SceneFactory::gameOver());
-        }
 	}
 
 	ResourceManager::unloadResources();
