@@ -8,8 +8,6 @@
  * on the user's camera.
  */
 class RenderingServer {
-    protected:
-        static int cameraFix;
     public:
         static bool visible;
         static Camera2D camera;

@@ -1,5 +1,6 @@
 #include "SceneFactory.h"
 #include "PhysicsTileMap.h"
+#include "RenderingServer.h"
 #include "ResourceManager.h"
 #include "TileAnimationController.h"
 #include "TileMap.h"
@@ -54,6 +55,9 @@ Scene* SceneFactory::preview1() {
 }
 
 Scene* SceneFactory::level1() {
+    // fix camera glitches
+    RenderingServer::camera.target.x = -1.0f;
+
     // first level -- reset lives
     GameState::lives = 3;
 
