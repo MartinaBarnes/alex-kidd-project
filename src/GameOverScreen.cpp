@@ -5,7 +5,7 @@
 
 void GameOverScreen::update(float dt) {
     if (time >= duration) {
-        SceneManager::replace(SceneFactory::intro1());
+        SceneManager::replace(SceneFactory::title());
         return;
     }
     time += dt;

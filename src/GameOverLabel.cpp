@@ -13,7 +13,7 @@ void GameOverLabel::draw(float _) {
 
     // 🔥 POSICIONES SEPARADAS
     int labelX = 28;   // 👉 "SCORE:" más a la izquierda
-    int numberX = 90; // 👉 número más a la derecha
+    int numberX = 82; // 👉 número más a la derecha
 
     // =========================
     // GAME OVER

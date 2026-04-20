@@ -16,13 +16,14 @@ int main ()
 	SetTargetFPS(60);
 	SetAudioStreamBufferSizeDefault(4096);
 	ResourceManager::loadResources();
+	SetWindowState(FLAG_WINDOW_MAXIMIZED);
 
 	RenderTexture2D target = LoadRenderTexture(GAME_WIDTH, GAME_HEIGHT);
 	Rectangle targetSrc = Rectangle { 0, 0, GAME_WIDTH, -GAME_HEIGHT };
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	SceneManager::replace(SceneFactory::intro1());
+	SceneManager::replace(SceneFactory::intro());
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{

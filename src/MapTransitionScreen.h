@@ -9,7 +9,7 @@ class MapTransitionScreen : public Entity {
         AnimatedSprite* alex;
         float time = 0.0f;
     public:
-        float duration = 2.0f;
+        float duration = 1.0f;
         float delay = 2.0f;
 
         void update(float) override;

@@ -12,6 +12,14 @@
 #include "GameOverScreen.h"
 #include "MapTransitionScreen.h"
 #include "TitleScreen.h"
+#include "IntroScreen.h"
+
+Scene* SceneFactory::intro() {
+    Scene* scene = new Scene();
+    scene->background = BLACK;
+    scene->push(new IntroScreen());
+    return scene;
+}
 
 Scene* SceneFactory::title() {
     // initialize scene
@@ -29,7 +37,7 @@ Scene* SceneFactory::title() {
     return scene;
 }
 
-Scene* SceneFactory::intro1() {
+Scene* SceneFactory::preview1() {
     // initialize scene
     Scene* scene = new Scene();
     scene->background = BLACK;
@@ -515,16 +523,16 @@ Scene* SceneFactory::level1() {
 
 	// scorpion
 	WanderingEnemy* scorpion = new WanderingEnemy();
-	scorpion->physics->aabb.position = Vector2 { 62 * TILE_SIZE, 4 * TILE_SIZE }; // 62
-	scorpion->physics->aabb.size = Vector2 { 16, 16 };
+	scorpion->physics->aabb.position = Vector2 { 62 * TILE_SIZE, 4 * TILE_SIZE + 3 };
+	scorpion->physics->aabb.size = Vector2 { 16, 13 };
 	scorpion->direction = -1;
 	scorpion->walk_speed = 40.0f;
 	scorpion->wander_distance = 6 * TILE_SIZE;
 	scorpion->sprite->animation = new Animation();
 	scorpion->sprite->animation->texture = ResourceManager::getTexture("scorpion");
 	scorpion->sprite->animation->frames = {
-	    Rectangle { 0, 0, 16, 16 },
-		Rectangle { 16, 0, 16, 16 }
+	    Rectangle { 0, 3, 16, 13 },
+		Rectangle { 16, 3, 16, 13 }
 	};
 	scorpion->sprite->frame_rate = 2.0f;
 	scene->push(scorpion);

@@ -32,13 +32,13 @@ Onigiri::Onigiri(Vector2 position) {
     physics = new PhysicsArea();
     physics->mask = LAYER_PLAYER;
     physics->aabb.position = position;
-    physics->aabb.size = Vector2 { 16, 16 };
+    physics->aabb.size = Vector2 { 10, 10 };
     PhysicsServer::push(physics);
 
     sprite = new Sprite();
     sprite->texture = ResourceManager::getTexture("items");
     sprite->frame = Rectangle { 0, 0, 16, 16 };
-    sprite->position = position;
+    sprite->position = Vector2 { position.x - 3, position.y - 3 };
     RenderingServer::push(sprite);
 }
 

@@ -55,6 +55,7 @@ void Player::update(float dt) {
             if (death_time < DEATH_ANIM_DELAY) {
                 death_time += dt;
                 if (death_time >= DEATH_ANIM_DELAY) {
+                    StopSound(*ResourceManager::getSound("death"));
                     if (GameState::lives <= 0) {
                         SceneManager::replace(SceneFactory::gameOver());
                         return;
@@ -67,7 +68,6 @@ void Player::update(float dt) {
                     respawning = false;
                     SceneManager::pause = false;
                     RenderingServer::visible = true;
-                    StopSound(*ResourceManager::getSound("death"));
                     PlayMusicStream(*scene->music);
                 }
             }
@@ -231,7 +231,7 @@ Player::Player() {
 	hitbox = new PhysicsHitbox();
 	hitbox->layer = LAYER_PLAYER;
 	hitbox->mask = LAYER_ENEMY + LAYER_BREAKABLE;
-	hitbox->aabb = AABB(0, 0, 8, 16);
+	hitbox->aabb = AABB(0, 0, 12, 16);
 	hitbox->enabled = false;
 	PhysicsServer::push(hitbox);
 
