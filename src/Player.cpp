@@ -94,13 +94,23 @@ void Player::update(float dt) {
         return;
     }
 
-    if (IsKeyPressed(KEY_TABULATOR)) {
+    // toggle status screen
+    if (IsKeyPressed(KEY_TAB)) {
         SceneManager::pause = !SceneManager::pause;
         status->enabled = SceneManager::pause;
         return;
     }
 
+    // move control to the status screen
     if (SceneManager::pause) {
+        if (!status->enabled) {
+            return;
+        }
+        if (IsKeyPressed(KEY_RIGHT)) {
+            status->item = std::min(status->item + 1, status->SLOT_MAX);
+        } else if (IsKeyPressed(KEY_LEFT)) {
+            status->item = std::max(status->item - 1, 0);
+        }
         return;
     }
 
@@ -249,7 +259,7 @@ Player::Player() {
     status = new StatusScreen();
     status->pausable = true;
     status->enabled = false;
-    RenderingServer::push(status);
+    RenderingServer::pushOverlay(status);
 }
 
 Player::~Player() {

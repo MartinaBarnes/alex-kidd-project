@@ -10,8 +10,8 @@ bool GameOverLabel::isOnScreen() const {
 void GameOverLabel::draw(float _) {
     std::string texto = "GAME OVER";
 
-    int fontSize = 14;
-    int posY = GAME_HEIGHT / 2 - 26;
+    int fontSize = 10;
+    int posY = GAME_HEIGHT / 2 - 22;
     int posX;
 
     int scorePosY = posY + 32;
