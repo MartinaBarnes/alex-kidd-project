@@ -1,11 +1,29 @@
 #include "Onigiri.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
+#include "SceneManager.h"
+#include "SceneFactory.h"
 #include "ResourceManager.h"
 
 void Onigiri::update(float dt) {
+    if (touched) {
+        delay += dt;
+        if (delay < DELAY_TIME) {
+            return;
+        }
+        RenderingServer::visible = false;
+        if (delay < DELAY_TIME * 2) {
+            return;
+        }
+        SceneManager::replace(SceneFactory::gameOver());
+        return;
+    }
     for (int i = 0; i < physics->colliders.size(); i++) {
-        // TODO: go to next level or game over for now
+        touched = true;
+        delay = 0.0f;
+        pausable = true;
+        SceneManager::pause = true;
+        StopMusicStream(*scene->music);
         return;
     }
 }

@@ -22,10 +22,17 @@ int main ()
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	SceneManager::replace(SceneFactory::gameOver());
+	SceneManager::replace(SceneFactory::level1());
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
+        if (SceneManager::flushed) {
+            delete SceneManager::flushed;
+            SceneManager::flushed = NULL;
+            SceneManager::pause = false;
+            RenderingServer::visible = true;
+        }
+
 	    // automatic resolution scaling
 	    short scnW = GetScreenWidth();
 		short scnH = GetScreenHeight();
@@ -45,8 +52,8 @@ int main ()
 		// run scene logic
 		Color background = BLACK;
 		if (SceneManager::current != NULL) {
-		    SceneManager::current->update(dt);
 			background = SceneManager::current->background;
+            SceneManager::current->update(dt);
 		}
         SceneManager::workspace->position.x = RenderingServer::camera.target.x - 32;
         SceneManager::workspace->position.y = RenderingServer::camera.target.y - 32;

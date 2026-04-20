@@ -10,16 +10,15 @@ bool GameOverLabel::isOnScreen() const {
 void GameOverLabel::draw(float _) {
     std::string texto = "GAME OVER";
 
-    int fontSize = 16;
-    int posY = GAME_HEIGHT / 2 - 10;
+    int fontSize = 14;
+    int posY = GAME_HEIGHT / 2 - 26;
     int posX;
 
-    int scoreFontSize = 8;
-    int scorePosY = posY + 18;
+    int scorePosY = posY + 32;
 
     // 🔥 POSICIONES SEPARADAS
-    int labelX = 0;   // 👉 "SCORE:" más a la izquierda
-    int numberX = 64; // 👉 número más a la derecha
+    int labelX = 28;   // 👉 "SCORE:" más a la izquierda
+    int numberX = 90; // 👉 número más a la derecha
 
     // =========================
     // GAME OVER
@@ -35,7 +34,7 @@ void GameOverLabel::draw(float _) {
     std::string label = "SCORE:";
     std::string number = std::to_string(score);
 
-    DrawText(label.c_str(), posX - labelX, scorePosY, scoreFontSize, WHITE);
-    DrawText(number.c_str(), posX + numberX, scorePosY, scoreFontSize, WHITE);
+    DrawText(label.c_str(), posX - labelX, scorePosY, fontSize, WHITE);
+    DrawText(number.c_str(), posX + numberX, scorePosY, fontSize, WHITE);
 
 }

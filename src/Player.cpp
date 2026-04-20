@@ -56,8 +56,6 @@ void Player::update(float dt) {
             if (death_time < DEATH_ANIM_DELAY) {
                 death_time += dt;
                 if (death_time >= DEATH_ANIM_DELAY) {
-                    SceneManager::pause = false;
-                    RenderingServer::visible = true;
                     if (GameState::lives <= 0) {
                         SceneManager::replace(SceneFactory::gameOver());
                         return;
@@ -69,6 +67,8 @@ void Player::update(float dt) {
                     physics->aabb.position.y += 8.0f; // HACK: make it start on the ground
                     physics->onGround = true;
                     respawning = false;
+                    SceneManager::pause = false;
+                    RenderingServer::visible = true;
                     StopSound(*ResourceManager::getSound("death"));
                     PlayMusicStream(*scene->music);
                 }
@@ -166,7 +166,7 @@ void Player::update(float dt) {
         if (!physics->onGround) {
             physics->velocity.y += GRAVITY * dt;
         } else {
-            if (IsKeyDown(KEY_UP) && !attacking) {
+            if (IsKeyPressed(KEY_UP) && !attacking) {
                 jumping = true;
                 PlaySound(*ResourceManager::getSound("jump"));
             }
