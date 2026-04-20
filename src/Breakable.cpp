@@ -59,4 +59,9 @@ Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle
 Breakable::~Breakable() {
 	PhysicsServer::pop(physics);
 	delete physics;
+
+	if (!particles->active) {
+	    RenderingServer::pop(particles);
+		delete particles;
+	}
 }

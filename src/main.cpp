@@ -32,7 +32,7 @@ int main ()
             delete SceneManager::flushed;
             SceneManager::flushed = NULL;
             SceneManager::pause = false;
-            RenderingServer::camera.target = Vector2 { 0.0f, 0.0f };
+            RenderingServer::camera.target = Vector2 { 0, 0 };
             RenderingServer::visible = true;
         }
 
@@ -75,6 +75,16 @@ int main ()
 		ClearBackground(BLACK);
 		DrawTexturePro(target.texture, targetSrc, targetDest, targetPos, 0.0f, WHITE);
 		EndDrawing();
+
+        if (IsKeyPressed(KEY_F1)) {
+            SceneManager::replace(SceneFactory::title());
+        } else if (IsKeyPressed(KEY_F2)) {
+            SceneManager::replace(SceneFactory::preview1());
+        } else if (IsKeyPressed(KEY_F3)) {
+            SceneManager::replace(SceneFactory::level1());
+        } else if (IsKeyPressed(KEY_F4)) {
+            SceneManager::replace(SceneFactory::gameOver());
+        }
 	}
 
 	ResourceManager::unloadResources();

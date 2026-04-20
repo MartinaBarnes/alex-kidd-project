@@ -272,6 +272,6 @@ Player::~Player() {
     RenderingServer::pop(sprite);
     delete sprite;
 
-    RenderingServer::pop(status);
+    RenderingServer::popOverlay(status);
     delete status;
 }

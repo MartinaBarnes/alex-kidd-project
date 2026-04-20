@@ -55,9 +55,6 @@ Scene* SceneFactory::preview1() {
 }
 
 Scene* SceneFactory::level1() {
-    // fix camera glitches
-    RenderingServer::camera.target.x = -1.0f;
-
     // first level -- reset lives
     GameState::lives = 3;
 
