@@ -184,7 +184,7 @@ void Player::update(float dt) {
         if (!physics->onGround) {
             physics->velocity.y += GRAVITY * dt;
         } else {
-            if (IsKeyPressed(KEY_UP) && !attacking) {
+            if (IsKeyPressed(KEY_NULL) && !attacking) {
                 jumping = true;
                 PlaySound(*ResourceManager::getSound("jump"));
             }
