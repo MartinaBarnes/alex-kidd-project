@@ -10,6 +10,23 @@
 #include "Onigiri.h"
 #include "GameState.h"
 #include "GameOverScreen.h"
+#include "MapTransitionScreen.h"
+
+Scene* SceneFactory::intro1() {
+    // initialize screen
+    Scene* scene = new Scene();
+    scene->background = BLACK;
+
+    // instance screen
+    scene->push(new MapTransitionScreen());
+
+    // play music
+    Sound* jingle = ResourceManager::getSound("level_start");
+    SetSoundVolume(*jingle, 0.5f);
+    PlaySound(*jingle);
+
+    return scene;
+}
 
 Scene* SceneFactory::level1() {
     // first level -- reset lives

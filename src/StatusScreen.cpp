@@ -18,7 +18,7 @@ void StatusScreen::draw(float dt) {
     }
 
     // draw background
-    DrawTexture(*ResourceManager::getTexture("ui_map0"), 0, 0, WHITE);
+    DrawTexture(*ResourceManager::getTexture("ui_status"), 0, 0, WHITE);
 
     // draw map arrow
     if (!mapArrowBlinked) {

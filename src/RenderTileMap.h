@@ -12,6 +12,5 @@ class RenderTileMap : public RenderComponent {
         Rectangle tiles[64]; // sections of the texture to use
         short map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
 
-        bool isOnScreen() const override;
         void draw(float) override;
 };

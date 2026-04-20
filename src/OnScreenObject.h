@@ -8,5 +8,5 @@
  */
 class OnScreenObject {
     public:
-        virtual bool isOnScreen() const = 0;
+        virtual bool isOnScreen() const { return true; };
 };

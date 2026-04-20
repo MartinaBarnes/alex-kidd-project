@@ -1,11 +1,6 @@
 ﻿#include "GameOverLabel.h"
 #include <SceneManager.h>
 #include <string>
-#include <iostream>
-
-bool GameOverLabel::isOnScreen() const {
-    return true;
-}
 
 void GameOverLabel::draw(float _) {
     std::string texto = "GAME OVER";

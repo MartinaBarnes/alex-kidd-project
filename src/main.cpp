@@ -22,7 +22,7 @@ int main ()
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	SceneManager::replace(SceneFactory::level1());
+	SceneManager::replace(SceneFactory::intro1());
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
@@ -31,6 +31,7 @@ int main ()
             delete SceneManager::flushed;
             SceneManager::flushed = NULL;
             SceneManager::pause = false;
+            RenderingServer::camera.target = Vector2 { 0.0f, 0.0f };
             RenderingServer::visible = true;
         }
 

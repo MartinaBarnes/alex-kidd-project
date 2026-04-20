@@ -1,12 +1,7 @@
 #include "RenderTileMap.h"
 #include "PhysicsTileMap.h"
-#include "ResourceManager.h"
 #include "SceneManager.h"
 #include <cmath>
-
-bool RenderTileMap::isOnScreen() const {
-    return true;
-}
 
 void RenderTileMap::draw(float _) {
     int u = SceneManager::workspace->position.x / TILE_SIZE;
