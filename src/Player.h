@@ -3,6 +3,7 @@
 #include "PhysicsCharacter.h"
 #include "PhysicsHitbox.h"
 #include "AnimatedSprite.h"
+#include "StatusScreen.h"
 #include "TileMap.h"
 
 #define DIRECTION_RIGHT 1.0f
@@ -43,6 +44,7 @@ class Player : public LivingEntity
         PhysicsCharacter* physics;
         PhysicsHitbox* hitbox;
         AnimatedSprite* sprite;
+        StatusScreen* status;
 		TileMap* tileMap;
 
 		void update(float) override;

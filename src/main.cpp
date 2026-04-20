@@ -26,6 +26,7 @@ int main ()
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
+	    // if we're changing scenes, safely dispose of the old one and resume game
         if (SceneManager::flushed) {
             delete SceneManager::flushed;
             SceneManager::flushed = NULL;

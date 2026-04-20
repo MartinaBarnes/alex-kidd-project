@@ -19,7 +19,6 @@
 
 void Player::onKilled() {
     GameState::lives--;
-    pausable = true;
     death_time = 0.0f;
     attacking = false;
     hitbox->enabled = false;
@@ -61,7 +60,6 @@ void Player::update(float dt) {
                         return;
                     }
                     alive = true;
-                    pausable = false;
                     sprite->pausable = false;
                     physics->aabb.position = tileMap->findSpawnPoint(Vector2 { RenderingServer::camera.target.x + 1, RenderingServer::camera.target.y }); // HACK
                     physics->aabb.position.y += 8.0f; // HACK: make it start on the ground
@@ -93,6 +91,16 @@ void Player::update(float dt) {
                 RenderingServer::visible = false;
             }
         }
+        return;
+    }
+
+    if (IsKeyPressed(KEY_TABULATOR)) {
+        SceneManager::pause = !SceneManager::pause;
+        status->enabled = SceneManager::pause;
+        return;
+    }
+
+    if (SceneManager::pause) {
         return;
     }
 
@@ -202,6 +210,8 @@ void Player::update(float dt) {
 }
 
 Player::Player() {
+    pausable = true;
+
 	physics = new PhysicsCharacter();
 	physics->layer = LAYER_PLAYER;
 	physics->mask = LAYER_WORLD + LAYER_ENEMY + LAYER_BOUNDS;
@@ -235,6 +245,11 @@ Player::Player() {
     sprite = new AnimatedSprite();
     sprite->animation = &animations[0];
     RenderingServer::push(sprite);
+
+    status = new StatusScreen();
+    status->pausable = true;
+    status->enabled = false;
+    RenderingServer::push(status);
 }
 
 Player::~Player() {
@@ -246,4 +261,7 @@ Player::~Player() {
 
     RenderingServer::pop(sprite);
     delete sprite;
+
+    RenderingServer::pop(status);
+    delete status;
 }
