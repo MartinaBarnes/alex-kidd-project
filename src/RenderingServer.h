@@ -8,15 +8,17 @@
  * on the user's camera.
  */
 class RenderingServer {
-  public:
-    static bool visible;
-    static Camera2D camera;
-    static std::vector<RenderComponent*> components;
-    static std::vector<RenderComponent*> overlay;
+    protected:
+        static int cameraFix;
+    public:
+        static bool visible;
+        static Camera2D camera;
+        static std::vector<RenderComponent*> components;
+        static std::vector<RenderComponent*> overlay;
 
-    static void push(RenderComponent*); // adds a component to the world
-    static void pop(RenderComponent*); // removes a component from the world
-    static void pushOverlay(RenderComponent*); // adds a component to the camera
-    static void popOverlay(RenderComponent*); // removes a component from the camera
-    static void update(float);
+        static void push(RenderComponent*); // adds a component to the world
+        static void pop(RenderComponent*); // removes a component from the world
+        static void pushOverlay(RenderComponent*); // adds a component to the camera
+        static void popOverlay(RenderComponent*); // removes a component from the camera
+        static void update(float);
 };

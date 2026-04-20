@@ -5,6 +5,7 @@
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "SceneManager.h"
+#include "GameState.h"
 #include "raylib.h"
 #include <algorithm>
 
@@ -16,6 +17,7 @@
 #define ANIM_DEATH 5
 
 void Player::onKilled() {
+    GameState::lives--;
     pausable = true;
     death_time = 0.0f;
     attacking = false;
@@ -190,7 +192,7 @@ void Player::update(float dt) {
     }
 
     // place the punch hitbox on the side the player is facing
-    hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f + hitbox->aabb.size.x * direction;
+    hitbox->aabb.position.x = physics->aabb.position.x + physics->aabb.size.x / 2.0f - hitbox->aabb.size.x / 2.0f + hitbox->aabb.size.x * direction;
     hitbox->aabb.position.y = physics->aabb.position.y + physics->aabb.size.y - hitbox->aabb.size.y;
 }
 

@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "raylib.h"
 
+int RenderingServer::cameraFix = 0;
 bool RenderingServer::visible = true;
 Camera2D RenderingServer::camera = Camera2D {
     Vector2 { 0.0f, 0.0f },

@@ -8,8 +8,12 @@
 #include "Breakable.h"
 #include "WanderingEnemy.h"
 #include "Onigiri.h"
+#include "GameState.h"
 
 Scene* SceneFactory::level1() {
+    // first level -- reset lives
+    GameState::lives = 3;
+
     // initialize scene
     Scene* scene = new Scene();
     scene->background = Color { 0, 0, 255, 255 };
@@ -251,8 +255,8 @@ Scene* SceneFactory::level1() {
 
         tileMap->physics->map[x0][10] = PHYSTILE_AIR;
         tileMap->physics->map[x1][10] = PHYSTILE_AIR;
-        lavaTiles.push_back(Vector2 { x0, 10 });
-        lavaTiles.push_back(Vector2 { x1, 10 });
+        lavaTiles.push_back(Vector2 { (float)x0, 10 });
+        lavaTiles.push_back(Vector2 { (float)x1, 10 });
     }
     scene->push(new TileAnimationController(tileMap, { TILE_LAVA0, TILE_LAVA1, TILE_LAVA2, TILE_LAVA3 }, lavaTiles));
 
@@ -262,15 +266,15 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(8, 1, PHYSTILE_SOLID, TILE_BOXITEM);
     scene->push(new Breakable(tileMap, Vector2 { 8, 1 }));
 
-    for (int x = 2; x <= 3; x++) {
-        for (int y = 8; y <= 9; y++) {
+    for (float x = 2; x <= 3; x++) {
+        for (float y = 8; y <= 9; y++) {
             tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
             scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
 
-    for (int x = 6; x <= 7; x++) {
-        for (int y = 7; y <= 9; y++) {
+    for (float x = 6; x <= 7; x++) {
+        for (float y = 7; y <= 9; y++) {
             if (x == 7 && y == 8) {
                 tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BOXSTUN);
                 scene->push(new Breakable(tileMap, Vector2 { x, y }));
@@ -281,8 +285,8 @@ Scene* SceneFactory::level1() {
         }
     }
 
-    for (int x = 10; x <= 11; x++) {
-        for (int y = 6; y <= 9; y++) {
+    for (float x = 10; x <= 11; x++) {
+        for (float y = 6; y <= 9; y++) {
             if (x == 11 && y >= 8) {
                 break;
             }
@@ -299,7 +303,7 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(11, 8, PHYSTILE_SOLID, TILE_REDORB);
     tileMap->setTilePair(11, 9, PHYSTILE_SOLID, TILE_REDORB);
 
-    for (int y = 5; y <= 8; y++) {
+    for (float y = 5; y <= 8; y++) {
         tileMap->setTilePair(14, y, PHYSTILE_SOLID, TILE_BLUEORB);
         scene->push(new Breakable(tileMap, Vector2 { 14, y }, tiles, blueParticles));
     }
@@ -320,7 +324,7 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(17, 8, PHYSTILE_SOLID, TILE_BOXSTUN);
     scene->push(new Breakable(tileMap, Vector2 { 17, 8 }));
 
-    for (int y = 6; y <= 9; y++) {
+    for (float y = 6; y <= 9; y++) {
         if (y == 8) {
             tileMap->setTilePair(19, y, PHYSTILE_SOLID, TILE_REDORB);
             continue;
@@ -329,8 +333,8 @@ Scene* SceneFactory::level1() {
         scene->push(new Breakable(tileMap, Vector2 { 19, y }, tiles, blueParticles));
     }
 
-    for (int x = 21; x <= 22; x++) {
-        for (int y = 2; y <= 6; y++) {
+    for (float x = 21; x <= 22; x++) {
+        for (float y = 2; y <= 6; y++) {
             if (x == 21 && y == 5) {
                 tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_REDORB);
                 continue;
@@ -361,8 +365,8 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(32, 2, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 32, 2 }, tiles, blueParticles));
 
-    for (int x = 34; x <= 35; x++) {
-        for (int y = 2; y <= 9; y++) {
+    for (float x = 34; x <= 35; x++) {
+        for (float y = 2; y <= 9; y++) {
             if ((x == 34 && y == 5) || (x == 35 && y == 8)) {
                 tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_REDORB);
                 continue;
@@ -381,8 +385,8 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(37, 7, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 37, 7 }, tiles, blueParticles));
 
-    for (int x = 39; x <= 40; x++) {
-        for (int y = 5; y <= 7; y++) {
+    for (float x = 39; x <= 40; x++) {
+        for (float y = 5; y <= 7; y++) {
             if (x == 40 && (y != 7)) {
                 tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BOXITEM);
                 scene->push(new Breakable(tileMap, Vector2 { x, y }));
@@ -409,14 +413,14 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(54, 2, PHYSTILE_SOLID, TILE_BLUEORB);
     scene->push(new Breakable(tileMap, Vector2 { 54, 2 }, tiles, blueParticles));
 
-    for (int x = 56; x <= 62; x++) {
+    for (float x = 56; x <= 62; x++) {
         tileMap->setTilePair(x, 5, PHYSTILE_SOLID, TILE_REDORB);
         tileMap->setTilePair(x, 6, PHYSTILE_SOLID, TILE_BLUEORB);
         scene->push(new Breakable(tileMap, Vector2 { x, 6 }, tiles, blueParticles));
     }
 
-    for (int x = 53; x <= 55; x++) {
-        for (int y = 7; y <= 9; y++) {
+    for (float x = 53; x <= 55; x++) {
+        for (float y = 7; y <= 9; y++) {
             if ((y == 7 && (x == 53 || x == 54)) || (y == 8 && x == 53)) {
                 continue;
             }
@@ -424,7 +428,7 @@ Scene* SceneFactory::level1() {
             scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
         }
     }
-    for (int y = 7; y <= 8; y++) {
+    for (float y = 7; y <= 8; y++) {
         tileMap->setTilePair(56, y, PHYSTILE_SOLID, TILE_BLUEORB);
         scene->push(new Breakable(tileMap, Vector2 { 56, y }, tiles, blueParticles));
     }
@@ -434,7 +438,7 @@ Scene* SceneFactory::level1() {
     tileMap->setTilePair(62, 8, PHYSTILE_SOLID, TILE_REDORB);
     tileMap->setTilePair(62, 9, PHYSTILE_SOLID, TILE_REDORB);
 
-    for (int x = 58; x <= 60; x++) {
+    for (float x = 58; x <= 60; x++) {
         tileMap->setTilePair(x, 8, PHYSTILE_SOLID, TILE_BOXITEM);
         scene->push(new Breakable(tileMap, Vector2 { x, 8 }));
     }

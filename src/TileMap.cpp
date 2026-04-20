@@ -12,7 +12,7 @@ Vector2 TileMap::findSpawnPoint(Vector2 origin) {
             if (physics->map[i][j] != PHYSTILE_AIR || physics->map[i][j + 1] != PHYSTILE_AIR || physics->map[i][j + 2] != PHYSTILE_SOLID) {
                 continue;
             }
-            return Vector2 { i * TILE_SIZE, j * TILE_SIZE };
+            return Vector2 { (float)(i * TILE_SIZE), (float)(j * TILE_SIZE) };
         }
     }
     return origin;
