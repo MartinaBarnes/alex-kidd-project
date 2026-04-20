@@ -8,7 +8,7 @@
 #include "ResourceManager.h"
 
 void Enemy::onKilled() {
-    deathSprite->position = sprite->position;
+    deathSprite->position = Vector2 { sprite->position.x + sprite->size.x / 2.0f - deathSprite->size.x / 2.0, sprite->position.y + sprite->size.y / 2.0f - deathSprite->size.y / 2.0f };
     deathSprite->enabled = true;
     sprite->enabled = false;
     physics->enabled = false;
