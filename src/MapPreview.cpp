@@ -1,9 +1,9 @@
 #include "MapPreview.h"
 #include "ResourceManager.h"
-#include <iostream>
+#include <cmath>
 
 void MapPreview::draw(float dt) {
-    int mapSize = 167 * open;
+    float mapSize = std::floor(167.0f * open);
     int edgeSize = 12;
 
     // draw map
