@@ -1,7 +1,7 @@
 # Alex Kidd in Miracle World
 
 +   ![Repository](https://github.com/MartinaBarnes/alex-kidd-project)
-+   ![Demonstration video](https://youtu.be/GsDLv-d34ZE)
++   ![Demonstration video](https://www.youtube.com/watch?v=GsDLv-d34ZE)
 
 ## Members
 
