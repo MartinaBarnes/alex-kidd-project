@@ -10,15 +10,15 @@
 #include "WanderingEnemy.h"
 #include "Onigiri.h"
 #include "GameState.h"
-#include "GameOverScreen.h"
-#include "MapTransitionScreen.h"
-#include "TitleScreen.h"
-#include "IntroScreen.h"
+#include "GameOverController.h"
+#include "MapTransitionController.h"
+#include "TitleSplashController.h"
+#include "IntroSplashController.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
     scene->background = BLACK;
-    scene->push(new IntroScreen());
+    scene->push(new IntroSplashController());
     return scene;
 }
 
@@ -28,7 +28,7 @@ Scene* SceneFactory::title() {
     scene->background = Color { 255, 255, 170, 255 };
 
     // instance screen
-    scene->push(new TitleScreen());
+    scene->push(new TitleSplashController());
 
     // play music
     Sound* jingle = ResourceManager::getSound("title_screen");
@@ -44,7 +44,7 @@ Scene* SceneFactory::preview1() {
     scene->background = BLACK;
 
     // instance screen
-    scene->push(new MapTransitionScreen());
+    scene->push(new MapTransitionController());
 
     // play music
     Sound* jingle = ResourceManager::getSound("level_start");
@@ -554,7 +554,7 @@ Scene* SceneFactory::gameOver() {
     scene->background = BLACK;
 
     // instance screen
-    scene->push(new GameOverScreen());
+    scene->push(new GameOverController());
 
     // play music
     Sound* jingle = ResourceManager::getSound("game_over");

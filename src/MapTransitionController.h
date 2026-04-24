@@ -3,7 +3,7 @@
 #include "MapPreview.h"
 #include "AnimatedSprite.h"
 
-class MapTransitionScreen : public Entity {
+class MapTransitionController : public Entity {
     protected:
         MapPreview* preview;
         AnimatedSprite* alex;
@@ -14,6 +14,6 @@ class MapTransitionScreen : public Entity {
 
         void update(float) override;
 
-        MapTransitionScreen();
-        ~MapTransitionScreen();
+        MapTransitionController();
+        ~MapTransitionController();
 };

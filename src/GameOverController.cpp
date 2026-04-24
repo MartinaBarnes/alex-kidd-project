@@ -1,9 +1,9 @@
-#include "GameOverScreen.h"
+#include "GameOverController.h"
 #include "RenderingServer.h"
 #include "SceneManager.h"
 #include "SceneFactory.h"
 
-void GameOverScreen::update(float dt) {
+void GameOverController::update(float dt) {
     if (time >= duration) {
         SceneManager::replace(SceneFactory::title());
         return;
@@ -11,12 +11,12 @@ void GameOverScreen::update(float dt) {
     time += dt;
 }
 
-GameOverScreen::GameOverScreen() {
+GameOverController::GameOverController() {
 	label = new GameOverLabel();
 	RenderingServer::pushOverlay(label);
 }
 
-GameOverScreen::~GameOverScreen() {
+GameOverController::~GameOverController() {
 	RenderingServer::popOverlay(label);
 	delete label;
 }

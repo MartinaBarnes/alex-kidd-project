@@ -1,4 +1,4 @@
-#include "MapTransitionScreen.h"
+#include "MapTransitionController.h"
 #include "AnimatedSprite.h"
 #include "RenderingServer.h"
 #include "SceneManager.h"
@@ -6,7 +6,7 @@
 #include "ResourceManager.h"
 #include <cmath>
 
-void MapTransitionScreen::update(float dt) {
+void MapTransitionController::update(float dt) {
     if (time >= duration + delay - 0.2f) {
         RenderingServer::visible = false; // briefly make the screen blank
     }
@@ -18,7 +18,7 @@ void MapTransitionScreen::update(float dt) {
     time += dt;
 }
 
-MapTransitionScreen::MapTransitionScreen() {
+MapTransitionController::MapTransitionController() {
     preview = new MapPreview();
     preview->position = Vector2{ 27, 24 };
     preview->arrowPosition = Vector2 { 140, 72 };
@@ -36,7 +36,7 @@ MapTransitionScreen::MapTransitionScreen() {
     RenderingServer::pushOverlay(alex);
 }
 
-MapTransitionScreen::~MapTransitionScreen() {
+MapTransitionController::~MapTransitionController() {
     RenderingServer::popOverlay(preview);
     delete preview;
 

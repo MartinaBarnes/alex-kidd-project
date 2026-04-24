@@ -36,7 +36,8 @@ void StatusScreen::draw(float dt) {
     DrawText(coins, COINS_X - coinsSize, COINS_Y, FONT_SIZE, WHITE);
 
     // draw lives
-    const char* lives = std::to_string(GameState::lives).c_str();
+    std::string livesStr = std::to_string(GameState::lives);
+    const char* lives = livesStr.c_str();
     float livesSize = MeasureText(lives, FONT_SIZE);
     DrawText(lives, LIVES_X - livesSize, LIVES_Y, FONT_SIZE, yellow);
 

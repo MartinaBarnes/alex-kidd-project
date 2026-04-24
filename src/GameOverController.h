@@ -6,7 +6,7 @@
  * Game over screen.
  * Shows the game over label.
  */
-class GameOverScreen : public Entity {
+class GameOverController : public Entity {
 	protected:
 		GameOverLabel* label;
 		float time = 0.0f;
@@ -15,6 +15,6 @@ class GameOverScreen : public Entity {
 
 		void update(float) override;
 
-		GameOverScreen();
-		~GameOverScreen();
+		GameOverController();
+		~GameOverController();
 };
