@@ -13,8 +13,6 @@ class SceneManager {
     public:
         static bool pause;
         static Scene* current;
-        static Scene* flushed;
+        static Scene* queued;
         static AABB* workspace;
-
-        static void replace(Scene*);
 };

@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "SceneFactory.h"
 #include <cmath>
+#include <iostream>
 
 int main ()
 {
@@ -23,18 +24,20 @@ int main ()
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	SceneManager::replace(SceneFactory::intro());
+	SceneManager::current = SceneFactory::intro();
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
-	    // if we're changing scenes, safely dispose of the old one and resume game
-        if (SceneManager::flushed) {
-            delete SceneManager::flushed;
-            SceneManager::flushed = NULL;
-            SceneManager::pause = false;
-            RenderingServer::camera.target = Vector2 { 0, 0 };
-            RenderingServer::visible = true;
-        }
+		// if we have a new queued scene, change it
+		if (SceneManager::queued) {
+			delete SceneManager::current;
+			SceneManager::current = SceneManager::queued;
+			SceneManager::queued = NULL;
+
+			SceneManager::pause = false;
+			RenderingServer::camera.target = Vector2{ 0, 0 };
+			RenderingServer::visible = true;
+		}
 
 	    // automatic resolution scaling
 	    short scnW = GetScreenWidth();
@@ -54,7 +57,7 @@ int main ()
 
 		// run scene logic
 		Color background = BLACK;
-		if (SceneManager::current != NULL) {
+		if (SceneManager::current) {
 			background = SceneManager::current->background;
             SceneManager::current->update(dt);
 		}

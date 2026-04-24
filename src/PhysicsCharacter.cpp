@@ -99,31 +99,25 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
 
         onGround = false;
         if (velocity.y < 0.0f) {
-            if (aabb.position.y <= 0.0f) { // attempted going out of bounds
-                aabb.position.y = 0.0f;
+            for (int i = x0; i <= x1; i++) {
+                if (tilemap->map[i][y0] == PHYSTILE_AIR) {
+                    continue; // do not collide with air
+                }
+                if (tilemap->map[i][y0] == PHYSTILE_DEATHPIT) {
+                    inDeathPit = true; // touched a death pit
+                    continue;
+                }
+                if (y0 < TILEMAP_HEIGHT && tilemap->map[i][y0 + 1] == PHYSTILE_SOLID) {
+                    continue; // ignore tiles with an obstructed vertical face (avoid getting stuck)
+                }
+                float limit = (y0 + 1) * TILE_SIZE;
+                if (aabb.position.y >= limit) {
+                    continue; // we haven't collided yet
+                }
+                aabb.position.y = limit;
                 velocity.y = 0.0f;
                 onCeiling = true;
-            } else {
-                for (int i = x0; i <= x1; i++) {
-                    if (tilemap->map[i][y0] == PHYSTILE_AIR) {
-                        continue; // do not collide with air
-                    }
-                    if (tilemap->map[i][y0] == PHYSTILE_DEATHPIT) {
-                        inDeathPit = true; // touched a death pit
-                        continue;
-                    }
-                    if (y0 < TILEMAP_HEIGHT && tilemap->map[i][y0 + 1] == PHYSTILE_SOLID) {
-                        continue; // ignore tiles with an obstructed vertical face (avoid getting stuck)
-                    }
-                    float limit = (y0 + 1) * TILE_SIZE;
-                    if (aabb.position.y >= limit) {
-                        continue; // we haven't collided yet
-                    }
-                    aabb.position.y = limit;
-                    velocity.y = 0.0f;
-                    onCeiling = true;
-                    break;
-                }
+                break;
             }
         } else if (velocity.y > 0.0f) {
             onCeiling = false;

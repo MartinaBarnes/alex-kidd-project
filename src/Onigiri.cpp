@@ -15,7 +15,7 @@ void Onigiri::update(float dt) {
         if (delay < DELAY_TIME * 2) {
             return;
         }
-        SceneManager::replace(SceneFactory::gameOver());
+        SceneManager::queued = SceneFactory::gameOver();
         return;
     }
     for (int i = 0; i < physics->colliders.size(); i++) {

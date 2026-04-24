@@ -11,7 +11,7 @@ void MapTransitionController::update(float dt) {
         RenderingServer::visible = false; // briefly make the screen blank
     }
     if (time >= duration + delay) {
-        SceneManager::replace(SceneFactory::level1());
+        SceneManager::queued = SceneFactory::level1();
         return;
     }
     preview->open = std::min(time / duration, 1.0f);

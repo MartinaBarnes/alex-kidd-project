@@ -57,7 +57,7 @@ void Player::update(float dt) {
                 if (death_time >= DEATH_ANIM_DELAY) {
                     StopSound(*ResourceManager::getSound("death"));
                     if (GameState::lives <= 0) {
-                        SceneManager::replace(SceneFactory::gameOver());
+                        SceneManager::queued = SceneFactory::gameOver();
                         return;
                     }
                     alive = true;
