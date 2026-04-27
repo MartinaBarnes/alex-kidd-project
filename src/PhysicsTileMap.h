@@ -20,4 +20,5 @@ class PhysicsTileMap : public PhysicsComponent {
         int map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
 
         bool isOnScreen() const override;
+        bool testCollision(float, PhysicsComponent*) override;
 };

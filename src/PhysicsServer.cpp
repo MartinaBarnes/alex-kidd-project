@@ -30,8 +30,7 @@ void PhysicsServer::update(float dt)
             continue;
         }
         component->awake = component->enabled && component->isOnScreen();
-        component->isColliding = false;
-        component->colliders.resize(0);
+        component->resetCollisionData();
         if (!component->awake) {
             continue;
         }

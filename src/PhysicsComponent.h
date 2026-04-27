@@ -24,6 +24,10 @@ class PhysicsComponent : public OnScreenObject {
         bool isColliding; // did it collide in the last frame
         std::vector<PhysicsComponent*> colliders = {}; // objects collided in the last frame
 
+        virtual void resetCollisionData() {
+            isColliding = false;
+            colliders.resize(0);
+        };
         virtual bool testCollision(float, PhysicsComponent*) { return false; };
         virtual void onCollision(PhysicsComponent*) {};
 };
