@@ -18,7 +18,9 @@
 class PhysicsTileMap : public PhysicsComponent {
     public:
         int map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
+        std::vector<Vector2> tilesHit;
 
         bool isOnScreen() const override;
+        void resetCollisionData() override;
         bool testCollision(float, PhysicsComponent*) override;
 };
