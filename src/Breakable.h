@@ -9,6 +9,7 @@
  * Allows for the destruction of a tile in a TileMap.
  * It both resets a physics map and rendered map tile, while emiting a sound
  * and activating a particle system.
+ * @deprecated
  */
 class Breakable : public Entity {
 	protected:

@@ -24,11 +24,12 @@ bool PhysicsTileMap::testCollision(float _, PhysicsComponent* component) {
         for (int x = x0; x <= x1; x++) {
             for (int y = y0; y <= y1; y++) {
                 if (map[x][y] == PHYSTILE_SOLID) {
-                    tilesHit.push_back(Vector2 { (float)x, (float)y });
+                    tilesHit.push_back(TileCoords { x, y });
                     return true;
                 }
             }
         }
     }
+
     return false;
 }

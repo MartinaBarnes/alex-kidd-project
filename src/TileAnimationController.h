@@ -5,6 +5,7 @@
 /**
  * Tile animation controller class.
  * Animates a group of tiles from a TileMap.
+ * @deprecated
  */
 class TileAnimationController : public Entity {
     protected:

@@ -11,6 +11,19 @@
 #define PHYSTILE_WATER 2
 #define PHYSTILE_DEATHPIT 3
 
+struct TileCoords {
+    int x;
+    int y;
+
+    bool const operator==(const TileCoords &o) const {
+        return x == o.x && y == o.y;
+    }
+
+    bool const operator<(const TileCoords &o) const {
+        return x < o.x || (x == o.x && y < o.y);
+    }
+};
+
 /**
  * Physics tile map class.
  * Contains the physics data of a tile map.
@@ -18,7 +31,7 @@
 class PhysicsTileMap : public PhysicsComponent {
     public:
         int map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
-        std::vector<Vector2> tilesHit;
+        std::vector<TileCoords> tilesHit; // tiles hit by a PhysicsHitbox
 
         bool isOnScreen() const override;
         void resetCollisionData() override;

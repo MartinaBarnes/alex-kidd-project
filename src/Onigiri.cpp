@@ -22,6 +22,7 @@ void Onigiri::update(float dt) {
         touched = true;
         delay = 0.0f;
         pausable = true;
+        sprite->enabled = false;
         SceneManager::pause = true;
         StopMusicStream(*scene->music);
         return;

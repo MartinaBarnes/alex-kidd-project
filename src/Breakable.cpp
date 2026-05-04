@@ -37,15 +37,15 @@ Breakable::Breakable(TileMap* map, Vector2 coords) {
 
 	particles = new ParticleEmitter();
 	particles->origin = physics->aabb.position;
-	particles->texture = ResourceManager::getTexture("tiles");
-	particles->frame = Rectangle { 112, 16, 7, 7 };
+	particles->particles->texture = ResourceManager::getTexture("tiles");
+	particles->particles->frames.push_back(Rectangle { 112, 16, 7, 7 });
 	particles->oneShot = true;
 	RenderingServer::push(particles);
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle frame) : Breakable(map, coords) {
-    particles->texture = texture;
-    particles->frame = frame;
+    particles->particles->texture = texture;
+    particles->particles->frames.push_back(frame);
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords, char* snd) : Breakable(map, coords) {

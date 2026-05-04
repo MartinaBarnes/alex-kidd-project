@@ -1,5 +1,11 @@
 #pragma once
 #include "RenderComponent.h"
+#include <vector>
+
+struct Particles {
+    Texture2D* texture;
+    std::vector<Rectangle> frames;
+};
 
 /**
  * Particle emitter class.
@@ -13,8 +19,7 @@ class ParticleEmitter : public RenderComponent {
         const float VELOCITY_Y = 256.0f;
     public:
         Vector2 origin;
-		Texture2D* texture;
-		Rectangle frame;
+        Particles* particles;
 		bool active;
 		float time;
 		bool oneShot; // whether this should be deleted upon finishing
