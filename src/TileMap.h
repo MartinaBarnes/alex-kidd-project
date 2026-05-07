@@ -16,9 +16,10 @@ class TileMap : public Entity {
         std::map<TileCoords, bool> breakables;
         std::map<int, Particles*> particles;
 
+        void update(float) override;
+
         Vector2 findSpawnPoint(Vector2);
         void setTilePair(int, int, int, int);
-        void update(float) override;
 
         TileMap();
 		~TileMap();

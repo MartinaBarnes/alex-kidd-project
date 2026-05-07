@@ -30,7 +30,7 @@ struct TileCoords {
  */
 class PhysicsTileMap : public PhysicsComponent {
     public:
-        int map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
+        short map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
         std::vector<TileCoords> tilesHit; // tiles hit by a PhysicsHitbox
 
         bool isOnScreen() const override;

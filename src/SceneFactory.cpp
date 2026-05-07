@@ -146,6 +146,7 @@ Scene* SceneFactory::level1() {
     Rectangle blueParticles = Rectangle { 112, 24, 8, 8 };
 
     // tile map
+    //*(TileMap*)tileMap->render->map = {}; // NOTE: manera de establecer directamente el mapa de datos
     tileMap->render->map[0][1] = TILE_CLOUD0;
     tileMap->render->map[1][1] = TILE_CLOUD1;
 

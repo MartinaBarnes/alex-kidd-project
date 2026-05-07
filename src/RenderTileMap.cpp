@@ -1,7 +1,10 @@
 #include "RenderTileMap.h"
-#include "PhysicsTileMap.h"
 #include "SceneManager.h"
 #include <cmath>
+
+#define TILEMAP_WIDTH 128
+#define TILEMAP_HEIGHT 128
+#define TILE_SIZE 16
 
 void RenderTileMap::draw(float _) {
     int u = SceneManager::workspace->position.x / TILE_SIZE;

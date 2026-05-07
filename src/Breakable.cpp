@@ -19,7 +19,7 @@ void Breakable::doBreak() {
 	tileMap->physics->map[(int)tileCoords.x][(int)tileCoords.y] = PHYSTILE_AIR;
 	tileMap->render->map[(int)tileCoords.x][(int)tileCoords.y] = 0;
 	physics->enabled = false;
-	particles->active = true;
+	emitter->active = true;
 	PlaySound(*ResourceManager::getSound(sound));
 	markedForDeletion = true;
 }
@@ -35,17 +35,18 @@ Breakable::Breakable(TileMap* map, Vector2 coords) {
 	physics->aabb.size = Vector2 { TILE_SIZE, TILE_SIZE };
 	PhysicsServer::push(physics);
 
-	particles = new ParticleEmitter();
-	particles->origin = physics->aabb.position;
-	particles->particles->texture = ResourceManager::getTexture("tiles");
-	particles->particles->frames.push_back(Rectangle { 112, 16, 7, 7 });
-	particles->oneShot = true;
-	RenderingServer::push(particles);
+	emitter = new ParticleEmitter();
+	emitter->origin = physics->aabb.position;
+	emitter->particles = new Particles();
+	emitter->particles->texture = ResourceManager::getTexture("tiles");
+	emitter->particles->frames.push_back(Rectangle { 112, 16, 7, 7 });
+	emitter->oneShot = true;
+	RenderingServer::push(emitter);
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle frame) : Breakable(map, coords) {
-    particles->particles->texture = texture;
-    particles->particles->frames.push_back(frame);
+	emitter->particles->texture = texture;
+	emitter->particles->frames.push_back(frame);
 }
 
 Breakable::Breakable(TileMap* map, Vector2 coords, char* snd) : Breakable(map, coords) {
@@ -60,8 +61,8 @@ Breakable::~Breakable() {
 	PhysicsServer::pop(physics);
 	delete physics;
 
-	if (!particles->active) {
-	    RenderingServer::pop(particles);
-		delete particles;
+	if (!emitter->active) {
+	    RenderingServer::pop(emitter);
+		delete emitter;
 	}
 }

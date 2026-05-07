@@ -14,7 +14,7 @@
 class Breakable : public Entity {
 	protected:
 		PhysicsArea* physics;
-		ParticleEmitter* particles;
+		ParticleEmitter* emitter;
 	public:
 		TileMap* tileMap;
 		Vector2 tileCoords; // tile to reset
