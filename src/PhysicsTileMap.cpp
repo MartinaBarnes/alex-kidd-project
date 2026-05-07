@@ -9,8 +9,8 @@ bool PhysicsTileMap::isOnScreen() const
     return true;
 }
 
-void PhysicsTileMap::resetCollisionData() {
-    PhysicsComponent::resetCollisionData();
+void PhysicsTileMap::resetCollision() {
+    PhysicsComponent::resetCollision();
     tilesHit.resize(0);
 }
 
@@ -25,11 +25,22 @@ bool PhysicsTileMap::testCollision(float _, PhysicsComponent* component) {
             for (int y = y0; y <= y1; y++) {
                 if (map[x][y] == PHYSTILE_SOLID) {
                     tilesHit.push_back(TileCoords { x, y });
-                    return true;
+                    if (hitbox->oneShot) {
+                        hitbox->enabled = false;
+                        return true;
+                    }
                 }
             }
         }
     }
 
-    return false;
+    return !tilesHit.empty();
+}
+
+void PhysicsTileMap::replace(short replacement[TILEMAP_WIDTH][TILEMAP_HEIGHT]) {
+    for (int x = 0; x < TILEMAP_WIDTH; x++) {
+        for (int y = 0; y < TILEMAP_HEIGHT; y++) {
+            map[x][y] = replacement[x][y];
+        }
+    }
 }

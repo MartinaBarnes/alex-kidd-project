@@ -34,6 +34,8 @@ class PhysicsTileMap : public PhysicsComponent {
         std::vector<TileCoords> tilesHit; // tiles hit by a PhysicsHitbox
 
         bool isOnScreen() const override;
-        void resetCollisionData() override;
+        void resetCollision() override;
         bool testCollision(float, PhysicsComponent*) override;
+
+        void replace(short[TILEMAP_WIDTH][TILEMAP_HEIGHT]);
 };

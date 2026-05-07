@@ -30,7 +30,7 @@ void PhysicsServer::update(float dt)
             continue;
         }
         component->awake = component->enabled && component->isOnScreen();
-        component->resetCollisionData();
+        component->resetCollision();
         if (!component->awake) {
             continue;
         }

@@ -13,4 +13,6 @@ class RenderTileMap : public RenderComponent {
         short map[TILEMAP_WIDTH][TILEMAP_HEIGHT];
 
         void draw(float) override;
+
+        void replace(short[TILEMAP_WIDTH][TILEMAP_HEIGHT]);
 };

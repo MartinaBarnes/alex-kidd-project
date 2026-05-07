@@ -1,12 +1,21 @@
 #include "PhysicsCharacter.h"
 #include "PhysicsSolid.h"
 #include "PhysicsTileMap.h"
+#include "PhysicsHitbox.h"
 #include "raylib.h"
 #include <cmath>
 #include <algorithm>
 
 bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
 {
+    // disable one shot hitboxes
+    if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(collider)) {
+        if (hitbox->oneShot) {
+            hitbox->enabled = false;
+        }
+        return true;
+    }
+
     // check collision with a solid physics object
     if (PhysicsSolid* solid = dynamic_cast<PhysicsSolid*>(collider)) {
         if (!aabb.testAABB(solid->aabb)) {

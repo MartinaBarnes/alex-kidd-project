@@ -21,3 +21,11 @@ void RenderTileMap::draw(float _) {
         }
     }
 }
+
+void RenderTileMap::replace(short replacement[TILEMAP_WIDTH][TILEMAP_HEIGHT]) {
+    for (int x = 0; x < TILEMAP_WIDTH; x++) {
+        for (int y = 0; y < TILEMAP_HEIGHT; y++) {
+            map[x][y] = replacement[x][y];
+        }
+    }
+}
