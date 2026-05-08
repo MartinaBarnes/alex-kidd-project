@@ -11,10 +11,13 @@
  */
 class TileMap : public Entity {
     public:
+        static Particles defaultBreakParticles;
+
         PhysicsTileMap* physics;
         RenderTileMap* render;
         std::map<TileCoords, bool> breakables;
-        std::map<int, Particles*> particles;
+        std::map<int, Particles> breakParticles;
+        std::map<int, std::string> breakSounds;
 
         void update(float) override;
 

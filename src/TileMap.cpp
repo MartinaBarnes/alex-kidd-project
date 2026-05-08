@@ -3,7 +3,10 @@
 #include "PhysicsServer.h"
 #include "PhysicsTileMap.h"
 #include "RenderingServer.h"
+#include "ResourceManager.h"
 #include <cmath>
+
+Particles TileMap::defaultBreakParticles = Particles{ ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 } } };
 
 void TileMap::update(float _) {
     for (int i = 0; i < physics->tilesHit.size(); i++) {
@@ -17,9 +20,13 @@ void TileMap::update(float _) {
 
         ParticleEmitter* emitter = new ParticleEmitter();
         emitter->oneShot = true;
-        if (particles[tile]) {
-            emitter->particles = particles[tile];
+        emitter->particles = &defaultBreakParticles;
+
+        Particles* tileParticles = &breakParticles[tile];
+        if (tileParticles) {
+            emitter->particles = tileParticles;
         }
+
         emitter->active = true;
         RenderingServer::push(emitter);
     }

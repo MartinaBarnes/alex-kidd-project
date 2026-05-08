@@ -1,6 +1,9 @@
 #pragma once
 #include "RenderComponent.h"
-#include "PhysicsTileMap.h"
+
+#define TILEMAP_WIDTH 128
+#define TILEMAP_HEIGHT 128
+#define TILE_SIZE 16
 
 /**
  * Render tile map class.
