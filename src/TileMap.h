@@ -4,6 +4,7 @@
 #include "RenderTileMap.h"
 #include "ParticleEmitter.h"
 #include <map>
+#include <string>
 
 /**
  * Tile map class.

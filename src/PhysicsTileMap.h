@@ -37,5 +37,5 @@ class PhysicsTileMap : public PhysicsComponent {
         void resetCollision() override;
         bool testCollision(float, PhysicsComponent*) override;
 
-        void replace(short[TILEMAP_WIDTH][TILEMAP_HEIGHT]);
+        void setTileMap(short[TILEMAP_WIDTH][TILEMAP_HEIGHT]);
 };

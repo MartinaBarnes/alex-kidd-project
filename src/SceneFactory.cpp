@@ -1,5 +1,6 @@
 #include "SceneFactory.h"
 #include "PhysicsTileMap.h"
+#include "RenderTileMap.h"
 #include "RenderingServer.h"
 #include "ResourceManager.h"
 #include "TileAnimationController.h"
@@ -55,13 +56,8 @@ Scene* SceneFactory::preview1() {
 }
 
 Scene* SceneFactory::level1() {
-    // first level -- reset lives
-    GameState::lives = 3;
-
-    // initialize scene
-    Scene* scene = new Scene();
-    scene->background = Color { 0, 0, 255, 255 };
-    scene->music = ResourceManager::getMusic("main_theme");
+    // level data definition
+    Texture2D* atlas = ResourceManager::getTexture("tiles");
 
     enum {
         TILE_NONE,
@@ -101,47 +97,74 @@ Scene* SceneFactory::level1() {
         TILE_TEMPLEGRASS,
     };
 
-    Texture2D* tiles = ResourceManager::getTexture("tiles");
+    Rectangle tiles[64] = {
+        Rectangle { 0 },
+        Rectangle { 0, 48, 16, 16 },
+        Rectangle { 0, 32, 16, 16 },
+        Rectangle { 96, 32, 16, 16 },
+        Rectangle { 80, 0, 16, 16 },
+        Rectangle { 176, 0, 16, 16 },
+        Rectangle { 176, 16, 16, 16 },
+        Rectangle { 176, 32, 16, 16 },
+        Rectangle { 112, 0, 16, 16 },
+        Rectangle { 128, 0, 16, 16 },
+        Rectangle { 112, 48, 16, 16 },
+        Rectangle { 128, 32, 16, 16 },
+        Rectangle { 144, 32, 16, 16 },
+        Rectangle { 160, 32, 16, 16 },
+        Rectangle { 112, 32, 16, 16 },
+        Rectangle { 16, 0, 16, 16 },
+        Rectangle { 16, 16, 16, 16 },
+        Rectangle { 192, 0, 16, 16 },
+        Rectangle { 192, 16, 16, 16 },
+        Rectangle { 208, 0, 16, 16 },
+        Rectangle { 208, 16, 16, 16 },
+        Rectangle { 192, 32, 16, 16 },
+        Rectangle { 192, 48, 16, 16 },
+        Rectangle { 208, 32, 16, 16 },
+        Rectangle { 208, 48, 16, 16 },
+        Rectangle { 224, 0, 16, 16 },
+        Rectangle { 240, 0, 16, 16 },
+        Rectangle { 224, 16, 16, 16 },
+        Rectangle { 240, 16, 16, 16 },
+        Rectangle { 224, 32, 16, 16 },
+        Rectangle { 240, 32, 16, 16 },
+        Rectangle { 224, 48, 16, 16 },
+        Rectangle { 240, 48, 16, 16 },
+        Rectangle { 16, 32, 16, 16 }
+    };
 
+    short map[TILEMAP_WIDTH][TILEMAP_HEIGHT] = {
+        {},
+        { TILE_CLOUD0, TILE_CLOUD1 },
+        {},
+        {},
+        { TILE_TREETOP0 },
+        { TILE_TREETOP1, TILE_TREETOP0 },
+        { TILE_TREETOP1, TILE_TREETOP1 },
+        { TILE_TREETOP1, TILE_TREETOP1 },
+        { TILE_TREETRUNK, TILE_TREETRUNK },
+        { TILE_TREETRUNK, TILE_TREETRUNK }
+    };
+
+    short physics[TILEMAP_WIDTH][TILEMAP_HEIGHT] = {
+
+    };
+
+    // initialize scene
+    Scene* scene = new Scene();
+    scene->background = Color { 0, 0, 255, 255 };
+    scene->music = ResourceManager::getMusic("main_theme");
+
+    // initialize tile map
     TileMap* tileMap = new TileMap();
+    tileMap->render->texture = atlas;
+    tileMap->render->setTileSet(tiles);
+    tileMap->render->setTileMap(map);
+    tileMap->physics->setTileMap(physics);
     scene->push(tileMap);
 
-    // tile set
-    tileMap->render->texture = tiles;
-    tileMap->render->tiles[TILE_GRASS] = Rectangle { 0, 48, 16, 16 };
-    tileMap->render->tiles[TILE_TALLGRASS] = Rectangle { 0, 32, 16, 16 };
-    tileMap->render->tiles[TILE_BLUEORB] = Rectangle { 96, 32, 16, 16 };
-    tileMap->render->tiles[TILE_REDORB] = Rectangle { 80, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TREETOP0] = Rectangle { 176, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TREETOP1] = Rectangle { 176, 16, 16, 16 };
-    tileMap->render->tiles[TILE_TREETRUNK] = Rectangle { 176, 32, 16, 16 };
-    tileMap->render->tiles[TILE_CLOUD0] = Rectangle { 112, 0, 16, 16 };
-    tileMap->render->tiles[TILE_CLOUD1] = Rectangle { 128, 0, 16, 16 };
-    tileMap->render->tiles[TILE_LAVASTILL] = Rectangle { 112, 48, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA0] = Rectangle { 128, 32, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA1] = Rectangle { 144, 32, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA2] = Rectangle { 160, 32, 16, 16 };
-    tileMap->render->tiles[TILE_LAVA3] = Rectangle { 112, 32, 16, 16 };
-    tileMap->render->tiles[TILE_BOXITEM] = Rectangle { 16, 0, 16, 16 };
-    tileMap->render->tiles[TILE_BOXSTUN] = Rectangle { 16, 16, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLETOP0L] = Rectangle { 192, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLETOP1L] = Rectangle { 192, 16, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLETOP0R] = Rectangle { 208, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLETOP1R] = Rectangle { 208, 16, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLESIDE0L] = Rectangle { 192, 32, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLESIDE1L] = Rectangle { 192, 48, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLESIDE0R] = Rectangle { 208, 32, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLESIDE1R] = Rectangle { 208, 48, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER0] = Rectangle { 224, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER1] = Rectangle { 240, 0, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER2] = Rectangle { 224, 16, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER3] = Rectangle { 240, 16, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER4] = Rectangle { 224, 32, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER5] = Rectangle { 240, 32, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER6] = Rectangle { 224, 48, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLECENTER7] = Rectangle { 240, 48, 16, 16 };
-    tileMap->render->tiles[TILE_TEMPLEGRASS] = Rectangle { 16, 32, 16, 16 };
-
+    /*
     // blue orb particles
     Rectangle blueParticles = Rectangle { 112, 24, 8, 8 };
 
@@ -546,6 +569,9 @@ Scene* SceneFactory::level1() {
     SetMusicVolume(*scene->music, 0.5f);
     PlayMusicStream(*scene->music);
 
+    // first level -- reset lives
+    GameState::lives = 3;
+     */
     return scene;
 }
 
