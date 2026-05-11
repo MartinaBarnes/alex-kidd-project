@@ -1,29 +1,47 @@
 #include "Pogostick.h"
 #include "raylib.h"
-#include "AnimatedSprite.h"
+
+Pogostick::Pogostick()
+{
+    physics = new PhysicsCharacter();
+    hitbox = new PhysicsHitbox();
+    sprite = new AnimatedSprite();
+
+    direction = DIRECTION_RIGHT;
+    bouncing = false;
+
+    // Inicializar posición
+    physics->aabb.position = { 100, 100 };
+}
+
+Pogostick::~Pogostick()
+{
+    delete physics;
+    delete hitbox;
+    delete sprite;
+}
 
 void Pogostick::update(float delta)
 {
     // =========================
-    // INPUT HORIZONTAL
+    // MOVIMIENTO HORIZONTAL
     // =========================
 
-    float movement = 0.0f;
+    float move = 0.0f;
 
     if (IsKeyDown(KEY_A))
     {
-        movement -= 1.0f;
+        move -= 1.0f;
         direction = DIRECTION_LEFT;
     }
 
     if (IsKeyDown(KEY_D))
     {
-        movement += 1.0f;
+        move += 1.0f;
         direction = DIRECTION_RIGHT;
     }
 
-    // Movimiento horizontal
-    physics->velocity.x = movement * MOVE_SPEED;
+    physics->velocity.x = move * MOVE_SPEED;
 
     // =========================
     // GRAVEDAD
@@ -31,11 +49,8 @@ void Pogostick::update(float delta)
 
     physics->velocity.y += GRAVITY * delta;
 
-    // Limitar velocidad máxima de caída
     if (physics->velocity.y > MAX_FALL_SPEED)
-    {
         physics->velocity.y = MAX_FALL_SPEED;
-    }
 
     // =========================
     // REBOTE AUTOMÁTICO
@@ -52,4 +67,7 @@ void Pogostick::update(float delta)
 
     sprite->position = physics->aabb.position;
     sprite->flipped = (direction == DIRECTION_LEFT);
+
+    // HITBOX sincronizada
+    hitbox->aabb.position = physics->aabb.position;
 }
