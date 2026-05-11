@@ -1,15 +1,42 @@
 #pragma once
 #include "Vehicle.h"
 #include "PhysicsCharacter.h"
+#include "PhysicsHitbox.h"
+#include "AnimatedSprite.h"
+
+#define DIRECTION_RIGHT 1.0f
+#define DIRECTION_LEFT -1.0f
 
 class Pogostick : public Vehicle
 {
-	//gravedad, feurza salto, velocidad movimiento, direccion movimiento
-	//puntero a phisics character, puntero a phyisics hitbox, puntero a sprite
-	
-	//constructores
+protected:
 
-	//override de update --> leer input, physics character modificar velocidad, logica movimiento...
+    // Dirección
+    float direction = DIRECTION_RIGHT;
 
-	//destructores
+    // Estado
+    bool bouncing = false;
+
+public:
+
+    // Movimiento
+    const float MOVE_SPEED = 180.0f;
+    const float AIR_ACCEL = 500.0f;
+    const float GRAVITY = 900.0f;
+    const float BOUNCE_FORCE = 350.0f;
+    const float MAX_FALL_SPEED = 700.0f;
+
+    // Componentes
+    PhysicsCharacter* physics;
+    PhysicsHitbox* hitbox;
+    AnimatedSprite* sprite;
+
+    // Función propia del Pogostick
+    void update(float delta);
+
+    //Constructor
+    Pogostick();
+
+    //Destructor
+    ~Pogostick();
 };
