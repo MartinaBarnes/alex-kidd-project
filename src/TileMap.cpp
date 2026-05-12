@@ -6,9 +6,13 @@
 #include "ResourceManager.h"
 #include <cmath>
 
-Particles TileMap::defaultBreakParticles = Particles{ ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 } } };
+Particles TileMap::DEFAULT_BREAK_PARTICLES = Particles{ ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 } } };
+std::string TileMap::DEFAULT_BREAK_SOUND = "break";
 
 void TileMap::update(float _) {
+    if (!physics) {
+        return;
+    }
     for (int i = 0; i < physics->tilesHit.size(); i++) {
         TileCoords coords = physics->tilesHit[i];
         if (!breakables[coords]) {
@@ -20,11 +24,17 @@ void TileMap::update(float _) {
 
         ParticleEmitter* emitter = new ParticleEmitter();
         emitter->oneShot = true;
-        emitter->particles = &defaultBreakParticles;
 
-        Particles* tileParticles = &breakParticles[tile];
-        if (tileParticles) {
-            emitter->particles = tileParticles;
+        if (breakParticles.find(tile) != breakParticles.end()) {
+            emitter->particles = &breakParticles[tile];
+        } else {
+            emitter->particles = &DEFAULT_BREAK_PARTICLES;
+        }
+
+        if (breakSounds.find(tile) != breakSounds.end()) {
+            PlaySound(*ResourceManager::getSound(breakSounds[tile]));
+        } else {
+            PlaySound(*ResourceManager::getSound(DEFAULT_BREAK_SOUND));
         }
 
         emitter->active = true;

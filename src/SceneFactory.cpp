@@ -135,33 +135,32 @@ Scene* SceneFactory::level1() {
     };
 
     short map[TILEMAP_WIDTH][TILEMAP_HEIGHT] = {
-        { TILE_NONE,    TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_CLD0,  TILE_CLD1,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_CLD0,  TILE_CLD1 },
-        { TILE_CLD0,    TILE_CLD1,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_CLD0,  TILE_CLD1 },
-        { TILE_NONE,    TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_CLD0,  TILE_CLD1,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_CLD0,  TILE_CLD1 },
-        { TILE_NONE,    TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE0 },
-        { TILE_TREE0,   TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE1 },
-        { TILE_TREE1,   TILE_TREE0, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE0, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE0, TILE_NONE,  TILE_NONE,  TILE_TREE1 },
-        { TILE_TREE1,   TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE0, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_TREE1 },
-        { TILE_TREE1,   TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE0, TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_TREE2 },
-        { TILE_TREE2,   TILE_TREE2, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE2, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE1, TILE_TREE1, TILE_NONE,  TILE_NONE,  TILE_TREE2 },
-        { TILE_TREE2,   TILE_TREE2, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE2, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE2, TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_TREE2, TILE_TREE2, TILE_NONE,  TILE_NONE,  TILE_TREE2 },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9   },
+        {   8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0   },
+        {   5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0   },
+        {   6,  5,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  6,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0   },
+        {   6,  6,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  6,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  5,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  5   },
+        {   6,  6,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  6,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  7,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  6   },
+        {   7,  7,  0,  0,  0,  0,  0,  0,  7,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  6,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  0,  0,  7,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  6,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  6   },
+        {   7,  7,  0,  0,  0,  0,  0,  0,  7,  0,  0,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  0,  0,  7,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7   },
+        {   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   },
+        {   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2   }
     };
 
-    /*short map[TILEMAP_WIDTH][TILEMAP_HEIGHT] = {
-        { TILE_NONE,    TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_NONE,  TILE_CLOUD0,    TILE_CLOUD1 },
-        { TILE_CLOUD0,  TILE_CLOUD1,TILE_NONE,  TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_CLOUD0, TILE_CLOUD1 },
-        { TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_CLOUD0, TILE_CLOUD1, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_CLOUD0, TILE_CLOUD1 },
-        { TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP0 },
-        { TILE_TREETOP0, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP1 },
-        { TILE_TREETOP1, TILE_TREETOP0, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP0, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP0 },
-        { TILE_TREETOP1, TILE_TREETOP1, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP1, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP0, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP1 },
-        { TILE_TREETOP1, TILE_TREETOP1, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP1, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP1, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP0, TILE_TREETOP1 },
-        { TILE_TREETRUNK, TILE_TREETRUNK, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETRUNK, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP1, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETOP1, TILE_TREETRUNK },
-        { TILE_TREETRUNK, TILE_TREETRUNK, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETRUNK, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETRUNK, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_NONE, TILE_TREETRUNK }
-    };*/
-
     short physics[TILEMAP_WIDTH][TILEMAP_HEIGHT] = {
-
+        { 0 },
+        { 0 },
+        { 0 },
+        { 0 },
+        { 0 },
+        { 0 },
+        { 0 },
+        { 0 },
+        { 0 },
+        {   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   },
+        {   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   },
     };
 
     // initialize scene
@@ -242,7 +241,7 @@ Scene* SceneFactory::level1() {
     tileMap->render->map[33][7] = TILE_TREETRUNK;
     tileMap->render->map[33][8] = TILE_TREETRUNK;
     tileMap->render->map[33][9] = TILE_TREETRUNK;
-    //
+
     tileMap->render->map[39][2] = TILE_CLOUD0;
     tileMap->render->map[40][2] = TILE_CLOUD1;
 
@@ -325,7 +324,7 @@ Scene* SceneFactory::level1() {
     for (int i = 0; i < 12; i++) {
         tileMap->physics->map[78][i] = PHYSTILE_SOLID;
     }
-
+    //
     std::vector<Vector2> lavaTiles;
     for (int i = 0; i < 4; i++) {
         int x0 = 24 + i;

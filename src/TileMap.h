@@ -12,7 +12,8 @@
  */
 class TileMap : public Entity {
     public:
-        static Particles defaultBreakParticles;
+        static Particles DEFAULT_BREAK_PARTICLES;
+        static std::string DEFAULT_BREAK_SOUND;
 
         PhysicsTileMap* physics;
         RenderTileMap* render;
