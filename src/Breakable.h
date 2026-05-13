@@ -1,32 +1,20 @@
 #pragma once
-#include "Entity.h"
-#include "PhysicsArea.h"
+#include "ResourceManager.h"
 #include "ParticleEmitter.h"
-#include "TileMap.h"
+#include <string>
 
 /**
- * Breakable entity class.
- * Allows for the destruction of a tile in a TileMap.
- * It both resets a physics map and rendered map tile, while emiting a sound
- * and activating a particle system.
- * @deprecated
+ * Breakable tile class
+ * Defines the behaviour of a breakable tile type.
  */
-class Breakable : public Entity {
-	protected:
-		PhysicsArea* physics;
-		ParticleEmitter* emitter;
-	public:
-		TileMap* tileMap;
-		Vector2 tileCoords; // tile to reset
-		char* sound = "break"; // breaking sound
+class Breakable {
+    protected:
+        static Particles DEFAULT_BREAK_PARTICLES;
+        static std::string DEFAULT_BREAK_SOUND;
+    public:
+        Particles* particles = &Breakable::DEFAULT_BREAK_PARTICLES;
+        std::string sound = Breakable::DEFAULT_BREAK_SOUND;
 
-		void update(float) override;
-		virtual void onBreak() {};
-		void doBreak();
-
-		Breakable(TileMap*, Vector2);
-		Breakable(TileMap*, Vector2, Texture2D*, Rectangle);
-		Breakable(TileMap*, Vector2, char*);
-		Breakable(TileMap*, Vector2, Texture2D*, Rectangle, char*);
-		~Breakable();
+        void doBreak(Vector2);
+        virtual void onBreak(Vector2) {};
 };

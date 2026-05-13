@@ -1,68 +1,8 @@
 #include "Breakable.h"
-#include "PhysicsComponent.h"
-#include "PhysicsServer.h"
-#include "RenderingServer.h"
-#include "ResourceManager.h"
-#include "PhysicsHitbox.h"
 
-void Breakable::update(float _) {
-	for (int i = 0; i < physics->colliders.size(); i++) {
-		if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(physics->colliders[i])) {
-			doBreak(); // break if we detect a hitbox hitting us
-			return;
-		}
-	}
-}
+static Particles DEFAULT_BREAK_PARTICLES    = Particles { ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 } } };
+static std::string DEFAULT_BREAK_SOUND      = "break";
 
-void Breakable::doBreak() {
-	onBreak();
-	tileMap->physics->map[(int)tileCoords.x][(int)tileCoords.y] = PHYSTILE_AIR;
-	tileMap->render->map[(int)tileCoords.x][(int)tileCoords.y] = 0;
-	physics->enabled = false;
-	emitter->active = true;
-	PlaySound(*ResourceManager::getSound(sound));
-	markedForDeletion = true;
-}
-
-Breakable::Breakable(TileMap* map, Vector2 coords) {
-	tileMap = map;
-	tileCoords = coords;
-
-	physics = new PhysicsArea();
-	physics->layer = LAYER_BREAKABLE;
-	physics->mask = LAYER_PLAYER;
-	physics->aabb.position = Vector2 { tileCoords.x * TILE_SIZE, tileCoords.y * TILE_SIZE };
-	physics->aabb.size = Vector2 { TILE_SIZE, TILE_SIZE };
-	PhysicsServer::push(physics);
-
-	emitter = new ParticleEmitter();
-	emitter->origin = physics->aabb.position;
-	emitter->particles = new Particles();
-	emitter->particles->texture = ResourceManager::getTexture("tiles");
-	emitter->particles->frames.push_back(Rectangle { 112, 16, 7, 7 });
-	emitter->oneShot = true;
-	RenderingServer::push(emitter);
-}
-
-Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle frame) : Breakable(map, coords) {
-	emitter->particles->texture = texture;
-	emitter->particles->frames.push_back(frame);
-}
-
-Breakable::Breakable(TileMap* map, Vector2 coords, char* snd) : Breakable(map, coords) {
-    sound = snd;
-}
-
-Breakable::Breakable(TileMap* map, Vector2 coords, Texture2D* texture, Rectangle frame, char* snd) : Breakable(map, coords, texture, frame) {
-    sound = snd;
-}
-
-Breakable::~Breakable() {
-	PhysicsServer::pop(physics);
-	delete physics;
-
-	if (!emitter->active) {
-	    RenderingServer::pop(emitter);
-		delete emitter;
-	}
+void Breakable::doBreak(Vector2 pos) {
+    // TODO: summon particle emitter and play break sound
 }

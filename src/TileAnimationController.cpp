@@ -9,8 +9,8 @@ void TileAnimationController::update(float dt) {
     // change the tiles to the current frame
     int tile = frames[frame];
     for (int i = 0; i < tiles.size(); i++) {
-        Vector2 coords = tiles[i];
-        tileMap->render->map[(int)coords.x][(int)coords.y] = tile;
+        TileCoords coords = tiles[i];
+        tileMap->render->map[coords.x][coords.y] = tile;
     }
 
     // run the animation
@@ -27,6 +27,6 @@ TileAnimationController::TileAnimationController(TileMap* map, std::vector<int> 
     frames = anim;
 }
 
-TileAnimationController::TileAnimationController(TileMap* map, std::vector<int> anim, std::vector<Vector2> coords) : TileAnimationController(map, anim) {
+TileAnimationController::TileAnimationController(TileMap* map, std::vector<int> anim, std::vector<TileCoords> coords) : TileAnimationController(map, anim) {
     tiles = coords;
 }

@@ -15,10 +15,10 @@ class TileAnimationController : public Entity {
         float frame_rate = 4.0f;
         TileMap* tileMap;
         std::vector<int> frames;
-        std::vector<Vector2> tiles = {};
+        std::vector<TileCoords> tiles = {};
 
         void update(float) override;
 
         TileAnimationController(TileMap*, std::vector<int>);
-        TileAnimationController(TileMap*, std::vector<int>, std::vector<Vector2>);
+        TileAnimationController(TileMap*, std::vector<int>, std::vector<TileCoords>);
 };

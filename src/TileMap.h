@@ -3,6 +3,8 @@
 #include "PhysicsTileMap.h"
 #include "RenderTileMap.h"
 #include "ParticleEmitter.h"
+#include "ResourceManager.h"
+#include "Breakable.h"
 #include <map>
 #include <string>
 
@@ -12,14 +14,9 @@
  */
 class TileMap : public Entity {
     public:
-        static Particles DEFAULT_BREAK_PARTICLES;
-        static std::string DEFAULT_BREAK_SOUND;
-
         PhysicsTileMap* physics;
         RenderTileMap* render;
-        std::map<TileCoords, bool> breakables;
-        std::map<int, Particles> breakParticles;
-        std::map<int, std::string> breakSounds;
+        std::map<int, Breakable> breakables;
 
         void update(float) override;
 
