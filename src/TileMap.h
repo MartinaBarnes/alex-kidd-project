@@ -2,6 +2,8 @@
 #include "Entity.h"
 #include "PhysicsTileMap.h"
 #include "RenderTileMap.h"
+#include "Breakable.h"
+#include <map>
 
 /**
  * Tile map class.
@@ -11,6 +13,9 @@ class TileMap : public Entity {
     public:
         PhysicsTileMap* physics;
         RenderTileMap* render;
+        std::map<int, Breakable> breakables;
+
+        void update(float) override;
 
         Vector2 findSpawnPoint(Vector2);
         void setTilePair(int, int, int, int);

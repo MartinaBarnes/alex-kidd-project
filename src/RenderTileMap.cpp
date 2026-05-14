@@ -1,8 +1,6 @@
 #include "RenderTileMap.h"
-#include "PhysicsTileMap.h"
 #include "SceneManager.h"
 #include <cmath>
-#include <iostream>
 
 void RenderTileMap::draw(float _) {
     int u = SceneManager::workspace->position.x / TILE_SIZE;
@@ -16,6 +14,20 @@ void RenderTileMap::draw(float _) {
                 continue;
             }
             DrawTextureRec(*texture, tiles[tile], Vector2{ (float)(x + i * TILE_SIZE), (float)(y + j * TILE_SIZE) }, WHITE);
+        }
+    }
+}
+
+void RenderTileMap::setTileSet(Rectangle tileSet[64]) {
+    for (int i = 0; i < 64; i++) {
+        tiles[i] = tileSet[i];
+    }
+}
+
+void RenderTileMap::setTileMap(short replacement[TILEMAP_HEIGHT][TILEMAP_WIDTH]) {
+    for (int x = 0; x < TILEMAP_HEIGHT; x++) {
+        for (int y = 0; y < TILEMAP_WIDTH; y++) {
+            map[x][y] = replacement[y][x];
         }
     }
 }
