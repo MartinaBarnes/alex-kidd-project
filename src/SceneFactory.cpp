@@ -209,22 +209,35 @@ Scene* SceneFactory::level1() {
 	scene->push(cameraController);
 
 	// scorpion
-	WanderingEnemy* scorpion = new WanderingEnemy();
-	scorpion->physics->aabb.position = Vector2 { 62 * TILE_SIZE, 4 * TILE_SIZE + 3 };
-	scorpion->physics->aabb.size = Vector2 { 16, 13 };
-	scorpion->direction = -1;
-	scorpion->walk_speed = 40.0f;
-	scorpion->wander_distance = 6 * TILE_SIZE;
-	scorpion->sprite->animation = new Animation();
-	scorpion->sprite->animation->texture = ResourceManager::getTexture("scorpion");
-	scorpion->sprite->animation->frames = {
+	WanderingEnemy* scorpion0 = new WanderingEnemy();
+	scorpion0->physics->aabb.position = Vector2 { 62 * TILE_SIZE, 4 * TILE_SIZE + 3 };
+	scorpion0->physics->aabb.size = Vector2 { 16, 13 };
+	scorpion0->direction = -1;
+	scorpion0->walk_speed = 40.0f;
+	scorpion0->wander_distance = 6 * TILE_SIZE;
+	scorpion0->sprite->animation = new Animation();
+	scorpion0->sprite->animation->texture = ResourceManager::getTexture("scorpion");
+	scorpion0->sprite->animation->frames = {
 	    Rectangle { 0, 3, 16, 13 },
 		Rectangle { 16, 3, 16, 13 }
 	};
-	scorpion->sprite->frame_rate = 2.0f;
-	scene->push(scorpion);
+	scorpion0->sprite->frame_rate = 2.0f;
+	scene->push(scorpion0);
 
-	// TODO: add second scorpion
+	WanderingEnemy* scorpion1 = new WanderingEnemy();
+	scorpion1->physics->aabb.position = Vector2 { 52 * TILE_SIZE, 10 * TILE_SIZE - 5 };
+	scorpion1->physics->aabb.size = Vector2 { 16, 13 };
+	scorpion1->direction = -1;
+	scorpion1->walk_speed = 40.0f;
+	scorpion1->wander_distance = 10 * TILE_SIZE;
+	scorpion1->sprite->animation = new Animation();
+	scorpion1->sprite->animation->texture = ResourceManager::getTexture("scorpion");
+	scorpion1->sprite->animation->frames = {
+	    Rectangle { 0, 3, 16, 13 },
+		Rectangle { 16, 3, 16, 13 }
+	};
+	scorpion1->sprite->frame_rate = 2.0f;
+	scene->push(scorpion1);
 
 	// onigiri
 	scene->push(new Onigiri(Vector2 { 75 * TILE_SIZE, 7 * TILE_SIZE }));
