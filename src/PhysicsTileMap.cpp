@@ -20,7 +20,6 @@ bool PhysicsTileMap::testCollision(float _, PhysicsComponent* component) {
         int y0 = std::clamp((int)std::floor(hitbox->aabb.position.y / TILE_SIZE), 0, TILEMAP_HEIGHT);
         int x1 = std::clamp((int)std::floor((hitbox->aabb.position.x + hitbox->aabb.size.x - 0.01f) / TILE_SIZE), 0, TILEMAP_WIDTH);
         int y1 = std::clamp((int)std::floor((hitbox->aabb.position.y + hitbox->aabb.size.y - 0.01f) / TILE_SIZE), 0, TILEMAP_HEIGHT);
-
         for (int x = x0; x <= x1; x++) {
             for (int y = y0; y <= y1; y++) {
                 if (map[x][y] == PHYSTILE_SOLID) {
@@ -37,10 +36,10 @@ bool PhysicsTileMap::testCollision(float _, PhysicsComponent* component) {
     return !tilesHit.empty();
 }
 
-void PhysicsTileMap::setTileMap(short replacement[TILEMAP_WIDTH][TILEMAP_HEIGHT]) {
-    for (int x = 0; x < TILEMAP_WIDTH; x++) {
-        for (int y = 0; y < TILEMAP_HEIGHT; y++) {
-            map[x][y] = replacement[x][y];
+void PhysicsTileMap::setTileMap(short replacement[TILEMAP_HEIGHT][TILEMAP_WIDTH]) {
+    for (int x = 0; x < TILEMAP_HEIGHT; x++) {
+        for (int y = 0; y < TILEMAP_WIDTH; y++) {
+            map[x][y] = replacement[y][x];
         }
     }
 }

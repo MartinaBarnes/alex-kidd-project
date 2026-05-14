@@ -230,8 +230,9 @@ Player::Player() {
 
 	hitbox = new PhysicsHitbox();
 	hitbox->layer = LAYER_PLAYER;
-	hitbox->mask = LAYER_ENEMY + LAYER_BREAKABLE;
+	hitbox->mask = LAYER_WORLD + LAYER_ENEMY + LAYER_BREAKABLE;
 	hitbox->aabb = AABB(0, 0, 12, 16);
+	hitbox->oneShot = true;
 	hitbox->enabled = false;
 	PhysicsServer::push(hitbox);
 

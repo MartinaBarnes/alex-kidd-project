@@ -24,10 +24,10 @@ void RenderTileMap::setTileSet(Rectangle tileSet[64]) {
     }
 }
 
-void RenderTileMap::setTileMap(short replacement[TILEMAP_WIDTH][TILEMAP_HEIGHT]) {
-    for (int x = 0; x < TILEMAP_WIDTH; x++) {
-        for (int y = 0; y < TILEMAP_HEIGHT; y++) {
-            map[x][y] = replacement[x][y];
+void RenderTileMap::setTileMap(short replacement[TILEMAP_HEIGHT][TILEMAP_WIDTH]) {
+    for (int x = 0; x < TILEMAP_HEIGHT; x++) {
+        for (int y = 0; y < TILEMAP_WIDTH; y++) {
+            map[x][y] = replacement[y][x];
         }
     }
 }

@@ -2,11 +2,8 @@
 #include "Entity.h"
 #include "PhysicsTileMap.h"
 #include "RenderTileMap.h"
-#include "ParticleEmitter.h"
-#include "ResourceManager.h"
 #include "Breakable.h"
 #include <map>
-#include <string>
 
 /**
  * Tile map class.

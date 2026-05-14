@@ -78,8 +78,8 @@ Scene* SceneFactory::level1() {
         TILE_BOXITEM,
         TILE_BOXSTUN,
         TILE_TMPLT0L,
-        TILE_TMPLT0R,
         TILE_TMPLT1L,
+        TILE_TMPLT0R,
         TILE_TMPLT1R,
         TILE_TMPLS0L,
         TILE_TMPLS1L,
@@ -134,35 +134,42 @@ Scene* SceneFactory::level1() {
         Rectangle { 16, 32, 16, 16 }
     };
 
-    short map[TILEMAP_WIDTH][TILEMAP_HEIGHT] = {
+    Breakable defaultBreakable = Breakable(Particles { ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 } } });
+
+    short map[TILEMAP_HEIGHT][TILEMAP_WIDTH] = {
         {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9   },
-        {   8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0   },
-        {   5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0   },
-        {   6,  5,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  6,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0   },
-        {   6,  6,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  6,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  5,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  5   },
-        {   6,  6,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  6,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  7,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  6   },
-        {   7,  7,  0,  0,  0,  0,  0,  0,  7,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  6,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  0,  0,  7,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  6,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  6   },
-        {   7,  7,  0,  0,  0,  0,  0,  0,  7,  0,  0,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  0,  0,  7,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7   },
-        {   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  10, 10, 10, 10, 1,  1,  1,  1,  1,  1,  1,  1,  10, 10, 10, 10, 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   },
-        {   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  10, 10, 10, 10, 2,  2,  2,  2,  2,  2,  2,  2,  10, 10, 10, 10, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2   }
+        {   8,  9,  0,  0,  0,  0,  0,  0,  15, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0   },
+        {   0,  0,  0,  0,  15, 0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  3,  3,  0,  8,  9,  0,  0,  0,  0,  4,  0,  3,  0,  3,  3,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  3,  0,  0,  0,  3,  3,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0,  5,  15, 3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0   },
+        {   5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  16, 15, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  3,  3,  0,  0,  0,  0,  0,  0,  4,  5,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  17, 19, 0,  0,  6,  0   },
+        {   6,  5,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  3,  15, 0,  0,  0,  0,  0,  4,  3,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  6,  4,  3,  0,  0,  0,  3,  15, 0,  3,  6,  0,  3,  6,  0,  3,  5,  0,  0,  0,  0,  0,  0,  4,  4,  4,  4,  4,  4,  4,  5,  0,  5,  0,  0,  0,  0,  0,  0 , 18, 20, 0,  0,  6,  0   },
+        {   6,  6,  0,  0,  0,  0,  0,  0,  6,  0,  3,  3,  0,  5,  3,  15, 0,  0,  0,  3,  0,  3,  3,  0,  0,  0,  0,  0,  0,  4,  6,  0,  0,  6,  3,  3,  0,  0,  0,  3,  3,  0,  0,  6,  0,  4,  6,  0,  0,  6,  4,  0,  0,  0,  0,  0,  3,  3,  3,  3,  3,  3,  3,  6,  5,  6,  0,  0,  0,  0,  0,  21, 25, 26, 23, 0,  6,  5   },
+        {   6,  6,  0,  0,  0,  0,  3,  3,  6,  0,  3,  3,  0,  6,  3,  4,  0,  0,  0,  3,  0,  0,  0,  0,  3,  0,  0,  0,  0,  5,  6,  0,  3,  7,  3,  16, 0,  3,  0,  3,  15, 0,  0,  6,  0,  0,  7,  0,  0,  6,  0,  0,  0,  0,  0,  3,  3,  0,  0,  0,  0,  0,  3,  6,  6,  6,  0,  0,  0,  0,  0,  22, 27, 28, 24, 0,  7,  6   },
+        {   7,  7,  3,  3,  0,  0,  3,  16, 7,  0,  16, 4,  0,  6,  3,  16, 0,  15, 0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  6,  0,  4,  7,  3,  4,  0,  0,  0,  0,  0,  0,  0,  7,  0,  0,  7,  0,  0,  7,  0,  0,  0,  0,  3,  3,  3,  0,  15, 15, 15, 0,  4,  7,  6,  7,  0,  0,  0,  0,  0,  22, 29, 30, 24, 0,  7,  6   },
+        {   7,  7,  3,  3,  0,  0,  3,  3,  7,  0,  3,  4,  0,  7,  4,  3,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7,  0,  0,  7,  3,  3,  0,  0,  0,  0,  0,  0,  0,  7,  0,  0,  7,  0,  0,  7,  0,  0,  0,  3,  3,  3,  4,  0,  0,  0,  0,  0,  4,  7,  7,  7,  0,  0,  0,  0,  0,  22, 31, 32, 24, 0,  7,  7   },
+        {   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  20, 20, 20, 20, 2,  2,  2,  2,  2,  2,  2,  2,  20, 20, 20, 20, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  33, 33, 33, 33, 2,  2,  2   },
+        {   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  10, 10, 10, 10, 1,  1,  1,  1,  1,  1,  1,  1,  10, 10, 10, 10, 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   }
     };
 
-    short physics[TILEMAP_WIDTH][TILEMAP_HEIGHT] = {
+    short physics[TILEMAP_HEIGHT][TILEMAP_WIDTH] = {
         {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
-        {   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  3,  3,  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,  3,  3,  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  1,  1,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  0,  1,  0,  1,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  1,  0,  0,  0,  1,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1,  1,  0,  1,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  1,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  1,  1,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1   },
+        {   4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  0,  0,  0,  0,  4,  4,  4,  4,  4,  4,  4,  4,  0,  0,  0,  0,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4   },
         {   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  3,  3,  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,  3,  3,  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   },
     };
+
+    std::map<int, Breakable> breakables;
+    breakables[TILE_BOXITEM] = defaultBreakable;
+    breakables[TILE_BOXSTUN] = defaultBreakable;
+    breakables[TILE_BORB] = Breakable(Particles { ResourceManager::getTexture("tiles"), { Rectangle { 112, 24, 8, 8 } } });
 
     // initialize scene
     Scene* scene = new Scene();
@@ -175,6 +182,7 @@ Scene* SceneFactory::level1() {
     tileMap->render->setTileSet(tiles);
     tileMap->render->setTileMap(map);
     tileMap->physics->setTileMap(physics);
+    tileMap->breakables = breakables;
     scene->push(tileMap);
 
     // animated lava tiles
@@ -187,379 +195,10 @@ Scene* SceneFactory::level1() {
         }
     ));
 
-    /*
-    // blue orb particles
-    Rectangle blueParticles = Rectangle { 112, 24, 8, 8 };
-
-    // tile map
-    //*(TileMap*)tileMap->render->map = {}; // NOTE: manera de establecer directamente el mapa de datos
-    tileMap->render->map[0][1] = TILE_CLOUD0;
-    tileMap->render->map[1][1] = TILE_CLOUD1;
-
-    tileMap->render->map[0][4] = TILE_TREETOP0;
-    tileMap->render->map[0][5] = TILE_TREETOP1;
-    tileMap->render->map[0][6] = TILE_TREETOP1;
-    tileMap->render->map[0][7] = TILE_TREETOP1;
-    tileMap->render->map[0][8] = TILE_TREETRUNK;
-    tileMap->render->map[0][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[1][5] = TILE_TREETOP0;
-    tileMap->render->map[1][6] = TILE_TREETOP1;
-    tileMap->render->map[1][7] = TILE_TREETOP1;
-    tileMap->render->map[1][8] = TILE_TREETRUNK;
-    tileMap->render->map[1][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[8][5] = TILE_TREETOP0;
-    tileMap->render->map[8][6] = TILE_TREETOP1;
-    tileMap->render->map[8][7] = TILE_TREETOP1;
-    tileMap->render->map[8][8] = TILE_TREETRUNK;
-    tileMap->render->map[8][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[11][2] = TILE_CLOUD0;
-    tileMap->render->map[12][2] = TILE_CLOUD1;
-
-    tileMap->render->map[13][6] = TILE_TREETOP0;
-    tileMap->render->map[13][7] = TILE_TREETOP1;
-    tileMap->render->map[13][8] = TILE_TREETOP1;
-    tileMap->render->map[13][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[16][0] = TILE_CLOUD0;
-    tileMap->render->map[17][0] = TILE_CLOUD1;
-
-    tileMap->render->map[20][1] = TILE_CLOUD0;
-    tileMap->render->map[21][1] = TILE_CLOUD1;
-
-    tileMap->render->map[24][2] = TILE_CLOUD0;
-    tileMap->render->map[25][2] = TILE_CLOUD1;
-
-    tileMap->render->map[29][7] = TILE_TREETOP0;
-    tileMap->render->map[29][8] = TILE_TREETOP1;
-    tileMap->render->map[29][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[29][0] = TILE_CLOUD0;
-    tileMap->render->map[30][0] = TILE_CLOUD1;
-
-    tileMap->render->map[30][5] = TILE_TREETOP0;
-    tileMap->render->map[30][6] = TILE_TREETOP1;
-    tileMap->render->map[30][7] = TILE_TREETOP1;
-    tileMap->render->map[30][8] = TILE_TREETRUNK;
-    tileMap->render->map[30][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[33][3] = TILE_TREETOP0;
-    tileMap->render->map[33][4] = TILE_TREETOP1;
-    tileMap->render->map[33][5] = TILE_TREETOP1;
-    tileMap->render->map[33][6] = TILE_TREETOP1;
-    tileMap->render->map[33][7] = TILE_TREETRUNK;
-    tileMap->render->map[33][8] = TILE_TREETRUNK;
-    tileMap->render->map[33][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[39][2] = TILE_CLOUD0;
-    tileMap->render->map[40][2] = TILE_CLOUD1;
-
-    tileMap->render->map[43][4] = TILE_TREETOP0;
-    tileMap->render->map[43][5] = TILE_TREETOP1;
-    tileMap->render->map[43][6] = TILE_TREETOP1;
-    tileMap->render->map[43][7] = TILE_TREETOP1;
-    tileMap->render->map[43][8] = TILE_TREETRUNK;
-    tileMap->render->map[43][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[44][0] = TILE_CLOUD0;
-    tileMap->render->map[45][0] = TILE_CLOUD1;
-
-    tileMap->render->map[46][3] = TILE_TREETOP0;
-    tileMap->render->map[46][4] = TILE_TREETOP1;
-    tileMap->render->map[46][5] = TILE_TREETOP1;
-    tileMap->render->map[46][6] = TILE_TREETOP1;
-    tileMap->render->map[46][7] = TILE_TREETRUNK;
-    tileMap->render->map[46][8] = TILE_TREETRUNK;
-    tileMap->render->map[46][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[49][5] = TILE_TREETOP0;
-    tileMap->render->map[49][6] = TILE_TREETOP1;
-    tileMap->render->map[49][7] = TILE_TREETOP1;
-    tileMap->render->map[49][8] = TILE_TREETRUNK;
-    tileMap->render->map[49][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[50][2] = TILE_CLOUD0;
-    tileMap->render->map[51][2] = TILE_CLOUD1;
-
-    tileMap->render->map[58][1] = TILE_CLOUD0;
-    tileMap->render->map[59][1] = TILE_CLOUD1;
-
-    tileMap->render->map[63][3] = TILE_CLOUD0;
-    tileMap->render->map[64][3] = TILE_CLOUD1;
-
-    tileMap->render->map[63][5] = TILE_TREETOP0;
-    tileMap->render->map[63][6] = TILE_TREETOP1;
-    tileMap->render->map[63][7] = TILE_TREETOP1;
-    tileMap->render->map[63][8] = TILE_TREETRUNK;
-    tileMap->render->map[63][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[64][6] = TILE_TREETOP0;
-    tileMap->render->map[64][7] = TILE_TREETOP1;
-    tileMap->render->map[64][8] = TILE_TREETOP1;
-    tileMap->render->map[64][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[65][5] = TILE_TREETOP0;
-    tileMap->render->map[65][6] = TILE_TREETOP1;
-    tileMap->render->map[65][7] = TILE_TREETOP1;
-    tileMap->render->map[65][8] = TILE_TREETRUNK;
-    tileMap->render->map[65][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[68][1] = TILE_CLOUD0;
-    tileMap->render->map[69][1] = TILE_CLOUD1;
-
-    tileMap->render->map[73][2] = TILE_CLOUD0;
-    tileMap->render->map[74][2] = TILE_CLOUD1;
-
-    tileMap->render->map[76][0] = TILE_CLOUD0;
-    tileMap->render->map[77][0] = TILE_CLOUD1;
-
-    tileMap->render->map[76][3] = TILE_TREETOP0;
-    tileMap->render->map[76][4] = TILE_TREETOP1;
-    tileMap->render->map[76][5] = TILE_TREETOP1;
-    tileMap->render->map[76][6] = TILE_TREETOP1;
-    tileMap->render->map[76][7] = TILE_TREETRUNK;
-    tileMap->render->map[76][8] = TILE_TREETRUNK;
-    tileMap->render->map[76][9] = TILE_TREETRUNK;
-
-    tileMap->render->map[77][6] = TILE_TREETOP0;
-    tileMap->render->map[77][7] = TILE_TREETOP1;
-    tileMap->render->map[77][8] = TILE_TREETOP1;
-    tileMap->render->map[77][9] = TILE_TREETRUNK;
-
-    for (int i = 0; i < 78; i++) {
-        tileMap->setTilePair(i, 10, PHYSTILE_SOLID, TILE_TALLGRASS);
-        tileMap->setTilePair(i, 11, PHYSTILE_SOLID, TILE_GRASS);
-    }
-    for (int i = 0; i < 12; i++) {
-        tileMap->physics->map[78][i] = PHYSTILE_SOLID;
-    }
-    // 10 3
-    std::vector<Vector2> lavaTiles;
-    for (int i = 0; i < 4; i++) {
-        int x0 = 24 + i;
-        int x1 = 36 + i;
-
-        tileMap->setTilePair(x0, 11, PHYSTILE_DEATHPIT, TILE_LAVASTILL);
-        tileMap->setTilePair(x1, 11, PHYSTILE_DEATHPIT, TILE_LAVASTILL);
-
-        tileMap->physics->map[x0][10] = PHYSTILE_AIR;
-        tileMap->physics->map[x1][10] = PHYSTILE_AIR;
-        lavaTiles.push_back(Vector2 { (float)x0, 10 });
-        lavaTiles.push_back(Vector2 { (float)x1, 10 });
-    }
-    scene->push(new TileAnimationController(tileMap, { TILE_LAVA0, TILE_LAVA1, TILE_LAVA2, TILE_LAVA3 }, lavaTiles));
-    //
-    tileMap->setTilePair(4, 2, PHYSTILE_SOLID, TILE_BOXITEM);
-    scene->push(new Breakable(tileMap, Vector2 { 4, 2 }));
-
-    tileMap->setTilePair(8, 1, PHYSTILE_SOLID, TILE_BOXITEM);
-    scene->push(new Breakable(tileMap, Vector2 { 8, 1 }));
-
-    for (float x = 2; x <= 3; x++) {
-        for (float y = 8; y <= 9; y++) {
-            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
-        }
-    }
-
-    for (float x = 6; x <= 7; x++) {
-        for (float y = 7; y <= 9; y++) {
-            if (x == 7 && y == 8) {
-                tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BOXSTUN);
-                scene->push(new Breakable(tileMap, Vector2 { x, y }));
-                continue;
-            }
-            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
-        }
-    }
-
-    for (float x = 10; x <= 11; x++) {
-        for (float y = 6; y <= 9; y++) {
-            if (x == 11 && y >= 8) {
-                break;
-            }
-            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            if (x == 10 && y == 8) {
-                scene->push(new Breakable(tileMap, Vector2 { x, y }));
-                continue;
-            }
-            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
-        }
-    }
-    tileMap->render->map[10][8] = TILE_BOXSTUN;
-    tileMap->setTilePair(10, 3, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(11, 8, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(11, 9, PHYSTILE_SOLID, TILE_REDORB);
-
-    for (float y = 5; y <= 8; y++) {
-        tileMap->setTilePair(14, y, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { 14, y }, tiles, blueParticles));
-    }
-    tileMap->setTilePair(14, 9, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(15, 5, PHYSTILE_SOLID, TILE_BOXITEM);
-    scene->push(new Breakable(tileMap, Vector2 { 15, 5 }));
-    tileMap->setTilePair(15, 6, PHYSTILE_SOLID, TILE_BOXITEM);
-    scene->push(new Breakable(tileMap, Vector2 { 15, 6 }));
-    tileMap->setTilePair(15, 7, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(15, 8, PHYSTILE_SOLID, TILE_BOXSTUN);
-    scene->push(new Breakable(tileMap, Vector2 { 15, 8 }));
-    tileMap->setTilePair(15, 9, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 15, 9 }, tiles, blueParticles));
-
-    tileMap->setTilePair(17, 3, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 17, 3 }, tiles, blueParticles));
-
-    tileMap->setTilePair(17, 8, PHYSTILE_SOLID, TILE_BOXSTUN);
-    scene->push(new Breakable(tileMap, Vector2 { 17, 8 }));
-
-    for (float y = 6; y <= 9; y++) {
-        if (y == 8) {
-            tileMap->setTilePair(19, y, PHYSTILE_SOLID, TILE_REDORB);
-            continue;
-        }
-        tileMap->setTilePair(19, y, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { 19, y }, tiles, blueParticles));
-    }
-
-    for (float x = 21; x <= 22; x++) {
-        for (float y = 2; y <= 6; y++) {
-            if (x == 21 && y == 5) {
-                tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_REDORB);
-                continue;
-            }
-            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            if (y == 4) {
-                scene->push(new Breakable(tileMap, Vector2 { x, y }));
-                continue;
-            }
-            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
-        }
-    }
-    tileMap->render->map[21][4] = TILE_BOXSTUN;
-    tileMap->render->map[22][4] = TILE_BOXITEM;
-
-    tileMap->setTilePair(24, 7, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 24, 7 }, tiles, blueParticles));
-
-    tileMap->setTilePair(26, 3, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 26, 3 }, tiles, blueParticles));
-
-    tileMap->setTilePair(29, 6, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(30, 2, PHYSTILE_SOLID, TILE_REDORB);
-
-    tileMap->setTilePair(32, 8, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(32, 7, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 32, 7 }, tiles, blueParticles));
-    tileMap->setTilePair(32, 2, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 32, 2 }, tiles, blueParticles));
-
-    for (float x = 34; x <= 35; x++) {
-        for (float y = 2; y <= 9; y++) {
-            if ((x == 34 && y == 5) || (x == 35 && y == 8)) {
-                tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_REDORB);
-                continue;
-            }
-            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            if ((x == 34 && y == 3) || (x == 35 && y == 7)) {
-                scene->push(new Breakable(tileMap, Vector2 { x, y }));
-                continue;
-            }
-            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
-        }
-    }
-    tileMap->render->map[34][3] = TILE_BOXITEM;
-    tileMap->render->map[35][7] = TILE_BOXSTUN;
-
-    tileMap->setTilePair(37, 7, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 37, 7 }, tiles, blueParticles));
-
-    for (float x = 39; x <= 40; x++) {
-        for (float y = 5; y <= 7; y++) {
-            if (x == 40 && (y != 7)) {
-                tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BOXITEM);
-                scene->push(new Breakable(tileMap, Vector2 { x, y }));
-                continue;
-            }
-            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
-        }
-    }
-
-    tileMap->setTilePair(42, 4, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(42, 5, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 42, 5 }, tiles, blueParticles));
-
-    tileMap->setTilePair(45, 5, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 45, 4 }, tiles, blueParticles));
-    tileMap->setTilePair(45, 6, PHYSTILE_SOLID, TILE_REDORB);
-
-    tileMap->setTilePair(48, 5, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 47, 4 }, tiles, blueParticles));
-
-    tileMap->setTilePair(50, 6, PHYSTILE_SOLID, TILE_REDORB);
-
-    tileMap->setTilePair(54, 2, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 54, 2 }, tiles, blueParticles));
-
-    for (float x = 56; x <= 62; x++) {
-        tileMap->setTilePair(x, 5, PHYSTILE_SOLID, TILE_REDORB);
-        tileMap->setTilePair(x, 6, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { x, 6 }, tiles, blueParticles));
-    }
-
-    for (float x = 53; x <= 55; x++) {
-        for (float y = 7; y <= 9; y++) {
-            if ((y == 7 && (x == 53 || x == 54)) || (y == 8 && x == 53)) {
-                continue;
-            }
-            tileMap->setTilePair(x, y, PHYSTILE_SOLID, TILE_BLUEORB);
-            scene->push(new Breakable(tileMap, Vector2 { x, y }, tiles, blueParticles));
-        }
-    }
-    for (float y = 7; y <= 8; y++) {
-        tileMap->setTilePair(56, y, PHYSTILE_SOLID, TILE_BLUEORB);
-        scene->push(new Breakable(tileMap, Vector2 { 56, y }, tiles, blueParticles));
-    }
-    tileMap->setTilePair(56, 9, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(62, 7, PHYSTILE_SOLID, TILE_BLUEORB);
-    scene->push(new Breakable(tileMap, Vector2 { 62, 7 }, tiles, blueParticles));
-    tileMap->setTilePair(62, 8, PHYSTILE_SOLID, TILE_REDORB);
-    tileMap->setTilePair(62, 9, PHYSTILE_SOLID, TILE_REDORB);
-
-    for (float x = 58; x <= 60; x++) {
-        tileMap->setTilePair(x, 8, PHYSTILE_SOLID, TILE_BOXITEM);
-        scene->push(new Breakable(tileMap, Vector2 { x, 8 }));
-    }
-
-    tileMap->render->map[72][4] = TILE_TEMPLETOP0L;
-    tileMap->render->map[72][5] = TILE_TEMPLETOP1L;
-    tileMap->render->map[73][4] = TILE_TEMPLETOP0R;
-    tileMap->render->map[73][5] = TILE_TEMPLETOP1R;
-    tileMap->render->map[71][6] = TILE_TEMPLESIDE0L;
-    tileMap->render->map[74][6] = TILE_TEMPLESIDE0R;
-    for (int y = 7; y <= 9; y++) {
-        tileMap->render->map[71][y] = TILE_TEMPLESIDE1L;
-        tileMap->render->map[74][y] = TILE_TEMPLESIDE1R;
-    }
-    tileMap->render->map[72][6] = TILE_TEMPLECENTER0;
-    tileMap->render->map[73][6] = TILE_TEMPLECENTER1;
-    tileMap->render->map[72][7] = TILE_TEMPLECENTER2;
-    tileMap->render->map[73][7] = TILE_TEMPLECENTER3;
-    tileMap->render->map[72][8] = TILE_TEMPLECENTER4;
-    tileMap->render->map[73][8] = TILE_TEMPLECENTER5;
-    tileMap->render->map[72][9] = TILE_TEMPLECENTER6;
-    tileMap->render->map[73][9] = TILE_TEMPLECENTER7;
-    for (int x = 71; x <= 74; x++) {
-        tileMap->render->map[x][10] = TILE_TEMPLEGRASS;
-    }
-
     // player
     Player* player = new Player();
 	player->tileMap = tileMap;
-	player->physics->aabb.position.y = 136;
+	player->physics->aabb.position.y = 136 + 8;
 	scene->push(player);
 
 	// camera controller
@@ -585,8 +224,24 @@ Scene* SceneFactory::level1() {
 	scorpion->sprite->frame_rate = 2.0f;
 	scene->push(scorpion);
 
+	// TODO: add second scorpion
+
 	// onigiri
 	scene->push(new Onigiri(Vector2 { 75 * TILE_SIZE, 7 * TILE_SIZE }));
+
+	// create tall grass only tilemap
+	TileMap* grass = new TileMap();
+	grass->render->texture = atlas;
+	grass->render->setTileSet(tiles);
+	for (int x = 0; x <= 76; x++) {
+	    if ((x >= 24 && x <= 27) || (x >= 36 && x <= 39)) {
+			continue;
+		}
+	    grass->render->map[x][10] = TILE_TGRASS;
+	}
+	grass->physics->layer = 0;
+	grass->physics->mask = 0;
+	scene->push(grass);
 
     // play music
     SetMusicVolume(*scene->music, 0.5f);
@@ -594,7 +249,7 @@ Scene* SceneFactory::level1() {
 
     // first level -- reset lives
     GameState::lives = 3;
-     */
+
     return scene;
 }
 

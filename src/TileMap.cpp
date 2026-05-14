@@ -1,9 +1,7 @@
 #include "TileMap.h"
-#include "ParticleEmitter.h"
 #include "PhysicsServer.h"
 #include "PhysicsTileMap.h"
 #include "RenderingServer.h"
-#include "ResourceManager.h"
 #include <cmath>
 
 void TileMap::update(float _) {
@@ -11,31 +9,13 @@ void TileMap::update(float _) {
         return;
     }
     for (int i = 0; i < physics->tilesHit.size(); i++) {
-        /**TileCoords coords = physics->tilesHit[i];
-        if (!breakables[coords]) {
+        TileCoords coords = physics->tilesHit[i];
+        int tile = render->map[coords.x][coords.y];
+        if (breakables.find(tile) == breakables.end()) {
             continue;
         }
-
-        int tile = render->map[coords.x][coords.y];
         setTilePair(coords.x, coords.y, PHYSTILE_AIR, 0);
-
-        ParticleEmitter* emitter = new ParticleEmitter();
-        emitter->oneShot = true;
-
-        if (breakParticles.find(tile) != breakParticles.end()) {
-            emitter->particles = &breakParticles[tile];
-        } else {
-            emitter->particles = &DEFAULT_BREAK_PARTICLES;
-        }
-
-        if (breakSounds.find(tile) != breakSounds.end()) {
-            PlaySound(*ResourceManager::getSound(breakSounds[tile]));
-        } else {
-            PlaySound(*ResourceManager::getSound(DEFAULT_BREAK_SOUND));
-        }
-
-        emitter->active = true;
-        RenderingServer::push(emitter);*/
+        breakables[tile].doBreak(Vector2 { (float)coords.x * TILE_SIZE, (float)coords.y * TILE_SIZE });
     }
 }
 
@@ -61,6 +41,7 @@ void TileMap::setTilePair(int x, int y, int physTile, int tile) {
 TileMap::TileMap() {
     physics = new PhysicsTileMap();
     physics->layer = LAYER_WORLD;
+    physics->mask = LAYER_PLAYER;
     PhysicsServer::push(physics);
 
     render = new RenderTileMap();

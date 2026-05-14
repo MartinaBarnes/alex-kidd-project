@@ -18,5 +18,5 @@ class RenderTileMap : public RenderComponent {
         void draw(float) override;
 
         void setTileSet(Rectangle[64]);
-        void setTileMap(short[TILEMAP_WIDTH][TILEMAP_HEIGHT]);
+        void setTileMap(short[TILEMAP_HEIGHT][TILEMAP_WIDTH]);
 };

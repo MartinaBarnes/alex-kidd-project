@@ -2,14 +2,15 @@
 #include "PhysicsComponent.h"
 #include "raylib.h"
 
-#define TILEMAP_WIDTH 128
-#define TILEMAP_HEIGHT 128
-#define TILE_SIZE 16
+#define TILEMAP_WIDTH   128
+#define TILEMAP_HEIGHT  128
+#define TILE_SIZE       16
 
-#define PHYSTILE_AIR 0
-#define PHYSTILE_SOLID 1
-#define PHYSTILE_WATER 2
-#define PHYSTILE_DEATHPIT 3
+#define PHYSTILE_AIR        0
+#define PHYSTILE_SOLID      1
+#define PHYSTILE_WATER      2
+#define PHYSTILE_DEATHPIT   3
+#define PHYSTILE_HALF       4
 
 struct TileCoords {
     int x;
@@ -37,5 +38,5 @@ class PhysicsTileMap : public PhysicsComponent {
         void resetCollision() override;
         bool testCollision(float, PhysicsComponent*) override;
 
-        void setTileMap(short[TILEMAP_WIDTH][TILEMAP_HEIGHT]);
+        void setTileMap(short[TILEMAP_HEIGHT][TILEMAP_WIDTH]);
 };

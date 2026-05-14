@@ -7,7 +7,6 @@
 #include "SceneManager.h"
 #include "SceneFactory.h"
 #include <cmath>
-#include <iostream>
 
 int main ()
 {

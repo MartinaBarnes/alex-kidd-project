@@ -8,13 +8,14 @@
  * Defines the behaviour of a breakable tile type.
  */
 class Breakable {
-    protected:
-        static Particles DEFAULT_BREAK_PARTICLES;
-        static std::string DEFAULT_BREAK_SOUND;
     public:
-        Particles* particles = &Breakable::DEFAULT_BREAK_PARTICLES;
-        std::string sound = Breakable::DEFAULT_BREAK_SOUND;
+        Particles particles;
+        std::string sound = "break";
 
         void doBreak(Vector2);
         virtual void onBreak(Vector2) {};
+
+        Breakable() {};
+        Breakable(Particles);
+        Breakable(Particles, std::string);
 };
