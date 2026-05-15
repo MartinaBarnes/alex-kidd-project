@@ -210,7 +210,7 @@ Scene* SceneFactory::level1() {
 
 	// scorpion
 	WanderingEnemy* scorpion0 = new WanderingEnemy();
-	scorpion0->physics->aabb.position = Vector2 { 62 * TILE_SIZE, 4 * TILE_SIZE + 3 };
+	scorpion0->physics->aabb.position = Vector2 { 62 * TILE_SIZE, 4 * TILE_SIZE + 2 };
 	scorpion0->physics->aabb.size = Vector2 { 16, 13 };
 	scorpion0->direction = -1;
 	scorpion0->walk_speed = 40.0f;
@@ -218,8 +218,8 @@ Scene* SceneFactory::level1() {
 	scorpion0->sprite->animation = new Animation();
 	scorpion0->sprite->animation->texture = ResourceManager::getTexture("scorpion");
 	scorpion0->sprite->animation->frames = {
-	    Rectangle { 0, 3, 16, 13 },
-		Rectangle { 16, 3, 16, 13 }
+	    Rectangle { 0, 2, 16, 14 },
+		Rectangle { 16, 2, 16, 14 }
 	};
 	scorpion0->sprite->frame_rate = 2.0f;
 	scene->push(scorpion0);
@@ -233,14 +233,14 @@ Scene* SceneFactory::level1() {
 	scorpion1->sprite->animation = new Animation();
 	scorpion1->sprite->animation->texture = ResourceManager::getTexture("scorpion");
 	scorpion1->sprite->animation->frames = {
-	    Rectangle { 0, 3, 16, 13 },
-		Rectangle { 16, 3, 16, 13 }
+	    Rectangle { 0, 2, 16, 14 },
+		Rectangle { 16, 2, 16, 14 }
 	};
 	scorpion1->sprite->frame_rate = 2.0f;
 	scene->push(scorpion1);
 
 	// onigiri
-	scene->push(new Onigiri(Vector2 { 75 * TILE_SIZE, 7 * TILE_SIZE }));
+	scene->push(new Onigiri(Vector2 { 75 * TILE_SIZE + 4, 7 * TILE_SIZE }));
 
 	// create tall grass only tilemap
 	TileMap* grass = new TileMap();
