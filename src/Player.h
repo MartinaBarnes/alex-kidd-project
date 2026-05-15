@@ -46,6 +46,7 @@ class Player : public LivingEntity
         AnimatedSprite* sprite;
         StatusScreen* status;
 		TileMap* tileMap;
+		bool enabled = true;
 
 		void update(float) override;
 		void onKilled() override;

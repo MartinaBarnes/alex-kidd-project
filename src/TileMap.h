@@ -13,7 +13,7 @@ class TileMap : public Entity {
     public:
         PhysicsTileMap* physics;
         RenderTileMap* render;
-        std::map<int, Breakable> breakables;
+        std::map<int, Breakable*> breakables;
 
         void update(float) override;
 

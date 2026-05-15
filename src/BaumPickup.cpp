@@ -4,18 +4,25 @@
 #include "ResourceManager.h"
 #include "GameState.h"
 
-void BaumPickup::update(float _) {
+void BaumPickup::update(float dt) {
 	for (int i = 0; i < physics->colliders.size(); i++) {
 		PlaySound(*ResourceManager::getSound("coin_pickup"));
 		GameState::baums += baums;
-		scene->pop(this);
-		delete this;
-		break;
+		markedForDeletion = true;
+		return;
+	}
+	if (!temp) {
+	    return;
+	}
+	time += dt;
+	if (time >= DISAPPEAR_TIME) {
+	    markedForDeletion = true;
 	}
 }
 
-BaumPickup::BaumPickup(Vector2 position, bool large) {
+BaumPickup::BaumPickup(Vector2 position, bool large, bool disappear) {
 	baums = large ? LARGE_BAUM_COUNT : SMALL_BAUM_COUNT;
+	temp = disappear;
 
 	physics = new PhysicsArea();
 	physics->aabb = AABB { (int)position.x, (int)position.y, 16, 16 };

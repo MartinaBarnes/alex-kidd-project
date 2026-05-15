@@ -3,7 +3,7 @@
 
 class BaumDrop : public Breakable {
 	public:
-		void onBreak(Scene*, Vector2) override;
+	    void onBreak(Scene*, Vector2) override;
 
-		BaumDrop(Particles particles) : Breakable(particles) {};
+		BaumDrop(Particles newParticles) : Breakable(newParticles) {};
 };

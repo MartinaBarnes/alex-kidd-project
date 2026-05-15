@@ -31,7 +31,8 @@ void StatusScreen::draw(float dt) {
     Color yellow = Color { 255, 255, 170, 255 };
 
     // draw coins
-    const char* coins = "0";
+    std::string coinsStr = std::to_string(GameState::baums);
+    const char* coins = coinsStr.c_str();
     float coinsSize = MeasureText(coins, FONT_SIZE);
     DrawText(coins, COINS_X - coinsSize, COINS_Y, FONT_SIZE, WHITE);
 

@@ -48,6 +48,10 @@ void Player::crouch(bool crouch) {
 }
 
 void Player::update(float dt) {
+    if (!enabled) {
+        return;
+    }
+
     // run the death sequence when dead
     if (!alive) {
         // wait a bit before respawning

@@ -3,6 +3,7 @@
 #include "ParticleEmitter.h"
 #include "Scene.h"
 #include <string>
+#include <iostream>
 
 /**
  * Breakable tile class
@@ -16,7 +17,7 @@ class Breakable {
         void doBreak(Scene*, Vector2);
         virtual void onBreak(Scene*, Vector2) {};
 
-        Breakable() {};
+        Breakable() = default;
         Breakable(Particles);
         Breakable(Particles, std::string);
 };

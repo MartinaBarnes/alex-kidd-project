@@ -15,7 +15,7 @@ void TileMap::update(float _) {
             continue;
         }
         setTilePair(coords.x, coords.y, PHYSTILE_AIR, 0);
-        breakables[tile].doBreak(scene, Vector2 { (float)coords.x * TILE_SIZE, (float)coords.y * TILE_SIZE });
+        breakables[tile]->doBreak(scene, Vector2 { (float)coords.x * TILE_SIZE, (float)coords.y * TILE_SIZE });
     }
 }
 
@@ -53,6 +53,10 @@ TileMap::TileMap() {
 }
 
 TileMap::~TileMap() {
+    for (const auto& [key, value] : breakables) {
+        delete value;
+    }
+
     PhysicsServer::pop(physics);
     delete physics;
 
