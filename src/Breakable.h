@@ -1,6 +1,7 @@
 #pragma once
 #include "ResourceManager.h"
 #include "ParticleEmitter.h"
+#include "Scene.h"
 #include <string>
 
 /**
@@ -12,8 +13,8 @@ class Breakable {
         Particles particles;
         std::string sound = "break";
 
-        void doBreak(Vector2);
-        virtual void onBreak(Vector2) {};
+        void doBreak(Scene*, Vector2);
+        virtual void onBreak(Scene*, Vector2) {};
 
         Breakable() {};
         Breakable(Particles);

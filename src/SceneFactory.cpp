@@ -15,6 +15,7 @@
 #include "MapTransitionController.h"
 #include "TitleSplashController.h"
 #include "IntroSplashController.h"
+#include "BaumDrop.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -134,7 +135,8 @@ Scene* SceneFactory::level1() {
         Rectangle { 16, 32, 16, 16 }
     };
 
-    Breakable defaultBreakable = Breakable(Particles { ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 } } });
+    Particles defaultParticles = Particles{ ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 } } };
+    Breakable defaultBreakable = Breakable(defaultParticles);
 
     short map[TILEMAP_HEIGHT][TILEMAP_WIDTH] = {
         {   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  9   },
@@ -167,7 +169,7 @@ Scene* SceneFactory::level1() {
     };
 
     std::map<int, Breakable> breakables;
-    breakables[TILE_BOXITEM] = defaultBreakable;
+    breakables[TILE_BOXITEM] = BaumDrop(defaultParticles);
     breakables[TILE_BOXSTUN] = defaultBreakable;
     breakables[TILE_BORB] = Breakable(Particles { ResourceManager::getTexture("tiles"), { Rectangle { 112, 24, 8, 8 } } });
 
