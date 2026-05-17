@@ -491,7 +491,7 @@ Scene* SceneFactory::level2() {
 	CameraController* cameraController = new CameraController();
 	cameraController->player = player;
 	cameraController->mode = CAM_RIGHT;
-	cameraController->limits.x = 2288;
+	cameraController->limits.x = 2160;
 	scene->push(cameraController);
 
     // play music
