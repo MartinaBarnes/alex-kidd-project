@@ -5,12 +5,13 @@
 
 class MapTransitionController : public Entity {
     protected:
-        MapPreview* preview;
         AnimatedSprite* alex;
         float time = 0.0f;
     public:
         float duration = 1.0f;
         float delay = 2.0f;
+        bool toLevel2 = false;
+        MapPreview* preview;
 
         void update(float) override;
 

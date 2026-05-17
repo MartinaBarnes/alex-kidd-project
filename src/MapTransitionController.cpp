@@ -11,6 +11,10 @@ void MapTransitionController::update(float dt) {
         RenderingServer::visible = false; // briefly make the screen blank
     }
     if (time >= duration + delay) {
+        if (toLevel2) {
+            SceneManager::queued = SceneFactory::level2();
+            return;
+        }
         SceneManager::queued = SceneFactory::level1();
         return;
     }
@@ -21,7 +25,6 @@ void MapTransitionController::update(float dt) {
 MapTransitionController::MapTransitionController() {
     preview = new MapPreview();
     preview->position = Vector2{ 27, 24 };
-    preview->arrowPosition = Vector2 { 140, 72 };
     RenderingServer::pushOverlay(preview);
 
     alex = new AnimatedSprite();
