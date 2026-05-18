@@ -19,7 +19,7 @@
 
 void Player::onKilled() {
     GameState::lives--;
-    death_time = 0.0f;
+    deathTime = 0.0f;
     attacking = false;
     hitbox->enabled = false;
     physics->velocity = Vector2 { 0, 0 };
@@ -48,17 +48,13 @@ void Player::crouch(bool crouch) {
 }
 
 void Player::update(float dt) {
-    if (!enabled) {
-        return;
-    }
-
     // run the death sequence when dead
     if (!alive) {
         // wait a bit before respawning
         if (respawning) {
-            if (death_time < DEATH_ANIM_DELAY) {
-                death_time += dt;
-                if (death_time >= DEATH_ANIM_DELAY) {
+            if (deathTime < DEATH_ANIM_DELAY) {
+                deathTime += dt;
+                if (deathTime >= DEATH_ANIM_DELAY) {
                     StopSound(*ResourceManager::getSound("death"));
                     if (GameState::lives <= 0) {
                         SceneManager::queued = SceneFactory::gameOver();
@@ -78,9 +74,9 @@ void Player::update(float dt) {
             return;
         }
         // after dying, freeze the screen a bit before showing the sequence
-        if (death_time < DEATH_ANIM_DELAY) {
-            death_time += dt;
-            if (death_time >= DEATH_ANIM_DELAY) {
+        if (deathTime < DEATH_ANIM_DELAY) {
+            deathTime += dt;
+            if (deathTime >= DEATH_ANIM_DELAY) {
                 sprite->pausable = true;
                 sprite->animation = &animations[ANIM_DEATH];
                 PlaySound(*ResourceManager::getSound("death"));
@@ -90,11 +86,17 @@ void Player::update(float dt) {
             if (sprite->position.y + sprite->animation->frames[0].height > RenderingServer::camera.target.y) {
                 sprite->position.y -= DEATH_ANIM_SPEED * dt;
             } else {
-                death_time = 0.0f;
+                deathTime = 0.0f;
                 respawning = true;
                 RenderingServer::visible = false;
             }
         }
+        return;
+    }
+
+    // check door status
+    if (doorState != NONE) {
+        // TODO: door sequence
         return;
     }
 
@@ -177,20 +179,26 @@ void Player::update(float dt) {
 
     // jumping and falling
     if (jumping) {
-        if (jump_time >= MAX_JUMP_TIME || !IsKeyDown(KEY_UP) || physics->onCeiling) {
+        if (jumpTime >= MAX_JUMP_TIME || !IsKeyDown(KEY_UP) || physics->onCeiling) {
             jumping = false;
-            jump_time = 0.0f;
+            jumpTime = 0.0f;
         } else {
-            jump_time += dt;
+            jumpTime += dt;
             physics->velocity.y = -JUMP_FORCE;
         }
     } else {
         if (!physics->onGround) {
             physics->velocity.y += GRAVITY * dt;
         } else {
-            if (IsKeyPressed(KEY_UP) && !attacking) {
-                jumping = true;
-                PlaySound(*ResourceManager::getSound("jump"));
+            if (IsKeyPressed(KEY_UP)) {
+                if (door) {
+                    // TODO: start door sequence
+                    return;
+                }
+                else if (!attacking) {
+                    jumping = true;
+                    PlaySound(*ResourceManager::getSound("jump"));
+                }
             }
         }
     }
@@ -198,8 +206,8 @@ void Player::update(float dt) {
     // punching
     if (attacking) {
         sprite->animation = &animations[ANIM_ATTACK];
-        attack_time += dt;
-        if (attack_time >= ATTACK_DURATION) {
+        attackTime += dt;
+        if (attackTime >= ATTACK_DURATION) {
             attacking = false;
             hitbox->enabled = false;
         }
@@ -208,7 +216,7 @@ void Player::update(float dt) {
         }
     } else {
         if (IsKeyPressed(KEY_SPACE)) {
-            attack_time = 0.0f;
+            attackTime = 0.0f;
             attacking = true;
             hitbox->enabled = true;
             if (physics->onGround) {

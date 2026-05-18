@@ -16,6 +16,7 @@
 #include "TitleSplashController.h"
 #include "IntroSplashController.h"
 #include "BaumDrop.h"
+#include "Door.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -486,6 +487,10 @@ Scene* SceneFactory::level2() {
 	//player->tileMap = tileMap;
 	player->physics->aabb.position.y = 136;
 	scene->push(player);
+
+    //HACER DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR
+    Door* door = new Door(Vector2{ 128, 112 }, player);
+    scene->push(door);
 
 	// camera controller
 	CameraController* cameraController = new CameraController();
