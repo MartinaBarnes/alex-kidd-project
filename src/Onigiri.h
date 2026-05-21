@@ -15,8 +15,9 @@ class Onigiri : public Entity {
         float delay = 0.0f;
         bool touched = false;
     public:
+        bool toEnding;
         void update(float) override;
 
-        Onigiri(Vector2);
+        Onigiri(Vector2, bool = false);
         ~Onigiri();
 };

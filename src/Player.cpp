@@ -153,7 +153,8 @@ void Player::update(float dt) {
     }
 
     // update sprite position
-    sprite->position = physics->aabb.position;
+    sprite->position.x = physics->aabb.position.x - 2;
+    sprite->position.y = physics->aabb.position.y;
     if (crouching) {
         sprite->position.y -= 4.0f; // HACK: the sprite height and the intended collision height are different
     }
@@ -237,7 +238,7 @@ Player::Player() {
 	physics = new PhysicsCharacter();
 	physics->layer = LAYER_PLAYER;
 	physics->mask = LAYER_WORLD + LAYER_ENEMY + LAYER_BOUNDS;
-	physics->aabb = AABB(0, 0, 16, 24);
+	physics->aabb = AABB(0, 0, 12, 24);
 	PhysicsServer::push(physics);
 
 	hitbox = new PhysicsHitbox();

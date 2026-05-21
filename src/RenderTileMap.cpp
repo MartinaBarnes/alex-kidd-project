@@ -19,7 +19,7 @@ void RenderTileMap::draw(float _) {
 }
 
 void RenderTileMap::setTileSet(Rectangle tileSet[64]) {
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < 128; i++) {
         tiles[i] = tileSet[i];
     }
 }

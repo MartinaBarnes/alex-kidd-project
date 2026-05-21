@@ -15,7 +15,11 @@ void Onigiri::update(float dt) {
         if (delay < DELAY_TIME * 2) {
             return;
         }
-        SceneManager::queued = SceneFactory::gameOver();
+        if (toEnding) {
+            SceneManager::queued = SceneFactory::gameOver();
+        } else {
+            SceneManager::queued = SceneFactory::preview2();
+        }
         return;
     }
     for (int i = 0; i < physics->colliders.size(); i++) {
@@ -29,7 +33,9 @@ void Onigiri::update(float dt) {
     }
 }
 
-Onigiri::Onigiri(Vector2 position) {
+Onigiri::Onigiri(Vector2 position, bool isLast) {
+    toEnding = isLast;
+
     physics = new PhysicsArea();
     physics->mask = LAYER_PLAYER;
     physics->aabb.position = position;
