@@ -16,6 +16,7 @@
 #include "IntroSplashController.h"
 #include "BaumDrop.h"
 #include "BaumPickup.h"
+#include "Door.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -524,6 +525,10 @@ Scene* SceneFactory::level2() {
 	player->physics->aabb.position.x = 10.0f;
 	player->physics->aabb.position.y = 136.0f;
 	scene->push(player);
+
+    //HACER DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR
+    Door* door = new Door(Vector2{ 128, 112 }, player);
+    scene->push(door);
 
 	// camera controller
 	CameraController* cameraController = new CameraController();

@@ -1,36 +1,19 @@
 #pragma once
 
 #include "Entity.h"
-#include "PhysicsHitbox.h"
-#include "AnimatedSprite.h"
 #include "Player.h"
-
-enum DoorState
-{
-    IDLE,
-    ENTERING,
-    INSIDE_WAIT,
-    INSIDE
-};
+#include "AABB.h"
 
 class Door : public Entity
 {
-protected:
+    protected:
+        AABB aabb;
+        Player* player;
 
-    PhysicsHitbox* hitbox;
-    AnimatedSprite* sprite;
+    public:
+        bool isExit = false;
 
-    Player* player;
+        Door(Vector2 pos, Player* player);
 
-    DoorState state = IDLE;
-
-    float timer = 0.0f;
-
-public:
-
-    Door(Vector2 pos, Player* player);
-
-    ~Door();
-
-    void update(float delta);
+        void update(float delta);
 };

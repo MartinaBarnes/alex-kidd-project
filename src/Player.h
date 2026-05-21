@@ -5,6 +5,7 @@
 #include "AnimatedSprite.h"
 #include "StatusScreen.h"
 #include "TileMap.h"
+#include "Door.h"
 
 #define DIRECTION_RIGHT 1.0f
 #define DIRECTION_LEFT -1.0f
@@ -21,15 +22,23 @@ class Player : public LivingEntity
         float direction = DIRECTION_RIGHT;
         bool crouching = false;
         bool jumping = false;
-        float jump_time = 0.0f;
+        float jumpTime = 0.0f;
         bool attacking = false;
-        float attack_time = 0.0f;
-        float death_time = 0.0f;
+        float attackTime = 0.0f;
+        float deathTime = 0.0f;
         bool respawning = false;
+		float doorTime = 0.0f;
 
 		void decelerate(float);
 		void crouch(bool);
 	public:
+		enum DoorState {
+			NONE,
+			ENTERING,
+			LOADING,
+			STANDBY
+		};
+
 	    const float WALK_SPEED          = 100.0f;
 		const float WALK_ACCELERATION   = 900.0f;
 		const float WALK_DECELERATION   = 500.0f;
@@ -46,7 +55,8 @@ class Player : public LivingEntity
         AnimatedSprite* sprite;
         StatusScreen* status;
 		TileMap* tileMap;
-		bool enabled = true;
+		Door* door;
+		DoorState doorState = NONE;
 
 		void update(float) override;
 		void onKilled() override;
