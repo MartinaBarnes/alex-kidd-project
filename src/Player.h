@@ -10,6 +10,8 @@
 #define DIRECTION_RIGHT 1.0f
 #define DIRECTION_LEFT -1.0f
 
+class Door;
+
 /**
  * Player class.
  * Implements all player related systems, such as movement, combat

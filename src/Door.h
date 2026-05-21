@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "AABB.h"
 
+class Player;
+
 class Door : public Entity
 {
     protected:
