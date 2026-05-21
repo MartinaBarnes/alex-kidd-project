@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "WanderingEnemy.h"
 
 /**
  * Scene factory class.
@@ -13,4 +14,5 @@ class SceneFactory {
         static Scene* preview2(); // instances the intro to level 2
         static Scene* level2(); // instances the level 2
         static Scene* gameOver(); // instances the game over screen
+        static WanderingEnemy* scorpion(); // instances a scorpion
 };
