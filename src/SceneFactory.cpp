@@ -488,9 +488,9 @@ Scene* SceneFactory::level2() {
         tileMap,
         { TILE_QSND0, TILE_QSND1, TILE_QSND2, TILE_QSND3 },
         {
-            TileCoords { 34, 10 }, TileCoords { 35, 10 }, TileCoords { 36, 10 }, TileCoords { 37, 10 },
-            TileCoords { 47, 10 }, TileCoords { 48, 10 }, TileCoords { 49, 10 }, TileCoords { 50, 10 },
-            TileCoords { 79, 10 }, TileCoords { 80, 10 }, TileCoords { 81, 10 }, TileCoords { 82, 10 }
+            TileCoords { 32, 10 }, TileCoords { 33, 10 }, TileCoords { 34, 10 }, TileCoords { 35, 10 },
+            TileCoords { 45, 10 }, TileCoords { 46, 10 }, TileCoords { 47, 10 }, TileCoords { 48, 10 },
+            TileCoords { 77, 10 }, TileCoords { 78, 10 }, TileCoords { 79, 10 }, TileCoords { 80, 10 }
         }
     ));
 
