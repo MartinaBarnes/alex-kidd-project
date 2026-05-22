@@ -8,7 +8,7 @@
 #include "ResourceManager.h"
 
 void Enemy::onKilled() {
-    deathSprite->position = Vector2 { physics->aabb.position.x + physics->aabb.size.x / 2.0f - 8.0f, physics->aabb.position.y + physics->aabb.size.y / 2.0f - 8.0f };
+    deathSprite->position = Vector2 { physics->aabb.position.x + physics->aabb.size.x / 2.0f - 8.0f, physics->aabb.position.y + physics->aabb.size.y - 16.0f };
     deathSprite->enabled = true;
     sprite->enabled = false;
     physics->enabled = false;
@@ -30,7 +30,7 @@ void Enemy::update(float dt) {
     // otherwise, check if we should die
 	for (int i = 0; i < physics->colliders.size(); i++) {
 		if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(physics->colliders[i])) {
-			kill();
+		    kill();
 			return;
 		}
 	}

@@ -10,10 +10,13 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
 {
     // disable one shot hitboxes
     if (PhysicsHitbox* hitbox = dynamic_cast<PhysicsHitbox*>(collider)) {
-        if (hitbox->oneShot) {
-            hitbox->enabled = false;
+        if (PhysicsRect::testCollision(dt, hitbox)) {
+            if (hitbox->oneShot) {
+                hitbox->enabled = false;
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
     // check collision with a solid physics object
