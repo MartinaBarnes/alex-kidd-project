@@ -57,7 +57,7 @@ class Player : public LivingEntity
         AnimatedSprite* sprite;
         StatusScreen* status;
 		TileMap* tileMap;
-		Door* door;
+		Door* door = NULL;
 		DoorState doorState = NONE;
 
 		void update(float) override;
