@@ -10,32 +10,43 @@ Pogostick::Pogostick()
     direction = DIRECTION_RIGHT;
     bouncing = false;
 
-    // Inicializar posición
+    //
     physics->aabb.position = { 100, 100 };
+    physics->aabb.size = { 12, 24 };
+    hitbox->aabb.size = { 12, 6 };
+
+    //Animated
+    Texture2D* texture = ResourceManager::getTexture("alex_pogo");
+    Animation* animation = new Animation();
+    animation->texture = texture;
+    animation->frames = {
+        Rectangle {},
+        Rectangle {},
+        Rectangle {}
+    };
+    sprite->animation = animation;
 }
 
 Pogostick::~Pogostick()
 {
     delete physics;
     delete hitbox;
+    delete sprite->animation;
     delete sprite;
 }
 
 void Pogostick::update(float delta)
 {
-    // =========================
-    // MOVIMIENTO HORIZONTAL
-    // =========================
-
+    //Movement
     float move = 0.0f;
 
-    if (IsKeyDown(KEY_A))
+    if (IsKeyDown(KEY_LEFT))
     {
         move -= 1.0f;
         direction = DIRECTION_LEFT;
     }
 
-    if (IsKeyDown(KEY_D))
+    if (IsKeyDown(KEY_RIGHT))
     {
         move += 1.0f;
         direction = DIRECTION_RIGHT;
@@ -43,31 +54,25 @@ void Pogostick::update(float delta)
 
     physics->velocity.x = move * MOVE_SPEED;
 
-    // =========================
-    // GRAVEDAD
-    // =========================
-
+    //Gravity
     physics->velocity.y += GRAVITY * delta;
 
-    if (physics->velocity.y > MAX_FALL_SPEED)
-        physics->velocity.y = MAX_FALL_SPEED;
-
-    // =========================
-    // REBOTE AUTOMÁTICO
-    // =========================
-
-    if (physics->onGround && physics->velocity.y >= 0)
+    //Bounce
+    if (physics->onGround)
     {
         physics->velocity.y = -BOUNCE_FORCE;
+
+        if (IsKeyDown(KEY_UP))
+        {
+            physics->velocity.y = -BOUNCE_FORCE * 2;
+        }
     }
 
-    // =========================
-    // SPRITE
-    // =========================
-
+    //Sprites
     sprite->position = physics->aabb.position;
     sprite->flipped = (direction == DIRECTION_LEFT);
 
-    // HITBOX sincronizada
+    //HITBOX sprite
     hitbox->aabb.position = physics->aabb.position;
+    hitbox->aabb.position.y += physics->aabb.size.y;
 }
