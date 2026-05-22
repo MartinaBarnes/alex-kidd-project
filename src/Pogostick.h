@@ -3,9 +3,7 @@
 #include "PhysicsCharacter.h"
 #include "PhysicsHitbox.h"
 #include "AnimatedSprite.h"
-
-#define DIRECTION_RIGHT 1.0f
-#define DIRECTION_LEFT -1.0f
+#include"Player.h"
 
 class Pogostick : public Vehicle
 {
