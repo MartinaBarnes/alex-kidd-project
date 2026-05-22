@@ -103,6 +103,22 @@ void Player::update(float dt) {
             case ENTERING:
                 sprite->scissor.x = 16.0f * std::min(doorTime / DOOR_SEQUENCE_TIME, 1.0f);
                 sprite->position.x = physics->aabb.position.x - sprite->scissor.x - 2.0f;
+                if (doorTime >= DOOR_SEQUENCE_TIME) {
+                    RenderingServer::visible = false;
+                    doorState = LOADING;
+                    doorTime = 0.0f;
+                }
+                break;
+            case LOADING:
+                if (doorTime >= 1.0f) {
+                    SceneManager::current = SceneFactory::shop();
+                    RenderingServer::visible = true;
+                }
+                break;
+            case STANDBY:
+                if (doorTime >= 1.0f) {
+                    doorState = NONE;
+                }
                 break;
         }
         // TODO: door sequence

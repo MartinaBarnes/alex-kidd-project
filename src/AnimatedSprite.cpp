@@ -38,7 +38,7 @@ void AnimatedSprite::draw(float dt) {
 	}
 
 	// draw frame
-	BeginScissorMode(dest.x, dest.y, dest.width, dest.height);
+	BeginScissorMode(std::round(dest.x), std::round(dest.y), dest.width, dest.height);
 	DrawTextureRec(*animation->texture, src, position, WHITE);
 	EndScissorMode();
 

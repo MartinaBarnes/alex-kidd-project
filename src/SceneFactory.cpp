@@ -522,7 +522,7 @@ Scene* SceneFactory::level2() {
     // player
     Player* player = new Player();
 	player->tileMap = tileMap;
-	player->physics->aabb.position.x = 10.0f;
+	player->physics->aabb.position.x = 129.0f; // 10.0f;
 	player->physics->aabb.position.y = 136.0f;
 	scene->push(player);
 
