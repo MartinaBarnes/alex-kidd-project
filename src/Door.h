@@ -9,10 +9,10 @@ class Player;
 class Door : public Entity
 {
     protected:
-        AABB aabb;
         Player* player;
 
     public:
+        AABB aabb;
         bool isExit = false;
 
         Door(Vector2 pos, Player* player);

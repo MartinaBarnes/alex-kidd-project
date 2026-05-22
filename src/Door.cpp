@@ -6,7 +6,7 @@ Door::Door(Vector2 pos, Player* player)
 {
     this->player = player;
     aabb.position = pos;
-    aabb.size = { 32, 64 };
+    aabb.size = { 30, 64 };
 }
 
 void Door::update(float delta)

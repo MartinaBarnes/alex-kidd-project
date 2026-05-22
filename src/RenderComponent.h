@@ -10,6 +10,7 @@ class RenderComponent : public OnScreenObject {
         bool pausable = false;
         bool enabled = true;
         bool visible; // is it enabled and on screen
+        bool onOverlay; // is this in the overlay layer
 
         virtual void draw(float) = 0;
 };

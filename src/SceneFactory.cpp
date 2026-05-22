@@ -527,7 +527,7 @@ Scene* SceneFactory::level2() {
 	scene->push(player);
 
     //HACER DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR
-    Door* door = new Door(Vector2{ 128, 112 }, player);
+    Door* door = new Door(Vector2{ 129, 112 }, player);
     scene->push(door);
 
 	// camera controller
@@ -600,4 +600,12 @@ WanderingEnemy* SceneFactory::scorpion() {
     };
     scorpion->sprite->frame_rate = 2.0f;
     return scorpion;
+}
+
+Scene* SceneFactory::shop() {
+    // initialize scene
+    Scene* scene = new Scene();
+    scene->background = BLACK;
+
+    return scene;
 }

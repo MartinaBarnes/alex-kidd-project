@@ -1,5 +1,7 @@
 #include "AnimatedSprite.h"
 #include "SceneManager.h"
+#include "RenderingServer.h"
+#include <cmath>
 
 bool AnimatedSprite::isOnScreen() const {
     AABB aabb;
@@ -9,9 +11,17 @@ bool AnimatedSprite::isOnScreen() const {
 }
 
 void AnimatedSprite::draw(float dt) {
+    if (!running) {
+        return;
+    }
+
     // if we reached the end of animation (or we changed to a shorter animation) reset
 	if (frame >= animation->frames.size()) {
 		frame = 0;
+
+		if (oneShot) {
+		    running = false;
+		}
 	}
 
 	// get the frame to draw
@@ -20,8 +30,17 @@ void AnimatedSprite::draw(float dt) {
 	    src.width = -src.width;
 	}
 
+	// get scissor rectangle to draw
+	Rectangle dest = Rectangle { position.x + scissor.x, position.y + scissor.y, std::abs(src.width) - scissor.width, src.height - scissor.height };
+	if (!onOverlay) {
+	    dest.x -= RenderingServer::camera.target.x;
+		dest.y -= RenderingServer::camera.target.y;
+	}
+
 	// draw frame
+	BeginScissorMode(dest.x, dest.y, dest.width, dest.height);
 	DrawTextureRec(*animation->texture, src, position, WHITE);
+	EndScissorMode();
 
 	// run animation (if not paused or pausable)
 	if (SceneManager::pause && !pausable) {
@@ -33,5 +52,5 @@ void AnimatedSprite::draw(float dt) {
 		frame++;
 		next_frame -= frame_time;
 	}
-	size = { src.width, src.height }; // store last frame size
+	size = { dest.width, dest.height }; // store last frame size
 }

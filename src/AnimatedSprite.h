@@ -17,15 +17,19 @@ struct Animation {
  * Runs and draws a selectable animation.
  */
 class AnimatedSprite : public RenderComponent {
-	private:
+    private:
+        Vector2 size; // last frame size (for screen boundaries detection)
+	protected:
 		int frame = 0;
 		float next_frame = 0.0f;
-		Vector2 size; // last frame size (for screen boundaries detection)
 	public:
+	    bool running = true;
+	    bool oneShot = false;
 	    bool flipped;
 		Vector2 position;
 		float frame_rate = 12.0f;
 		Animation* animation;
+		Rectangle scissor = Rectangle { 0 };
 
 		bool isOnScreen() const override;
 		void draw(float) override;

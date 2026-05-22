@@ -15,4 +15,5 @@ class SceneFactory {
         static Scene* level2(); // instances the level 2
         static Scene* gameOver(); // instances the game over screen
         static WanderingEnemy* scorpion(); // instances a scorpion
+        static Scene* shop(); // instances the level 2 shop
 };

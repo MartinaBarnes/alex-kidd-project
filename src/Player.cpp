@@ -10,12 +10,14 @@
 #include "raylib.h"
 #include <algorithm>
 
-#define ANIM_IDLE 0
-#define ANIM_WALK 1
-#define ANIM_JUMP 2
+#define ANIM_IDLE   0
+#define ANIM_WALK   1
+#define ANIM_JUMP   2
 #define ANIM_ATTACK 3
 #define ANIM_CROUCH 4
-#define ANIM_DEATH 5
+#define ANIM_DEATH  5
+
+#define DOOR_SEQUENCE_TIME  1.0f
 
 void Player::onKilled() {
     GameState::lives--;
@@ -96,6 +98,13 @@ void Player::update(float dt) {
 
     // check door status
     if (doorState != NONE) {
+        doorTime += dt;
+        switch (doorState) {
+            case ENTERING:
+                sprite->scissor.x = 16.0f * std::min(doorTime / DOOR_SEQUENCE_TIME, 1.0f);
+                sprite->position.x = physics->aabb.position.x - sprite->scissor.x - 2.0f;
+                break;
+        }
         // TODO: door sequence
         return;
     }
@@ -193,7 +202,13 @@ void Player::update(float dt) {
         } else {
             if (IsKeyPressed(KEY_UP)) {
                 if (door) {
-                    // TODO: start door sequence
+                    physics->velocity.x = 0.0f;
+                    physics->velocity.y = 0.0f;
+                    physics->aabb.position.x = door->aabb.position.x;
+                    physics->aabb.position.y = door->aabb.position.y + door->aabb.size.y - physics->aabb.size.y;
+                    sprite->animation = &animations[ANIM_WALK];
+                    sprite->flipped = true;
+                    doorState = ENTERING;
                     return;
                 }
                 else if (!attacking) {

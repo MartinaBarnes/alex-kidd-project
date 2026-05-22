@@ -15,6 +15,7 @@ std::vector<RenderComponent*> RenderingServer::overlay = {};
 
 void RenderingServer::push(RenderComponent* component)
 {
+    component->onOverlay = false;
     RenderingServer::components.push_back(component);
 }
 
@@ -32,6 +33,7 @@ void RenderingServer::pop(RenderComponent* component)
 
 void RenderingServer::pushOverlay(RenderComponent* component)
 {
+    component->onOverlay = true;
     RenderingServer::overlay.push_back(component);
 }
 
