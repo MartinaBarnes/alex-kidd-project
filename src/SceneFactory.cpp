@@ -17,6 +17,7 @@
 #include "BaumDrop.h"
 #include "BaumPickup.h"
 #include "Door.h"
+#include "CoinCounter.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -777,9 +778,10 @@ Scene* SceneFactory::shop() {
 	scene->push(player);
 
     // exit door
-    Door* door = new Door(Vector2{ 38, 112 }, player, true);
-    door->aabb.size.x = 16.0f;
-    scene->push(door);
+    scene->push(new Door(Vector2{ 38, 112 }, player, true));
+
+    // coin counter
+    scene->push(new CoinCounter(Vector2 { 88, 168 }));
 
     // play music
     SetMusicVolume(*scene->music, 0.5f);

@@ -4,7 +4,7 @@
 #include "SceneManager.h"
 
 bool PhysicsRect::isOnScreen() const {
-    return SceneManager::workspace->testAABB(aabb);
+    return always || SceneManager::workspace->testAABB(aabb);
 }
 
 bool PhysicsRect::testCollision(float _, PhysicsComponent* collider) {

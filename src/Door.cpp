@@ -6,7 +6,7 @@ Door::Door(Vector2 pos, Player* target, bool exit)
 {
     player = target;
     aabb.position = pos;
-    aabb.size = { 14, 64 };
+    aabb.size = { 10, 64 };
     isExit = exit;
 }
 

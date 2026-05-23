@@ -7,6 +7,7 @@
  */
 class PhysicsRect : public PhysicsComponent {
     public:
+        bool always = false;
         AABB aabb;
 
         bool isOnScreen() const override;
