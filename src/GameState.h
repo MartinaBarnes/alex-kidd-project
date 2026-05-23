@@ -8,4 +8,6 @@ class GameState {
 	public:
 		static int lives;
 		static int baums;
+
+		static void reset();
 };

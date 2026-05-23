@@ -9,7 +9,7 @@ void IntroSplashController::update(float dt) {
     time += dt;
     sprite->enabled = time > 0.5 && time < 3.75;
     if (time > 4.0f) {
-        SceneManager::queued = SceneFactory::title();
+        SceneManager::queued = SCENE_TITLE;
     }
 }
 

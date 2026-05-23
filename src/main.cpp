@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "SceneFactory.h"
 #include <cmath>
+#include <iostream>
 
 int main ()
 {
@@ -23,19 +24,47 @@ int main ()
 	Rectangle targetDest = Rectangle { 0 };
 	Vector2 targetPos = Vector2 { 0 };
 
-	SceneManager::current = SceneFactory::level2();
+	SceneManager::queued = SCENE_SHOP;
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
 		// if we have a new queued scene, change it
-		if (SceneManager::queued) {
-			delete SceneManager::current;
-			SceneManager::current = SceneManager::queued;
-			SceneManager::queued = NULL;
+		if (SceneManager::queued > SCENE_NONE) {
+		    if (SceneManager::scene) {
+				delete SceneManager::scene;
+			}
+			switch (SceneManager::queued) {
+			    case SCENE_INTRO:
+					SceneManager::scene = SceneFactory::intro();
+					break;
+				case SCENE_TITLE:
+				    SceneManager::scene = SceneFactory::title();
+					break;
+				case SCENE_PREVIEW1:
+				    SceneManager::scene = SceneFactory::preview1();
+					break;
+				case SCENE_LEVEL1:
+				    SceneManager::scene = SceneFactory::level1();
+					break;
+				case SCENE_PREVIEW2:
+				    SceneManager::scene = SceneFactory::preview2();
+					break;
+				case SCENE_LEVEL2:
+				    SceneManager::scene = SceneFactory::level2();
+					break;
+				case SCENE_GAMEOVER:
+				    SceneManager::scene = SceneFactory::gameOver();
+					break;
+				case SCENE_SHOP:
+				    SceneManager::scene = SceneFactory::shop();
+					break;
+			}
+			SceneManager::queued = SCENE_NONE;
 
 			SceneManager::pause = false;
 			RenderingServer::camera.target = Vector2{ 0, 0 };
 			RenderingServer::visible = true;
+
 		}
 
 	    // automatic resolution scaling
@@ -56,9 +85,9 @@ int main ()
 
 		// run scene logic
 		Color background = BLACK;
-		if (SceneManager::current) {
-			background = SceneManager::current->background;
-            SceneManager::current->update(dt);
+		if (SceneManager::scene) {
+			background = SceneManager::scene->background;
+            SceneManager::scene->update(dt);
 		}
         SceneManager::workspace->position.x = RenderingServer::camera.target.x - 32;
         SceneManager::workspace->position.y = RenderingServer::camera.target.y - 32;

@@ -16,9 +16,9 @@ void Onigiri::update(float dt) {
             return;
         }
         if (toEnding) {
-            SceneManager::queued = SceneFactory::gameOver();
+            SceneManager::queued = SCENE_GAMEOVER;
         } else {
-            SceneManager::queued = SceneFactory::preview2();
+            SceneManager::queued = SCENE_PREVIEW2;
         }
         return;
     }

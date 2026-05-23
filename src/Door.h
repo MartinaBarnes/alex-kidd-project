@@ -15,7 +15,7 @@ class Door : public Entity
         AABB aabb;
         bool isExit = false;
 
-        Door(Vector2 pos, Player* player);
+        Door(Vector2, Player*, bool = false);
 
         void update(float delta);
 };

@@ -1,6 +1,18 @@
 #include "Scene.h"
 #include "WanderingEnemy.h"
 
+enum {
+    SCENE_NONE,
+    SCENE_INTRO,
+    SCENE_TITLE,
+    SCENE_PREVIEW1,
+    SCENE_LEVEL1,
+    SCENE_PREVIEW2,
+    SCENE_LEVEL2,
+    SCENE_GAMEOVER,
+    SCENE_SHOP
+};
+
 /**
  * Scene factory class.
  * Static helper class to create scene instances.

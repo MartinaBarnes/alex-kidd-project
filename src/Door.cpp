@@ -2,11 +2,12 @@
 #include "raylib.h"
 #include "PhysicsServer.h"
 
-Door::Door(Vector2 pos, Player* player)
+Door::Door(Vector2 pos, Player* target, bool exit)
 {
-    this->player = player;
+    player = target;
     aabb.position = pos;
-    aabb.size = { 30, 64 };
+    aabb.size = { 14, 64 };
+    isExit = exit;
 }
 
 void Door::update(float delta)

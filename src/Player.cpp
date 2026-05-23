@@ -17,7 +17,7 @@
 #define ANIM_CROUCH 4
 #define ANIM_DEATH  5
 
-#define DOOR_SEQUENCE_TIME  1.0f
+#define DOOR_SEQUENCE_TIME  0.8f
 
 void Player::onKilled() {
     GameState::lives--;
@@ -59,7 +59,7 @@ void Player::update(float dt) {
                 if (deathTime >= DEATH_ANIM_DELAY) {
                     StopSound(*ResourceManager::getSound("death"));
                     if (GameState::lives <= 0) {
-                        SceneManager::queued = SceneFactory::gameOver();
+                        SceneManager::queued = SCENE_GAMEOVER;
                         return;
                     }
                     alive = true;
@@ -105,14 +105,20 @@ void Player::update(float dt) {
                 sprite->position.x = physics->aabb.position.x - sprite->scissor.x - 2.0f;
                 if (doorTime >= DOOR_SEQUENCE_TIME) {
                     RenderingServer::visible = false;
+                    SceneManager::pause = true;
+                    StopMusicStream(*scene->music);
                     doorState = LOADING;
                     doorTime = 0.0f;
                 }
                 break;
             case LOADING:
                 if (doorTime >= 1.0f) {
-                    SceneManager::current = SceneFactory::shop();
-                    RenderingServer::visible = true;
+                    if (door->isExit) {
+                        SceneManager::queued = SCENE_LEVEL2;
+                    } else {
+                        SceneManager::queued = SCENE_SHOP;
+                    }
+                    return;
                 }
                 break;
             case STANDBY:

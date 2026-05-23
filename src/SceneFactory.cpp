@@ -246,8 +246,8 @@ Scene* SceneFactory::level1() {
     SetMusicVolume(*scene->music, 0.5f);
     PlayMusicStream(*scene->music);
 
-    // first level -- reset lives
-    GameState::lives = 3;
+    // first level -- reset game state
+    GameState::reset();
 
     return scene;
 }
@@ -603,9 +603,187 @@ WanderingEnemy* SceneFactory::scorpion() {
 }
 
 Scene* SceneFactory::shop() {
+    // level data definition
+    Texture2D* atlas = ResourceManager::getTexture("shop");
+
+    enum {
+        TILE_NONE,
+        TILE_FLOOR,
+        TILE_ARCL0,
+        TILE_ARCL1,
+        TILE_ARCL2,
+        TILE_ARCL3,
+        TILE_ARCL4,
+        TILE_ARCL5,
+        TILE_ARCR0,
+        TILE_ARCR1,
+        TILE_ARCR2,
+        TILE_ARCR3,
+        TILE_ARCR4,
+        TILE_ARCR5,
+        TILE_BEAM,
+        TILE_WALL,
+        TILE_CEIL,
+        TILE_CRTL0,
+        TILE_CRTL1,
+        TILE_CRTL2,
+        TILE_CRTL3,
+        TILE_CRTL4,
+        TILE_CRTR0,
+        TILE_CRTR1,
+        TILE_CRTR2,
+        TILE_CRTR3,
+        TILE_CRTR4,
+        TILE_DOORL0,
+        TILE_DOORL1,
+        TILE_DOORL2,
+        TILE_DOORR0,
+        TILE_DOORR1,
+        TILE_DOORR2,
+        TILE_FRM0,
+        TILE_FRM1,
+        TILE_FRM2,
+        TILE_FRM3,
+        TILE_FRM4,
+        TILE_FRM5,
+        TILE_FRM6,
+        TILE_FRM7,
+        TILE_FRM8,
+        TILE_FRM9,
+        TILE_FRM10,
+        TILE_KPR0,
+        TILE_KPR1,
+        TILE_KPR2,
+        TILE_KPR3,
+        TILE_KPR4,
+        TILE_KPR5,
+        TILE_KPR6,
+        TILE_KPR7,
+        TILE_HUD0,
+        TILE_HUD1,
+        TILE_HUD2,
+        TILE_HUD3,
+        TILE_HUD4,
+    };
+
+    Rectangle tiles[128] = {
+        Rectangle { 0 },
+        Rectangle { 0, 48, 16, 16 },
+        Rectangle { 0, 32, 16, 16 },
+        Rectangle { 0, 16, 16, 16 },
+        Rectangle { 16, 16, 16, 16 },
+        Rectangle { 16, 0, 16, 16 },
+        Rectangle { 32, 0, 16, 16 },
+        Rectangle { 48, 0, 16, 16 },
+        Rectangle { 112, 32, 16, 16 },
+        Rectangle { 112, 16, 16, 16 },
+        Rectangle { 96, 16, 16, 16 },
+        Rectangle { 96, 0, 16, 16 },
+        Rectangle { 80, 0, 16, 16 },
+        Rectangle { 64, 0, 16, 16 },
+        Rectangle { 48, 16, 16, 16 },
+        Rectangle { 48, 32, 16, 16 },
+        Rectangle { 64, 32, 16, 16 },
+        Rectangle { 16, 32, 16, 16 },
+        Rectangle { 16, 48, 16, 16 },
+        Rectangle { 32, 16, 16, 16 },
+        Rectangle { 32, 32, 16, 16 },
+        Rectangle { 32, 48, 16, 16 },
+        Rectangle { 96, 32, 16, 16 },
+        Rectangle { 96, 48, 16, 16 },
+        Rectangle { 80, 16, 16, 16 },
+        Rectangle { 80, 32, 16, 16 },
+        Rectangle { 80, 48, 16, 16 },
+        Rectangle { 48, 48, 16, 16 },
+        Rectangle { 48, 64, 16, 16 },
+        Rectangle { 48, 80, 16, 16 },
+        Rectangle { 64, 48, 16, 16 },
+        Rectangle { 64, 64, 16, 16 },
+        Rectangle { 64, 80, 16, 16 },
+        Rectangle { 80, 64, 16, 16 },
+        Rectangle { 96, 64, 16, 16 },
+        Rectangle { 112, 64, 16, 16 },
+        Rectangle { 80, 80, 16, 16 },
+        Rectangle { 112, 80, 16, 16 },
+        Rectangle { 80, 96, 16, 16 },
+        Rectangle { 96, 96, 16, 16 },
+        Rectangle { 112, 96, 16, 16 },
+        Rectangle { 80, 112, 16, 16 },
+        Rectangle { 96, 112, 16, 16 },
+        Rectangle { 112, 112, 16, 16 },
+        Rectangle { 16, 64, 16, 16 },
+        Rectangle { 32, 64, 16, 16 },
+        Rectangle { 16, 80, 16, 16 },
+        Rectangle { 32, 80, 16, 16 },
+        Rectangle { 0, 96, 16, 16 },
+        Rectangle { 16, 96, 16, 16 },
+        Rectangle { 32, 96, 16, 16 },
+        Rectangle { 48, 96, 16, 16 },
+        Rectangle { 0, 112, 16, 16 },
+        Rectangle { 16, 112, 16, 16 },
+        Rectangle { 32, 112, 16, 16 },
+        Rectangle { 48, 112, 16, 16 },
+        Rectangle { 64, 112, 16, 16 },
+    };
+
+    short map[TILEMAP_HEIGHT][TILEMAP_WIDTH] = {
+        { 0, 5, 6, 7, 16,16,16,16,16,16,16,16,13,12,11,0 },
+        { 3, 4, 14,14,14,14,14,14,14,14,14,14,14,14,10,9 },
+        { 2, 17,15,15,15,15,15,15,15,15,15,15,15,15,22,8 },
+        { 2, 18,15,15,15,15,15,15,15,15,15,15,15,15,23,8 },
+        { 2, 19,15,15,15,33,34,34,34,34,35,15,15,15,24,8 },
+        { 2, 20,15,15,15,36,0, 0, 0, 0, 37,15,15,15,25,8 },
+        { 2, 21,27,30,15,38,39,39,39,39,40,15,15,15,26,8 },
+        { 2, 17,28,31,15,15,15,15,15,15,15,15,44,45,22,8 },
+        { 2, 18,29,32,15,15,15,15,15,15,15,15,46,47,23,8 },
+        { 2, 19,29,32,15,15,15,15,15,15,15,48,49,50,51,8 },
+        { 1, 52,53,54,55,56,1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    };
+
+    short physics[TILEMAP_HEIGHT][TILEMAP_WIDTH] = {
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    };
+
     // initialize scene
     Scene* scene = new Scene();
-    scene->background = BLACK;
+    scene->background = Color { 0, 0, 255, 255 };
+    scene->music = ResourceManager::getMusic("main_theme");
+
+    // initialize tile map
+    TileMap* tileMap = new TileMap();
+    tileMap->render->texture = atlas;
+    tileMap->render->setTileSet(tiles);
+    tileMap->render->setTileMap(map);
+    tileMap->physics->setTileMap(physics);
+    scene->push(tileMap);
+
+    // player
+    Player* player = new Player();
+	player->tileMap = tileMap;
+	player->physics->aabb.position.x = 38.0f;
+	player->physics->aabb.position.y = 136.0f;
+	scene->push(player);
+
+    // exit door
+    Door* door = new Door(Vector2{ 38, 112 }, player, true);
+    door->aabb.size.x = 28.0f;
+    scene->push(door);
+
+    // play music
+    SetMusicVolume(*scene->music, 0.5f);
+    PlayMusicStream(*scene->music);
 
     return scene;
 }

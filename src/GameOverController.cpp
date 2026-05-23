@@ -5,7 +5,7 @@
 
 void GameOverController::update(float dt) {
     if (time >= duration) {
-        SceneManager::queued = SceneFactory::title();
+        SceneManager::queued = SCENE_TITLE;
         return;
     }
     time += dt;

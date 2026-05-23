@@ -12,10 +12,10 @@ void MapTransitionController::update(float dt) {
     }
     if (time >= duration + delay) {
         if (toLevel2) {
-            SceneManager::queued = SceneFactory::level2();
+            SceneManager::queued = SCENE_LEVEL2;
             return;
         }
-        SceneManager::queued = SceneFactory::level1();
+        SceneManager::queued = SCENE_LEVEL1;
         return;
     }
     preview->open = std::min(time / duration, 1.0f);
