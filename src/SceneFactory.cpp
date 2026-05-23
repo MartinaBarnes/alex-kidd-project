@@ -778,7 +778,7 @@ Scene* SceneFactory::shop() {
 
     // exit door
     Door* door = new Door(Vector2{ 38, 112 }, player, true);
-    door->aabb.size.x = 28.0f;
+    door->aabb.size.x = 16.0f;
     scene->push(door);
 
     // play music
