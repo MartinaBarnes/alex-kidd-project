@@ -14,6 +14,9 @@ PurchaseOption::PurchaseOption() {
     RenderingServer::push(label);
 
     physics = new PhysicsArea();
+    physics->aabb.size = Vector2 { 16, 16 };
+    physics->layer = LAYER_WORLD;
+    physics->mask = LAYER_PLAYER;
     PhysicsServer::push(physics);
 }
 

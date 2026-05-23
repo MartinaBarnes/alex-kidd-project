@@ -5,9 +5,10 @@
 #include "PhysicsArea.h"
 
 enum {
+    BUY_NONE,
     BUY_LIFE,
     BUY_POGOSTICK
-}
+};
 
 class PurchaseOption : public Entity {
     protected:
@@ -15,6 +16,9 @@ class PurchaseOption : public Entity {
         Label* label;
         PhysicsArea* physics;
     public:
+        int item = BUY_NONE;
+        int price = 0;
+
         void update(float) override;
 
         PurchaseOption();
