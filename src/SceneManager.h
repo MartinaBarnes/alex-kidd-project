@@ -12,6 +12,7 @@
 class SceneManager {
     public:
         static bool pause;
+        static bool inPlayableLevel;
         static int queued;
         static Scene* scene;
         static AABB* workspace;

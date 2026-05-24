@@ -4,5 +4,6 @@
 
 bool SceneManager::pause = false;
 Scene* SceneManager::scene = NULL;
+bool SceneManager::inPlayableLevel = false;
 int SceneManager::queued = SCENE_NONE;
 AABB* SceneManager::workspace = new AABB(-32, -32, GAME_WIDTH + 64, GAME_HEIGHT + 64);
