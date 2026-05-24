@@ -19,6 +19,7 @@
 #include "Door.h"
 #include "CoinCounter.h"
 #include "PurchaseOption.h"
+#include "HoppingEnemy.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -581,6 +582,52 @@ Scene* SceneFactory::level2() {
     kaicho1->direction = -1;
     scene->push(kaicho1);
 
+    // hoppers
+    HoppingEnemy* hopper0 = SceneFactory::hopper();
+    hopper0->physics->aabb.position = Vector2 { 386.0f, 144.0f };
+    hopper0->direction = -1;
+    scene->push(hopper0);
+
+    HoppingEnemy* hopper1 = SceneFactory::hopper();
+    hopper1->physics->aabb.position = Vector2 { 704.0f, 144.0f };
+    hopper1->direction = -1;
+    scene->push(hopper1);
+
+    HoppingEnemy* hopper2 = SceneFactory::hopper();
+    hopper2->physics->aabb.position = Vector2 { 1200.0f, 80.0f };
+    hopper2->direction = -1;
+    scene->push(hopper2);
+
+    HoppingEnemy* hopper3 = SceneFactory::hopper();
+    hopper3->physics->aabb.position = Vector2 { 1376.0f, 128.0f };
+    hopper3->direction = -1;
+    scene->push(hopper3);
+
+    HoppingEnemy* hopper4 = SceneFactory::hopper();
+    hopper4->physics->aabb.position = Vector2 { 1242.0f, 64.0f };
+    hopper4->direction = -1;
+    scene->push(hopper4);
+
+    HoppingEnemy* hopper5 = SceneFactory::hopper();
+    hopper5->physics->aabb.position = Vector2 { 1744.0f, 80.0f };
+    hopper5->direction = -1;
+    scene->push(hopper5);
+
+    HoppingEnemy* hopper6 = SceneFactory::hopper();
+    hopper6->physics->aabb.position = Vector2 { 1982.0f, 106.0f };
+    hopper6->direction = -1;
+    scene->push(hopper6);
+
+    HoppingEnemy* hopper7 = SceneFactory::hopper();
+    hopper7->physics->aabb.position = Vector2 { 1966.0f, 96.0f };
+    hopper7->direction = -1;
+    scene->push(hopper7);
+
+    HoppingEnemy* hopper8 = SceneFactory::hopper();
+    hopper8->physics->aabb.position = Vector2 { 1950.0f, 100.0f };
+    hopper8->direction = -1;
+    scene->push(hopper8);
+
 	// onigiri
 	scene->push(new Onigiri(Vector2 { 2244.0f, 128.0f }, true));
 
@@ -844,4 +891,18 @@ WanderingEnemy* SceneFactory::kaicho() {
     };
     kaicho->sprite->frame_rate = 2.0f;
     return kaicho;
+}
+
+HoppingEnemy* SceneFactory::hopper() {
+    HoppingEnemy* hopper = new HoppingEnemy();
+    hopper->physics->aabb.size = Vector2 { 16, 16 };
+    hopper->walk_speed = 40.0f;
+    hopper->sprite->animation = new Animation();
+    hopper->sprite->animation->texture = ResourceManager::getTexture("hopper");
+    hopper->sprite->animation->frames = {
+        Rectangle { 0, 0, 16, 16 },
+    	Rectangle { 16, 0, 16, 16 }
+    };
+    hopper->sprite->frame_rate = 8.0f;
+    return hopper;
 }

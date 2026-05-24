@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "WanderingEnemy.h"
+#include "HoppingEnemy.h"
 
 enum {
     SCENE_NONE,
@@ -29,4 +30,5 @@ class SceneFactory {
         static Scene* shop(); // instances the level 2 shop
         static WanderingEnemy* scorpion(); // instances a scorpion
         static WanderingEnemy* kaicho(); // instances a monster bird
+        static HoppingEnemy* hopper(); // instances a hopper
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include "LivingEntity.h"
-#include "PhysicsCharacter.h"
+#include "PhysicsPlayer.h"
 #include "PhysicsHitbox.h"
 #include "AnimatedSprite.h"
 #include "StatusScreen.h"
@@ -52,7 +52,7 @@ class Player : public LivingEntity
 		const float DEATH_ANIM_SPEED    = 80.0f;
 		const float DEATH_ANIM_DELAY    = 0.5f;
 
-        PhysicsCharacter* physics;
+        PhysicsPlayer* physics;
         PhysicsHitbox* hitbox;
         AnimatedSprite* sprite;
         StatusScreen* status;
