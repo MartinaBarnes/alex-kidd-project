@@ -774,7 +774,7 @@ Scene* SceneFactory::shop() {
     // buy pogo stick
     if (GameState::shop[0]) {
         PurchaseOption* pogoStick = new PurchaseOption();
-        pogoStick->slot = 1;
+        pogoStick->slot = 0;
         pogoStick->item = BUY_POGOSTICK;
         pogoStick->setPrice(100);
         pogoStick->sprite->texture = ResourceManager::getTexture("items");
