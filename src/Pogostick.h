@@ -12,16 +12,16 @@ protected:
     bool bouncing = false;
 
 public:
-    const float MOVE_SPEED = 180.0f;
-    const float GRAVITY = 900.0f;
-    const float BOUNCE_FORCE = 350.0f;
-    const float MAX_FALL_SPEED = 700.0f;
+    const float MOVE_SPEED = 100.0f;
+    const float GRAVITY = 70.0f;
+    const float BOUNCE_FORCE = 50.0f;
 
-    PhysicsCharacter* physics;
+    PhysicsPlayer* physics;
     PhysicsHitbox* hitbox;
     AnimatedSprite* sprite;
 
-    void update(float delta);
+    void update(float delta) override;
+    void onKilled() override;
 
     Pogostick();
     ~Pogostick();

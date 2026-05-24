@@ -20,6 +20,7 @@
 #include "CoinCounter.h"
 #include "PurchaseOption.h"
 #include "HoppingEnemy.h"
+#include "Pogostick.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -535,7 +536,13 @@ Scene* SceneFactory::level2() {
 	player->physics->aabb.position.y = 136.0f;
 	scene->push(player);
 
-    //HACER DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR
+    //Pogostick
+    Pogostick* pogostick = new Pogostick();
+    pogostick->physics->aabb.position.x = 100.0f;
+    pogostick->physics->aabb.position.y = 125.0f;
+    scene->push(pogostick);
+
+    //HACER DOOR
     Door* door = new Door(Vector2{ 129, 112 }, player);
     scene->push(door);
 

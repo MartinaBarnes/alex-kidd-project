@@ -1,29 +1,43 @@
 #include "Pogostick.h"
 #include "raylib.h"
+#include "PhysicsServer.h"
+#include "RenderingServer.h"
+
+#include <iostream>
+using namespace std;
 
 Pogostick::Pogostick()
 {
-    physics = new PhysicsCharacter();
+    physics = new PhysicsPlayer();
     hitbox = new PhysicsHitbox();
     sprite = new AnimatedSprite();
+    
+    PhysicsServer::push(physics);
+    PhysicsServer::push(hitbox);
+    RenderingServer::push(sprite);
+
+    physics->layer = LAYER_PLAYER;
+    physics->mask = LAYER_WORLD;
 
     direction = DIRECTION_RIGHT;
     bouncing = false;
 
     //
     physics->aabb.position = { 100, 100 };
-    physics->aabb.size = { 12, 24 };
+    physics->aabb.size = { 12, 35 };
     hitbox->aabb.size = { 12, 6 };
 
     //Animated
     Texture2D* texture = ResourceManager::getTexture("alex_pogo");
     Animation* animation = new Animation();
     animation->texture = texture;
-    animation->frames = {
-        Rectangle {},
-        Rectangle {},
-        Rectangle {}
+    animation->frames = 
+    {
+        Rectangle {0, 0, 16, 35},
+        Rectangle {18, 0, 16, 35},
+        Rectangle {36, 0, 16, 35}
     };
+
     sprite->animation = animation;
 }
 
@@ -37,6 +51,8 @@ Pogostick::~Pogostick()
 
 void Pogostick::update(float delta)
 {
+    cout << physics->aabb.position.x << " " << physics->aabb.position.y << endl;
+
     //Movement
     float move = 0.0f;
 
@@ -55,7 +71,7 @@ void Pogostick::update(float delta)
     physics->velocity.x = move * MOVE_SPEED;
 
     //Gravity
-    physics->velocity.y += GRAVITY * delta;
+
 
     //Bounce
     if (physics->onGround)
@@ -68,6 +84,11 @@ void Pogostick::update(float delta)
         }
     }
 
+    else
+    {
+        physics->velocity.y += GRAVITY * delta;
+    }
+
     //Sprites
     sprite->position = physics->aabb.position;
     sprite->flipped = (direction == DIRECTION_LEFT);
@@ -76,3 +97,5 @@ void Pogostick::update(float delta)
     hitbox->aabb.position = physics->aabb.position;
     hitbox->aabb.position.y += physics->aabb.size.y;
 }
+
+void Pogostick :: onKilled() { }
