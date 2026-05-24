@@ -18,6 +18,7 @@
 #include "BaumPickup.h"
 #include "Door.h"
 #include "CoinCounter.h"
+#include "PurchaseOption.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -735,7 +736,7 @@ Scene* SceneFactory::shop() {
         { 2, 19,15,15,15,33,34,34,34,34,35,15,15,15,24,8 },
         { 2, 20,15,15,15,36,0, 0, 0, 0, 37,15,15,15,25,8 },
         { 2, 21,27,30,15,38,39,39,39,39,40,15,15,15,26,8 },
-        { 2, 17,28,31,15,15,15,15,15,15,15,15,44,45,22,8 },
+        { 2, 17,28,31,15,41,42,42,42,42,43,15,44,45,22,8 },
         { 2, 18,29,32,15,15,15,15,15,15,15,15,46,47,23,8 },
         { 2, 19,29,32,15,15,15,15,15,15,15,48,49,50,51,8 },
         { 1, 52,53,54,55,56,1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -770,6 +771,30 @@ Scene* SceneFactory::shop() {
     tileMap->physics->setTileMap(physics);
     scene->push(tileMap);
 
+    // buy pogo stick
+    if (GameState::shop[0]) {
+        PurchaseOption* pogoStick = new PurchaseOption();
+        pogoStick->slot = 1;
+        pogoStick->item = BUY_POGOSTICK;
+        pogoStick->setPrice(100);
+        pogoStick->sprite->texture = ResourceManager::getTexture("items");
+        pogoStick->sprite->frame = Rectangle { 0, 16, 16, 16 };
+        pogoStick->placeAt(Vector2 { 104, 86 });
+        scene->push(pogoStick);
+    }
+
+    // buy extra life
+    if (GameState::shop[1]) {
+        PurchaseOption* extraLife = new PurchaseOption();
+        extraLife->slot = 1;
+        extraLife->item = BUY_LIFE;
+        extraLife->setPrice(200);
+        extraLife->sprite->texture = ResourceManager::getTexture("items");
+        extraLife->sprite->frame = Rectangle { 48, 0, 16, 16 };
+        extraLife->placeAt(Vector2 { 136, 86 });
+        scene->push(extraLife);
+    }
+
     // player
     Player* player = new Player();
 	player->tileMap = tileMap;
@@ -781,7 +806,7 @@ Scene* SceneFactory::shop() {
     scene->push(new Door(Vector2{ 38, 112 }, player, true));
 
     // coin counter
-    scene->push(new CoinCounter(Vector2 { 88, 168 }));
+    scene->push(new CoinCounter(Vector2 { 87, 167 }));
 
     // play music
     SetMusicVolume(*scene->music, 0.5f);

@@ -10,15 +10,23 @@ enum {
     BUY_POGOSTICK
 };
 
+/**
+ * An item for sale in the shop.
+ */
 class PurchaseOption : public Entity {
     protected:
-        Sprite* sprite;
         Label* label;
         PhysicsArea* physics;
     public:
+        int slot;
         int item = BUY_NONE;
         int price = 0;
 
+        Sprite* sprite;
+
+        void setPrice(int);
+        void placeAt(Vector2);
+        void onPurchase();
         void update(float) override;
 
         PurchaseOption();

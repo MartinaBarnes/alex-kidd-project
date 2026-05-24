@@ -1,16 +1,48 @@
 #include "PurchaseOption.h"
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
+#include "GameState.h"
+
+void PurchaseOption::setPrice(int amount) {
+    price = amount;
+    label->text = std::to_string(amount);
+}
+
+void PurchaseOption::placeAt(Vector2 position) {
+    physics->aabb.position = position;
+    sprite->position = position;
+    label->position = position;
+    label->position.x += sprite->frame.width;
+    label->position.y -= 10.0f;
+}
+
+void PurchaseOption::onPurchase() {
+    if (GameState::baums < price) {
+        return;
+    }
+    markedForDeletion = true;
+    GameState::shop[slot] = false;
+    GameState::baums -= price;
+    if (item == BUY_LIFE) {
+        GameState::lives++;
+        return;
+    }
+    // TODO: give pogo stick
+}
 
 void PurchaseOption::update(float _) {
-    // TODO: check for collision and purchase
+    if (physics->colliders.empty()) {
+        return;
+    }
+    onPurchase();
 }
 
 PurchaseOption::PurchaseOption() {
     sprite = new Sprite();
-    PhysicsServer::push(sprite);
+    RenderingServer::push(sprite);
 
     label = new Label();
+    label->align = TEXTALIGN_RIGHT;
     RenderingServer::push(label);
 
     physics = new PhysicsArea();
