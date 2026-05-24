@@ -614,7 +614,7 @@ Scene* SceneFactory::level2() {
     scene->push(hopper5);
 
     HoppingEnemy* hopper6 = SceneFactory::hopper();
-    hopper6->physics->aabb.position = Vector2 { 1982.0f, 106.0f };
+    hopper6->physics->aabb.position = Vector2 { 1978.0f, 106.0f };
     hopper6->direction = -1;
     scene->push(hopper6);
 
