@@ -227,6 +227,12 @@ Scene* SceneFactory::level1() {
     scorpion1->wander_distance = 10 * TILE_SIZE;
     scene->push(scorpion1);
 
+    // kaicho
+    WanderingEnemy* kaicho = SceneFactory::kaicho();
+    kaicho->physics->aabb.position = Vector2 { 960.0f, 112.0f };
+    kaicho->direction = -1;
+    scene->push(kaicho);
+
 	// onigiri
 	scene->push(new Onigiri(Vector2 { 75 * TILE_SIZE + 4, 7 * TILE_SIZE }));
 
@@ -564,6 +570,17 @@ Scene* SceneFactory::level2() {
     scorpion3->wander_distance = 960.0f;
     scene->push(scorpion3);
 
+    // kaichos
+    WanderingEnemy* kaicho0 = SceneFactory::kaicho();
+    kaicho0->physics->aabb.position = Vector2 { 1720.0f, 80.0f };
+    kaicho0->direction = -1;
+    scene->push(kaicho0);
+
+    WanderingEnemy* kaicho1 = SceneFactory::kaicho();
+    kaicho1->physics->aabb.position = Vector2 { 536.0f, 80.0f };
+    kaicho1->direction = -1;
+    scene->push(kaicho1);
+
 	// onigiri
 	scene->push(new Onigiri(Vector2 { 2244.0f, 128.0f }, true));
 
@@ -588,20 +605,6 @@ Scene* SceneFactory::gameOver() {
     PlaySound(*jingle);
 
     return scene;
-}
-
-WanderingEnemy* SceneFactory::scorpion() {
-    WanderingEnemy* scorpion = new WanderingEnemy();
-    scorpion->physics->aabb.size = Vector2 { 16, 13 };
-    scorpion->walk_speed = 40.0f;
-    scorpion->sprite->animation = new Animation();
-    scorpion->sprite->animation->texture = ResourceManager::getTexture("scorpion");
-    scorpion->sprite->animation->frames = {
-        Rectangle { 0, 2, 16, 14 },
-    	Rectangle { 16, 2, 16, 14 }
-    };
-    scorpion->sprite->frame_rate = 2.0f;
-    return scorpion;
 }
 
 Scene* SceneFactory::shop() {
@@ -813,4 +816,32 @@ Scene* SceneFactory::shop() {
     PlayMusicStream(*scene->music);
 
     return scene;
+}
+
+WanderingEnemy* SceneFactory::scorpion() {
+    WanderingEnemy* scorpion = new WanderingEnemy();
+    scorpion->physics->aabb.size = Vector2 { 16, 13 };
+    scorpion->walk_speed = 40.0f;
+    scorpion->sprite->animation = new Animation();
+    scorpion->sprite->animation->texture = ResourceManager::getTexture("scorpion");
+    scorpion->sprite->animation->frames = {
+        Rectangle { 0, 2, 16, 14 },
+    	Rectangle { 16, 2, 16, 14 }
+    };
+    scorpion->sprite->frame_rate = 2.0f;
+    return scorpion;
+}
+
+WanderingEnemy* SceneFactory::kaicho() {
+    WanderingEnemy* kaicho = new WanderingEnemy();
+    kaicho->physics->aabb.size = Vector2 { 24, 16 };
+    kaicho->walk_speed = 40.0f;
+    kaicho->sprite->animation = new Animation();
+    kaicho->sprite->animation->texture = ResourceManager::getTexture("kaicho");
+    kaicho->sprite->animation->frames = {
+        Rectangle { 0, 0, 24, 16 },
+    	Rectangle { 24, 0, 24, 16 }
+    };
+    kaicho->sprite->frame_rate = 2.0f;
+    return kaicho;
 }
