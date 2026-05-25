@@ -1,4 +1,5 @@
 #include "WanderingEnemy.h"
+#include "GameState.h"
 #include <cmath>
 
 void WanderingEnemy::update(float dt) {
@@ -19,4 +20,9 @@ void WanderingEnemy::update(float dt) {
     // move
     physics->velocity.x = walk_speed * direction;
     wandered += std::abs(physics->velocity.x) * dt;
+}
+
+void WanderingEnemy::onKilled() {
+    Enemy::onKilled();
+    GameState::score += 200;
 }

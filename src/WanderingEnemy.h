@@ -14,4 +14,5 @@ class WanderingEnemy : public Enemy {
         int direction = 1;
 
         void update(float) override;
+        void onKilled() override;
 };

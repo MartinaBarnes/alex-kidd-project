@@ -15,7 +15,7 @@ Pogostick::Pogostick()
     PhysicsServer::push(physics);
 
     hitbox = new PhysicsHitbox();
-    hitbox->aabb.size = { 12, 6 };
+    hitbox->aabb.size = { 12, 4 };
     hitbox->layer = LAYER_PLAYER;
 	hitbox->mask = LAYER_WORLD + LAYER_ENEMY + LAYER_BREAKABLE;
 	hitbox->oneShot = true;

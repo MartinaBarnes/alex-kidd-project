@@ -3,6 +3,7 @@
 #include "RenderingServer.h"
 #include "SceneManager.h"
 #include "SceneFactory.h"
+#include "GameState.h"
 #include "ResourceManager.h"
 
 void Onigiri::update(float dt) {
@@ -23,6 +24,7 @@ void Onigiri::update(float dt) {
         return;
     }
     for (int i = 0; i < physics->colliders.size(); i++) {
+        GameState::score += 1000;
         touched = true;
         delay = 0.0f;
         pausable = true;

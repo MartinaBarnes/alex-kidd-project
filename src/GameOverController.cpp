@@ -2,6 +2,7 @@
 #include "RenderingServer.h"
 #include "SceneManager.h"
 #include "SceneFactory.h"
+#include "GameState.h"
 
 void GameOverController::update(float dt) {
     if (time >= duration) {
@@ -13,6 +14,7 @@ void GameOverController::update(float dt) {
 
 GameOverController::GameOverController() {
 	label = new GameOverLabel();
+	label->score = GameState::score;
 	RenderingServer::pushOverlay(label);
 }
 

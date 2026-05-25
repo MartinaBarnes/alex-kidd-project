@@ -27,7 +27,7 @@ void Player::onKilled() {
     physics->velocity = Vector2 { 0, 0 };
     SceneManager::pause = true;
     StopMusicStream(*scene->music);
-    invulnerability = 4.0f;
+    invulnerability = 2.0f;
 }
 
 void Player::decelerate(float dt) {

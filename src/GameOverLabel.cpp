@@ -13,7 +13,7 @@ void GameOverLabel::draw(float _) {
 
     // 🔥 POSICIONES SEPARADAS
     int labelX = 28;   // 👉 "SCORE:" más a la izquierda
-    int numberX = 82; // 👉 número más a la derecha
+    int numberX = 88; // 👉 número más a la derecha
 
     // =========================
     // GAME OVER
@@ -30,6 +30,6 @@ void GameOverLabel::draw(float _) {
     std::string number = std::to_string(score);
 
     DrawText(label.c_str(), posX - labelX, scorePosY, fontSize, WHITE);
-    DrawText(number.c_str(), posX + numberX, scorePosY, fontSize, WHITE);
+    DrawText(number.c_str(), posX + numberX - MeasureText(number.c_str(), fontSize), scorePosY, fontSize, WHITE);
 
 }

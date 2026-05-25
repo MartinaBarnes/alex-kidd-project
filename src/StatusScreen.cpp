@@ -31,19 +31,17 @@ void StatusScreen::draw(float dt) {
     Color yellow = Color { 255, 255, 170, 255 };
 
     // draw coins
-    std::string coinsStr = std::to_string(GameState::baums);
-    const char* coins = coinsStr.c_str();
+    const char* coins = std::to_string(GameState::baums).c_str();
     float coinsSize = MeasureText(coins, FONT_SIZE);
     DrawText(coins, COINS_X - coinsSize, COINS_Y, FONT_SIZE, WHITE);
 
     // draw lives
-    std::string livesStr = std::to_string(GameState::lives);
-    const char* lives = livesStr.c_str();
+    const char* lives = std::to_string(GameState::lives).c_str();
     float livesSize = MeasureText(lives, FONT_SIZE);
     DrawText(lives, LIVES_X - livesSize, LIVES_Y, FONT_SIZE, yellow);
 
     // draw score
-    const char* score = "0";
+    const char* score = std::to_string(GameState::score).c_str();
     float scoreSize = MeasureText(score, FONT_SIZE);
     DrawText(score, SCORE_X - scoreSize, LIVES_Y, FONT_SIZE, yellow);
 }
