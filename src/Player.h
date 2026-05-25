@@ -6,11 +6,13 @@
 #include "StatusScreen.h"
 #include "TileMap.h"
 #include "Door.h"
+#include "Vehicle.h"
 
 #define DIRECTION_RIGHT 1.0f
 #define DIRECTION_LEFT -1.0f
 
 class Door;
+class Vehicle;
 
 /**
  * Player class.
@@ -56,9 +58,11 @@ class Player : public LivingEntity
         PhysicsHitbox* hitbox;
         AnimatedSprite* sprite;
         StatusScreen* status;
+        Vehicle* vehicle = NULL;
 		TileMap* tileMap;
 		Door* door = NULL;
 		DoorState doorState = NONE;
+		float invulnerability = 0.0f;
 
 		void update(float) override;
 		void onKilled() override;

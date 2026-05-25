@@ -31,6 +31,8 @@ class AnimatedSprite : public RenderComponent {
 		Animation* animation;
 		Rectangle scissor = Rectangle { 0 };
 
+		void start();
+
 		bool isOnScreen() const override;
 		void draw(float) override;
 };

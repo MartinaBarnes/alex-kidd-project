@@ -27,6 +27,7 @@ void Player::onKilled() {
     physics->velocity = Vector2 { 0, 0 };
     SceneManager::pause = true;
     StopMusicStream(*scene->music);
+    invulnerability = 4.0f;
 }
 
 void Player::decelerate(float dt) {
@@ -96,6 +97,18 @@ void Player::update(float dt) {
         return;
     }
 
+    // if we're in a vehicle, do nothing
+    if (vehicle) {
+        sprite->enabled = false;
+        physics->enabled = false;
+        physics->aabb.position = vehicle->getPosition();
+        physics->velocity = vehicle->getVelocity();
+        return;
+    } else {
+        sprite->enabled = true;
+        physics->enabled = true;
+    }
+
     // check door status
     if (doorState != NONE) {
         doorTime += dt;
@@ -127,7 +140,6 @@ void Player::update(float dt) {
                 }
                 break;
         }
-        // TODO: door sequence
         return;
     }
 
@@ -154,8 +166,9 @@ void Player::update(float dt) {
     if (physics->inDeathPit) {
         kill(); // kill player after touching a death pit
     } else {
+        invulnerability = std::max(invulnerability - dt, 0.0f);
         for (int i = 0; i < physics->colliders.size(); i++) {
-            if (physics->colliders[i]->layer & LAYER_ENEMY) {
+            if (physics->colliders[i]->layer & LAYER_ENEMY && invulnerability <= 0.0f) {
                 kill(); // kill player after touching an enemy
                 return;
             }

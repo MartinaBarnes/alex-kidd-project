@@ -26,13 +26,16 @@ bool PhysicsTileMap::testCollision(float _, PhysicsComponent* component) {
                     tilesHit.push_back(TileCoords { x, y });
                     if (hitbox->oneShot) {
                         hitbox->enabled = false;
+                        hitbox->colliders.push_back(this); // HACK
                         return true;
                     }
                 }
             }
         }
+        if (!tilesHit.empty()) {
+            hitbox->colliders.push_back(this); // HACK
+        }
     }
-
     return !tilesHit.empty();
 }
 

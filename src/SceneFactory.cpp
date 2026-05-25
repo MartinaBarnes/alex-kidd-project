@@ -537,10 +537,14 @@ Scene* SceneFactory::level2() {
 	scene->push(player);
 
     //Pogostick
-    Pogostick* pogostick = new Pogostick();
-    pogostick->physics->aabb.position.x = 100.0f;
-    pogostick->physics->aabb.position.y = 125.0f;
-    scene->push(pogostick);
+    if (!GameState::shop[BUY_POGOSTICK]) {
+        Pogostick* pogostick = new Pogostick();
+        pogostick->physics->aabb.position.x = 100.0f;
+        pogostick->physics->aabb.position.y = 125.0f;
+        pogostick->driver = player;
+        player->vehicle = pogostick;
+        scene->push(pogostick);
+    }
 
     //HACER DOOR
     Door* door = new Door(Vector2{ 129, 112 }, player);

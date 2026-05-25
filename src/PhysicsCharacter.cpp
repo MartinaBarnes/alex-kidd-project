@@ -38,6 +38,7 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
     if (PhysicsTileMap* tilemap = dynamic_cast<PhysicsTileMap*>(collider)) {
         float tilemap_width = TILEMAP_WIDTH * TILE_SIZE - aabb.size.x;
         aabb.position.x = std::clamp(aabb.position.x + velocity.x * dt, 0.0f, tilemap_width); // avoid going out of bounds
+        bool flyingOver = aabb.position.y + aabb.size.y < 0.0f; // out of top bounds
 
         // get out current tile coordinates based on your position and size
         int x0 = std::clamp((int)std::floor(aabb.position.x / TILE_SIZE), 0, TILEMAP_WIDTH);
@@ -46,62 +47,64 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
         int y1 = std::clamp((int)std::floor((aabb.position.y + aabb.size.y - 0.01f) / TILE_SIZE), 0, TILEMAP_HEIGHT);
 
         inDeathPit = false;
-        if (velocity.x < 0.0f) {
-            onWall = false;
-            if (aabb.position.x <= 0.0f) { // attempted going out of bounds
-                onWall = true;
-            } else {
-                for (int i = y0; i <= y1; i++) {
-                    if (tilemap->map[x0][i] == PHYSTILE_AIR) {
-                        continue; // do not collide with air
-                    }
-                    if (tilemap->map[x0][i] == PHYSTILE_DEATHPIT) {
-                        inDeathPit = true; // touched a death pit
-                        continue;
-                    }
-                    if (x0 < TILEMAP_WIDTH && (tilemap->map[x0 + 1][i] == PHYSTILE_SOLID || tilemap->map[x0 + 1][i] == PHYSTILE_HALF)) {
-                        continue; // ignore tiles with an obstructed horizontal face (potentially floor)
-                    }
-                    if (tilemap->map[x0][i] == PHYSTILE_HALF && aabb.position.y <= i * TILE_SIZE - TILE_SIZE / 2) {
-                        continue; // avoid getting pushed off a half-tile's edge
-                    }
-                    float limit = (x0 + 1) * TILE_SIZE;
-                    if (aabb.position.x >= limit) {
-                        continue; // we haven't collided yet
-                    }
-                    aabb.position.x = limit;
-                    velocity.x = 0.0f;
+        if (!flyingOver) {
+            if (velocity.x < 0.0f) {
+                onWall = false;
+                if (aabb.position.x <= 0.0f) { // attempted going out of bounds
                     onWall = true;
-                    break;
+                } else {
+                    for (int i = y0; i <= y1; i++) {
+                        if (tilemap->map[x0][i] == PHYSTILE_AIR) {
+                            continue; // do not collide with air
+                        }
+                        if (tilemap->map[x0][i] == PHYSTILE_DEATHPIT) {
+                            inDeathPit = true; // touched a death pit
+                            continue;
+                        }
+                        if (x0 < TILEMAP_WIDTH && (tilemap->map[x0 + 1][i] == PHYSTILE_SOLID || tilemap->map[x0 + 1][i] == PHYSTILE_HALF)) {
+                            continue; // ignore tiles with an obstructed horizontal face (potentially floor)
+                        }
+                        if (tilemap->map[x0][i] == PHYSTILE_HALF && aabb.position.y <= i * TILE_SIZE - TILE_SIZE / 2) {
+                            continue; // avoid getting pushed off a half-tile's edge
+                        }
+                        float limit = (x0 + 1) * TILE_SIZE;
+                        if (aabb.position.x >= limit) {
+                            continue; // we haven't collided yet
+                        }
+                        aabb.position.x = limit;
+                        velocity.x = 0.0f;
+                        onWall = true;
+                        break;
+                    }
                 }
-            }
-        } else if (velocity.x > 0.0f) {
-            onWall = false;
-            if (aabb.position.x >= tilemap_width) {
-                onWall = true;
-            } else {
-                for (int i = y0; i <= y1; i++) {
-                    if (tilemap->map[x1][i] == PHYSTILE_AIR) {
-                        continue; // do not collide with air
-                    }
-                    if (tilemap->map[x1][i] == PHYSTILE_DEATHPIT) {
-                        inDeathPit = true; // touched a death pit
-                        continue;
-                    }
-                    if (x1 > 0 && (tilemap->map[x1 - 1][i] == PHYSTILE_SOLID || tilemap->map[x1 - 1][i] == PHYSTILE_HALF)) {
-                        continue; // ignore tiles with an obstructed horizontal face (potentially floor)
-                    }
-                    if (tilemap->map[x1][i] == PHYSTILE_HALF && aabb.position.y <= i * TILE_SIZE - TILE_SIZE / 2) {
-                        continue; // avoid getting pushed off a half-tile's edge
-                    }
-                    float limit = x1 * TILE_SIZE - aabb.size.x;
-                    if (aabb.position.x <= limit) {
-                        continue; // we haven't collided yet
-                    }
-                    aabb.position.x = limit;
-                    velocity.x = 0.0f;
+            } else if (velocity.x > 0.0f) {
+                onWall = false;
+                if (aabb.position.x >= tilemap_width) {
                     onWall = true;
-                    break;
+                } else {
+                    for (int i = y0; i <= y1; i++) {
+                        if (tilemap->map[x1][i] == PHYSTILE_AIR) {
+                            continue; // do not collide with air
+                        }
+                        if (tilemap->map[x1][i] == PHYSTILE_DEATHPIT) {
+                            inDeathPit = true; // touched a death pit
+                            continue;
+                        }
+                        if (x1 > 0 && (tilemap->map[x1 - 1][i] == PHYSTILE_SOLID || tilemap->map[x1 - 1][i] == PHYSTILE_HALF)) {
+                            continue; // ignore tiles with an obstructed horizontal face (potentially floor)
+                        }
+                        if (tilemap->map[x1][i] == PHYSTILE_HALF && aabb.position.y <= i * TILE_SIZE - TILE_SIZE / 2) {
+                            continue; // avoid getting pushed off a half-tile's edge
+                        }
+                        float limit = x1 * TILE_SIZE - aabb.size.x;
+                        if (aabb.position.x <= limit) {
+                            continue; // we haven't collided yet
+                        }
+                        aabb.position.x = limit;
+                        velocity.x = 0.0f;
+                        onWall = true;
+                        break;
+                    }
                 }
             }
         }
@@ -118,64 +121,66 @@ bool PhysicsCharacter::testCollision(float dt, PhysicsComponent* collider)
         onCeiling = false;
         onGround = false;
 
-        if (velocity.y < 0.0f) {
-            for (int i = x0; i <= x1; i++) {
-                if (tilemap->map[i][y0] == PHYSTILE_AIR) {
-                    continue; // do not collide with air
-                }
-                if (tilemap->map[i][y0] == PHYSTILE_DEATHPIT) {
-                    inDeathPit = true; // touched a death pit
-                    continue;
-                }
-                if (y0 < TILEMAP_HEIGHT && (tilemap->map[i][y0 + 1] == PHYSTILE_SOLID || tilemap->map[i][y0 + 1] == PHYSTILE_HALF)) {
-                    continue; // ignore tiles with an obstructed vertical face (avoid getting stuck)
-                }
-                float limit = (y0 + 1) * TILE_SIZE;
-                if (aabb.position.y >= limit) {
-                    continue; // we haven't collided yet
-                }
-                aabb.position.y = limit;
-                velocity.y = 0.0f;
-                onCeiling = true;
-                break;
-            }
-        } else if (velocity.y > 0.0f) {
-            if (aabb.position.y + aabb.size.y >= TILEMAP_HEIGHT * TILE_SIZE) { // attempted going out of bounds
-                aabb.position.y = TILEMAP_HEIGHT * TILE_SIZE - aabb.size.y;
-                velocity.y = 0.0f;
-                onGround = true;
-            } else {
+        if (!flyingOver) {
+            if (velocity.y < 0.0f) {
                 for (int i = x0; i <= x1; i++) {
-                    if (tilemap->map[i][y1] == PHYSTILE_AIR) {
+                    if (tilemap->map[i][y0] == PHYSTILE_AIR) {
                         continue; // do not collide with air
                     }
-                    if (tilemap->map[i][y1] == PHYSTILE_DEATHPIT) {
+                    if (tilemap->map[i][y0] == PHYSTILE_DEATHPIT) {
                         inDeathPit = true; // touched a death pit
                         continue;
                     }
-                    if (y1 > 0 && tilemap->map[i][y1 - 1] == PHYSTILE_SOLID) {
+                    if (y0 < TILEMAP_HEIGHT && (tilemap->map[i][y0 + 1] == PHYSTILE_SOLID || tilemap->map[i][y0 + 1] == PHYSTILE_HALF)) {
                         continue; // ignore tiles with an obstructed vertical face (avoid getting stuck)
                     }
-                    float limit = y1 * TILE_SIZE - aabb.size.y;
-                    if (tilemap->map[i][y1] == PHYSTILE_HALF) {
-                        limit += TILE_SIZE / 2;
-                    }
-                    if (aabb.position.y <= limit) {
+                    float limit = (y0 + 1) * TILE_SIZE;
+                    if (aabb.position.y >= limit) {
                         continue; // we haven't collided yet
                     }
                     aabb.position.y = limit;
                     velocity.y = 0.0f;
-                    onGround = true;
+                    onCeiling = true;
                     break;
                 }
-            }
-        } else {
-            // check if we've walked off a platform
-            int y = std::clamp((int)std::floor((aabb.position.y + aabb.size.y) / TILE_SIZE), 0, TILEMAP_HEIGHT);
-            for (int i = x0; i <= x1; i++) {
-                if (tilemap->map[i][y] != PHYSTILE_AIR) {
+            } else if (velocity.y > 0.0f) {
+                if (aabb.position.y + aabb.size.y >= TILEMAP_HEIGHT * TILE_SIZE) { // attempted going out of bounds
+                    aabb.position.y = TILEMAP_HEIGHT * TILE_SIZE - aabb.size.y;
+                    velocity.y = 0.0f;
                     onGround = true;
-                    break;
+                } else {
+                    for (int i = x0; i <= x1; i++) {
+                        if (tilemap->map[i][y1] == PHYSTILE_AIR) {
+                            continue; // do not collide with air
+                        }
+                        if (tilemap->map[i][y1] == PHYSTILE_DEATHPIT) {
+                            inDeathPit = true; // touched a death pit
+                            continue;
+                        }
+                        if (y1 > 0 && tilemap->map[i][y1 - 1] == PHYSTILE_SOLID) {
+                            continue; // ignore tiles with an obstructed vertical face (avoid getting stuck)
+                        }
+                        float limit = y1 * TILE_SIZE - aabb.size.y;
+                        if (tilemap->map[i][y1] == PHYSTILE_HALF) {
+                            limit += TILE_SIZE / 2;
+                        }
+                        if (aabb.position.y <= limit) {
+                            continue; // we haven't collided yet
+                        }
+                        aabb.position.y = limit;
+                        velocity.y = 0.0f;
+                        onGround = true;
+                        break;
+                    }
+                }
+            } else {
+                // check if we've walked off a platform
+                int y = std::clamp((int)std::floor((aabb.position.y + aabb.size.y) / TILE_SIZE), 0, TILEMAP_HEIGHT);
+                for (int i = x0; i <= x1; i++) {
+                    if (tilemap->map[i][y] != PHYSTILE_AIR) {
+                        onGround = true;
+                        break;
+                    }
                 }
             }
         }

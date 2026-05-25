@@ -3,6 +3,11 @@
 #include "RenderingServer.h"
 #include <cmath>
 
+void AnimatedSprite::start() {
+    frame = 0;
+    running = true;
+}
+
 bool AnimatedSprite::isOnScreen() const {
     AABB aabb;
     aabb.position = position;
@@ -11,18 +16,10 @@ bool AnimatedSprite::isOnScreen() const {
 }
 
 void AnimatedSprite::draw(float dt) {
-    if (!running) {
-        return;
-    }
-
     // if we reached the end of animation (or we changed to a shorter animation) reset
-	if (frame >= animation->frames.size()) {
-		frame = 0;
-
-		if (oneShot) {
-		    running = false;
-		}
-	}
+    if (running && frame >= animation->frames.size()) {
+        frame = 0;
+    }
 
 	// get the frame to draw
 	Rectangle src = animation->frames[frame];
@@ -42,8 +39,13 @@ void AnimatedSprite::draw(float dt) {
 	DrawTextureRec(*animation->texture, src, position, WHITE);
 	EndScissorMode();
 
+	// if we ended the animation while being a one shot, stop it
+	if (oneShot && frame == animation->frames.size() - 1) {
+        running = false;
+    }
+
 	// run animation (if not paused or pausable)
-	if (SceneManager::pause && !pausable) {
+	if (!running || (SceneManager::pause && !pausable)) {
 	    return;
 	}
 	next_frame += dt;

@@ -36,9 +36,9 @@ int main ()
             SceneManager::queued = SCENE_PREVIEW1;
         } else if (IsKeyPressed(KEY_F11)) { // jump to level 2
             SceneManager::queued = SCENE_PREVIEW2;
-        } else if (IsKeyPressed(KEY_F12)) { // jump to level's 2 shop
+        } /*else if (IsKeyPressed(KEY_F12)) { // jump to level's 2 shop
             SceneManager::queued = SCENE_SHOP;
-        }
+        }*/
 
 		// if we have a new queued scene, change it
 		if (SceneManager::queued > SCENE_NONE) {
