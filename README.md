@@ -1,7 +1,7 @@
 # Alex Kidd in Miracle World
 
 +   ![Repository](https://github.com/MartinaBarnes/alex-kidd-project)
-+   ![Demonstration video](https://www.youtube.com/watch?v=GsDLv-d34ZE)
++   ![Demonstration video](https://youtu.be/c-K_YsqEAEg)
 
 ## Members
 
@@ -41,6 +41,16 @@ You must traverse the level jumping over obstacles, avoiding death pits and avoi
 +   Death pits
 +   Breakable objects
 +   Scorpion enemy
++   Monster bird enemy
++   Hopper enemy
++   Baum bag pickups
++   Boxes that drop baum bags upon breaking
++   Rice ball to finish level
++   Shop
++   Scoring
++   Status screen
++   Stage 4 as Level 1
++   Stage 6 as Level 2
 +   Death sequence
 +   Respawning
 +   Background music
@@ -48,3 +58,22 @@ You must traverse the level jumping over obstacles, avoiding death pits and avoi
 +   Title screen
 +   Level introduction screen
 +   Game over screen
++   Debug cheats
+
+## Extra feature
++   Pogo stick vehicle
+
+## Debug features
+
+| **Key**     | **Cheat**                     |
+|-------------|-------------------------------|
+| F1          | Spawn an extra life           |
+| F2          | Spawn a pogo stick            |
+| F3          | Spawn an small baums bag      |
+| F4          | Spawn an large baums bag      |
+| F5          | Spawn a scorpion              |
+| F6          | Spawn a monster bird          |
+| F7          | Spawn a hopper                |
+| F9          | Return to title screen        |
+| F10         | Warp to level 1               |
+| F11         | Warp to level 2               |
