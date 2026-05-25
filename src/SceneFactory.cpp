@@ -537,9 +537,9 @@ Scene* SceneFactory::level2() {
 	scene->push(player);
 
     //Pogostick
-    if (!GameState::shop[BUY_POGOSTICK]) {
+    if (!GameState::shop[0]) {
         Pogostick* pogostick = new Pogostick();
-        pogostick->physics->aabb.position.x = 100.0f;
+        pogostick->physics->aabb.position.x = 129.0f;
         pogostick->physics->aabb.position.y = 125.0f;
         pogostick->driver = player;
         player->vehicle = pogostick;
