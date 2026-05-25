@@ -1,7 +1,8 @@
 # Alex Kidd in Miracle World
 
 +   ![Repository](https://github.com/MartinaBarnes/alex-kidd-project)
-+   ![Demonstration video](https://youtu.be/c-K_YsqEAEg)
++   ![Alpha demonstration video](https://www.youtube.com/watch?v=c-K_YsqEAEg)
++   ![Prototype demonstration video](https://www.youtube.com/watch?v=GsDLv-d34ZE)
 
 ## Members
 
@@ -63,7 +64,7 @@ You must traverse the level jumping over obstacles, avoiding death pits and avoi
 ## Extra feature
 +   Pogo stick vehicle
 
-## Debug features
+## Debug cheats
 
 | **Key**     | **Cheat**                     |
 |-------------|-------------------------------|
