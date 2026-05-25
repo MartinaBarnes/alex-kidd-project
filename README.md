@@ -19,16 +19,16 @@ Alex Kidd in Miracle World is a 2D side-scrolling platformer where the player, a
 
 You must traverse the level jumping over obstacles, avoiding death pits and avoiding or fighting enemies until you reach a japanese rice ball.
 
-| **Key**     | **Purpose**                   |
-|-------------|-------------------------------|
-| ESCAPE      | Quit                          |
-| TABULATOR   | Pause                         |
-| RIGHT ARROW | Move right                    |
-| LEFT ARROW  | Move left                     |
-| UP ARROW    | Jump                          |
-| DOWN ARROW  | Crouch                        |
-| SPACE BAR   | Attack                        |
-| ALT + ENTER | Toggle fullscreen             |
+| **Key**     | **Purpose**                                              |
+|-------------|----------------------------------------------------------|
+| ESCAPE      | Quit                                                     |
+| TABULATOR   | Pause                                                    |
+| RIGHT ARROW | Move right                                               |
+| LEFT ARROW  | Move left                                                |
+| UP ARROW    | Jump, enter the shop, or jump higher with the pogo stick |
+| DOWN ARROW  | Crouch                                                   |
+| SPACE BAR   | Attack                                                   |
+| ALT + ENTER | Toggle fullscreen                                        |
 
 ## Features implemented
 
