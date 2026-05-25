@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Sprite.h"
 #include "PhysicsArea.h"
+#include "Player.h"
 
 enum {
     ITEM_NONE,
@@ -21,7 +22,7 @@ class ItemPickup : public Entity {
         Sprite* sprite;
 
         void placeAt(Vector2);
-        void onPickup();
+        void onPickup(Player*);
         void update(float) override;
 
         ItemPickup();

@@ -2,26 +2,35 @@
 #include "PhysicsServer.h"
 #include "RenderingServer.h"
 #include "GameState.h"
+#include "Pogostick.h"
 
 void ItemPickup::placeAt(Vector2 position) {
     physics->aabb.position = position;
     sprite->position = position;
 }
 
-void ItemPickup::onPickup() {
+void ItemPickup::onPickup(Player* player) {
     markedForDeletion = true;
+    PlaySound(*ResourceManager::getSound("item_pickup"));
     if (item == ITEM_LIFE) {
         GameState::lives++;
         return;
     }
-    // TODO: give pogo stick
+    if (item == ITEM_POGOSTICK) {
+        Pogostick* pogostick = new Pogostick();
+        pogostick->physics->aabb.position.x = player->physics->aabb.position.x;
+        pogostick->physics->aabb.position.y = player->physics->aabb.position.y - 11.0f;
+        pogostick->driver = player;
+        player->vehicle = pogostick;
+        scene->push(pogostick);
+    }
 }
 
 void ItemPickup::update(float _) {
     if (physics->colliders.empty()) {
         return;
     }
-    onPickup();
+    onPickup(((PhysicsPlayer*)physics->colliders[0])->owner);
 }
 
 ItemPickup::ItemPickup() {

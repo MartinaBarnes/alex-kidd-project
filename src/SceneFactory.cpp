@@ -541,6 +541,7 @@ Scene* SceneFactory::level2() {
         Pogostick* pogostick = new Pogostick();
         pogostick->physics->aabb.position.x = 129.0f;
         pogostick->physics->aabb.position.y = 125.0f;
+        pogostick->physics->owner = player;
         pogostick->driver = player;
         player->vehicle = pogostick;
         scene->push(pogostick);

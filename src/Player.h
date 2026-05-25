@@ -13,6 +13,7 @@
 
 class Door;
 class Vehicle;
+class PhysicsPlayer;
 
 /**
  * Player class.
