@@ -175,7 +175,7 @@ Scene* SceneFactory::level1() {
     Particles defaultParticles = Particles{ ResourceManager::getTexture("tiles"), { Rectangle { 112, 16, 7, 7 }, Rectangle { 120, 16, 7, 7 } } };
     std::map<int, Breakable*> breakables;
     breakables[TILE_BOXITEM] = new BaumDrop(defaultParticles);
-    breakables[TILE_BOXSTUN] = new Breakable(defaultParticles);
+    breakables[TILE_BOXSTUN] = new Breakable(defaultParticles, "box_break");
     breakables[TILE_BORB] = new Breakable(Particles { ResourceManager::getTexture("tiles"), { Rectangle { 112, 24, 8, 8 }, Rectangle { 120, 24, 8, 8 } } });
 
     // initialize scene
@@ -467,8 +467,8 @@ Scene* SceneFactory::level2() {
     std::map<int, Breakable*> breakables;
     breakables[TILE_YROCK] = new Breakable(defaultParticles);
     breakables[TILE_BOXITEM] = new BaumDrop(defaultParticles);
-    breakables[TILE_BOXSTUN] = new Breakable(defaultParticles);
-    breakables[TILE_BOXQST] = new Breakable(defaultParticles);
+    breakables[TILE_BOXSTUN] = new Breakable(defaultParticles, "box_break");
+    breakables[TILE_BOXQST] = new Breakable(defaultParticles, "box_break");
 
     // initialize scene
     Scene* scene = new Scene();

@@ -99,6 +99,7 @@ void Pogostick::update(float delta)
     {
         sprite->start();
         physics->velocity.y = -BOUNCE_FORCE;
+        PlaySound(*ResourceManager::getSound("pogostick"));
 
         if (IsKeyDown(KEY_UP))
         {
@@ -121,6 +122,7 @@ void Pogostick::update(float delta)
 }
 
 void Pogostick::onKilled() {
+    PlaySound(*ResourceManager::getSound("vehicle_destroyed"));
     driver->invulnerability = 1.0f;
     driver->vehicle = NULL;
     markedForDeletion = true;

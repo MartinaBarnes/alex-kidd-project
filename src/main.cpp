@@ -29,6 +29,18 @@ int main ()
 
 	while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close button on the window
 	{
+	    // toggle music
+		if (IsKeyPressed(KEY_M)) {
+		    SceneManager::music = !SceneManager::music;
+			if (SceneManager::inPlayableLevel) {
+			    if (SceneManager::music) {
+					PlayMusicStream(*SceneManager::scene->music);
+				} else {
+				    StopMusicStream(*SceneManager::scene->music);
+				}
+			}
+		}
+
         // scene change cheats
         if (IsKeyPressed(KEY_F9)) { // return to title screen
             SceneManager::queued = SCENE_TITLE;
@@ -85,6 +97,9 @@ int main ()
 			RenderingServer::camera.target = Vector2{ 0, 0 };
 			RenderingServer::visible = true;
 
+			if (SceneManager::inPlayableLevel && !SceneManager::music) {
+			    StopMusicStream(*SceneManager::scene->music);
+			}
 		}
 
 	    // automatic resolution scaling

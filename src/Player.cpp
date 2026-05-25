@@ -71,7 +71,9 @@ void Player::update(float dt) {
                     respawning = false;
                     SceneManager::pause = false;
                     RenderingServer::visible = true;
-                    PlayMusicStream(*scene->music);
+                    if (SceneManager::music) {
+                        PlayMusicStream(*scene->music);
+                    }
                 }
             }
             return;

@@ -12,6 +12,7 @@ void Enemy::onKilled() {
     deathSprite->enabled = true;
     sprite->enabled = false;
     physics->enabled = false;
+    PlaySound(*ResourceManager::getSound("enemy_killed"));
 }
 
 void Enemy::update(float dt) {

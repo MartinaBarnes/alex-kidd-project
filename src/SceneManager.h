@@ -16,4 +16,5 @@ class SceneManager {
         static int queued;
         static Scene* scene;
         static AABB* workspace;
+        static bool music;
 };
