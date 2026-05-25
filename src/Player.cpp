@@ -97,18 +97,6 @@ void Player::update(float dt) {
         return;
     }
 
-    // if we're in a vehicle, do nothing
-    if (vehicle) {
-        sprite->enabled = false;
-        physics->enabled = false;
-        physics->aabb.position = vehicle->getPosition();
-        physics->velocity = vehicle->getVelocity();
-        return;
-    } else {
-        sprite->enabled = true;
-        physics->enabled = true;
-    }
-
     // check door status
     if (doorState != NONE) {
         doorTime += dt;
@@ -148,6 +136,18 @@ void Player::update(float dt) {
         SceneManager::pause = !SceneManager::pause;
         status->enabled = SceneManager::pause;
         return;
+    }
+
+    // if we're in a vehicle, do nothing
+    if (vehicle) {
+        sprite->enabled = false;
+        physics->enabled = false;
+        physics->aabb.position = vehicle->getPosition();
+        physics->velocity = vehicle->getVelocity();
+        return;
+    } else {
+        sprite->enabled = true;
+        physics->enabled = true;
     }
 
     // move control to the status screen
