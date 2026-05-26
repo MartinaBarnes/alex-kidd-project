@@ -868,7 +868,7 @@ Scene* SceneFactory::shop() {
     scene->push(new Door(Vector2{ 38, 112 }, player, true));
 
     // coin counter
-    scene->push(new CoinCounter(Vector2 { 87, 167 }));
+    scene->push(new CoinCounter(Vector2 { 87, 167 + 2 }));
 
     // play music
     SetMusicVolume(*scene->music, 0.5f);

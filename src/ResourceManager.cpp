@@ -5,11 +5,13 @@
 std::unordered_map<std::string, Texture2D> ResourceManager::textures;
 std::unordered_map<std::string, Sound> ResourceManager::sounds;
 std::unordered_map<std::string, Music> ResourceManager::music;
+std::unordered_map<std::string, Font> ResourceManager::fonts;
 
 char* ResourceManager::resourceDir = "resources";
 char* ResourceManager::textureDir = "textures";
 char* ResourceManager::soundDir = "sounds";
 char* ResourceManager::musicDir = "music";
+char* ResourceManager::fontDir = "fonts";
 
 std::string ResourceManager::resourceNameFromPath(std::string path) {
     std::string slash = "/";
@@ -54,6 +56,15 @@ void ResourceManager::loadResources() {
     }
     UnloadDirectoryFiles(musicFiles);
 
+    FilePathList fontFiles = LoadDirectoryFiles(ResourceManager::fontDir);
+    for (int i = 0; i < fontFiles.count; i++) {
+        std::string path = fontFiles.paths[i];
+        std::string name = ResourceManager::resourceNameFromPath(path);
+        std::cout << "Registered font '" << path << "' as '" << name << "'." << std::endl;
+        fonts[ResourceManager::resourceNameFromPath(path)] = LoadFont(path.c_str());
+    }
+    UnloadDirectoryFiles(fontFiles);
+
     std::cout << "Done loading resources." << std::endl;
 }
 
@@ -67,6 +78,9 @@ void ResourceManager::unloadResources() {
     for (auto i = ResourceManager::music.begin(); i != ResourceManager::music.end(); i++) {
         UnloadMusicStream(i->second);
     }
+    for (auto i = ResourceManager::fonts.begin(); i != ResourceManager::fonts.end(); i++) {
+        UnloadFont(i->second);
+    }
 }
 
 Texture2D* ResourceManager::getTexture(std::string name) {
@@ -79,4 +93,8 @@ Sound* ResourceManager::getSound(std::string name) {
 
 Music* ResourceManager::getMusic(std::string name) {
     return &music[name];
+}
+
+Font* ResourceManager::getFont(std::string name) {
+    return &fonts[name];
 }

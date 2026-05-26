@@ -1,11 +1,14 @@
 #include "Label.h"
+#include "ResourceManager.h"
 #include <cmath>
 
 void Label::draw(float _) {
-    int x = (int)position.x;
-    int y = (int)position.y;
+    float x = position.x;
+    float y = position.y;
     const char* str = text.c_str();
-    int size = (int)std::round(MeasureText(str, 10));
+    int fontSize = 8;
+    Font font = *ResourceManager::getFont("alex-kidd-in-miracle-world-sms");
+    float size = std::round(MeasureTextEx(font, str, fontSize, 0).x);
 
     if (align == TEXTALIGN_RIGHT) {
         x -= size;
@@ -13,5 +16,5 @@ void Label::draw(float _) {
         x += size / 2;
     }
 
-    DrawText(str, x, y, 10, WHITE);
+    DrawTextEx(font, str, Vector2 { x, y }, fontSize, 0, WHITE);
 }

@@ -1,15 +1,17 @@
-﻿#include "GameOverLabel.h"
-#include <SceneManager.h>
+#include "GameOverLabel.h"
+#include "SceneManager.h"
+#include "ResourceManager.h"
 #include <string>
 
 void GameOverLabel::draw(float _) {
     std::string texto = "GAME OVER";
 
-    int fontSize = 10;
-    int posY = GAME_HEIGHT / 2 - 22;
+    Font font = *ResourceManager::getFont("alex-kidd-in-miracle-world-sms");
+    int fontSize = 8;
+    int posY = GAME_HEIGHT / 2 - 20;
     int posX;
 
-    int scorePosY = posY + 32;
+    int scorePosY = posY + 34;
 
     // 🔥 POSICIONES SEPARADAS
     int labelX = 28;   // 👉 "SCORE:" más a la izquierda
@@ -18,10 +20,10 @@ void GameOverLabel::draw(float _) {
     // =========================
     // GAME OVER
     // =========================
-    int textWidth = MeasureText(texto.c_str(), fontSize);
+    int textWidth = MeasureTextEx(font, texto.c_str(), fontSize, 0).x;
     posX = GAME_WIDTH / 2 - textWidth / 2;
 
-    DrawText(texto.c_str(), posX, posY, fontSize, WHITE);
+    DrawTextEx(font, texto.c_str(), Vector2 { posX, posY }, fontSize, 0, WHITE);
 
     // =========================
     // SCORE SEPARADO
@@ -29,7 +31,7 @@ void GameOverLabel::draw(float _) {
     std::string label = "SCORE:";
     std::string number = std::to_string(score);
 
-    DrawText(label.c_str(), posX - labelX, scorePosY, fontSize, WHITE);
-    DrawText(number.c_str(), posX + numberX - MeasureText(number.c_str(), fontSize), scorePosY, fontSize, WHITE);
+    DrawTextEx(font, label.c_str(), Vector2 { posX - labelX, scorePosY }, fontSize, 0, WHITE);
+    DrawTextEx(font, number.c_str(), Vector2 { posX + numberX - MeasureTextEx(font, number.c_str(), fontSize, 0).x, scorePosY }, fontSize, 0, WHITE);
 
 }

@@ -30,18 +30,21 @@ void StatusScreen::draw(float dt) {
 
     Color yellow = Color { 255, 255, 170, 255 };
 
+    // font
+    Font font = *ResourceManager::getFont("alex-kidd-in-miracle-world-sms");
+
     // draw coins
     const char* coins = std::to_string(GameState::baums).c_str();
-    float coinsSize = MeasureText(coins, FONT_SIZE);
-    DrawText(coins, COINS_X - coinsSize, COINS_Y, FONT_SIZE, WHITE);
+    float coinsSize = MeasureTextEx(font, coins, FONT_SIZE, 0).x;
+    DrawTextEx(font, coins, Vector2 { COINS_X - coinsSize, COINS_Y }, FONT_SIZE, 0, WHITE);
 
     // draw lives
     const char* lives = std::to_string(GameState::lives).c_str();
-    float livesSize = MeasureText(lives, FONT_SIZE);
-    DrawText(lives, LIVES_X - livesSize, LIVES_Y, FONT_SIZE, yellow);
+    float livesSize = MeasureTextEx(font, lives, FONT_SIZE, 0).x;
+    DrawTextEx(font, lives, Vector2 { LIVES_X - livesSize, LIVES_Y }, FONT_SIZE, 0, yellow);
 
     // draw score
     const char* score = std::to_string(GameState::score).c_str();
-    float scoreSize = MeasureText(score, FONT_SIZE);
-    DrawText(score, SCORE_X - scoreSize, LIVES_Y, FONT_SIZE, yellow);
+    float scoreSize = MeasureTextEx(font, score, FONT_SIZE, 0).x;
+    DrawTextEx(font, score, Vector2 { SCORE_X - scoreSize, LIVES_Y }, FONT_SIZE, 0, yellow);
 }
