@@ -201,34 +201,3 @@ private:
        }
    }
 };
-
-/**int main() {
-   InitWindow(1920, 900, "Alex Kidd");
-
-   Font font = LoadFont("resources/alex-kidd-in-miracle-world-sms.otf");
-
-   DialogBox dialog(
-       { 1920 / 2 - 500, 180, 840, 160 },
-       { "Welcome! Please buy", "the things that you like." },
-       font
-   );
-
-
-   DialogBox dialogThanks(
-       { 1920 / 2 - 500, 180, 350, 85 },
-       { "Thank you." },
-       font
-   );
-
-   SetTargetFPS(60);
-   while (!WindowShouldClose()) {
-       dialog.Update(GetFrameTime());
-       BeginDrawing();
-       ClearBackground(RED);
-       dialog.Draw();
-       EndDrawing();
-   }
-
-   CloseWindow();
-   return 0;
-   }*/

@@ -22,6 +22,7 @@ class StatusScreen : public RenderComponent {
     public:
         const int SLOT_MAX = 6;
         int item = 0;
+        bool onLevel2 = false;
 
         bool isOnScreen() const override;
         void draw(float) override;

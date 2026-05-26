@@ -22,7 +22,11 @@ void StatusScreen::draw(float dt) {
 
     // draw map arrow
     if (!mapArrowBlinked) {
-        DrawTexture(arrow, 172, 72, WHITE);
+        if (onLevel2) {
+            DrawTexture(arrow, 112, 45, WHITE);
+        } else {
+            DrawTexture(arrow, 90, 54, WHITE);
+        }
     }
 
     // draw item selection
