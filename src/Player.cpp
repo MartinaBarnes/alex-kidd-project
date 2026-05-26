@@ -134,7 +134,7 @@ void Player::update(float dt) {
     }
 
     // toggle status screen
-    if (IsKeyPressed(KEY_TAB)) {
+    if (IsKeyPressed(KEY_TAB) && (status->enabled || !SceneManager::pause)) {
         SceneManager::pause = !SceneManager::pause;
         status->enabled = SceneManager::pause;
         return;

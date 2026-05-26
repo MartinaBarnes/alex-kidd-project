@@ -3,9 +3,13 @@
 
 class DialogController : public Entity {
     protected:
-        DialogBox welcomeDialog;
-        DialogBox thankYouDialog;
+        const float MAX_DELAY = 1.0f;
+
+        DialogBox* welcomeDialog;
+        DialogBox* thankYouDialog;
     public:
+        float delay = 0.0f;
+
         void welcome();
         void thankYou();
         void update(float) override;

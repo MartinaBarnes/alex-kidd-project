@@ -21,6 +21,7 @@
 #include "PurchaseOption.h"
 #include "HoppingEnemy.h"
 #include "Pogostick.h"
+#include "DialogController.h"
 
 Scene* SceneFactory::intro() {
     Scene* scene = new Scene();
@@ -869,6 +870,11 @@ Scene* SceneFactory::shop() {
 
     // coin counter
     scene->push(new CoinCounter(Vector2 { 87, 167 + 2 }));
+
+    // dialog box
+    DialogController* dialog = new DialogController();
+    dialog->welcome();
+    scene->push(dialog);
 
     // play music
     SetMusicVolume(*scene->music, 0.5f);

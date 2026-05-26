@@ -18,29 +18,29 @@ static std::vector<float> BuildCharPositions(Font font, const std::string& line,
 }
 
 class DialogBox : public RenderComponent {
-   enum State { BORDER, TEXT };
+   enum State { IDLE, BORDER, TEXT };
 
    Rectangle   rect;
    Font        font;
-   float       fontSize = 30.0f; //TAMAÑO DE LA FUENTA
-   float       padding = 30.0f;
+   float       fontSize = 8.0f; //TAMAÑO DE LA FUENTA
+   float       padding = 8.0f;
    float       textSpeed = 1000.0f; //RAPIDEZA ANIMACION RELLENO
    float       borderSpeed = 1500.0f; //RAPIDEZA ANIMACION BORDES
 
    float borderProgress = 0.0f;
    float totalPerimeter = 0.0f;
-   float animX = 10.0f;
+   float animX = 2.5f;
 
    std::vector<std::string>         lines;        // pares: línea de texto + línea de retorno vacía
    std::vector<std::vector<float>>  charPositions;
    size_t currentLine = 0;
-   State  state = BORDER;
+   State  state = IDLE;
    bool   done = false;
 
-   static constexpr float BORDER_T = 30.0f;
+   static constexpr float BORDER_T = 8.0f;
 
-   float TextLineH()   const { return fontSize + 9.0f; }
-   float ReturnLineH() const { return fontSize * 1.00f; }
+   float TextLineH()   const { return fontSize + 2.5f; }
+   float ReturnLineH() const { return fontSize * 0.25f; }
 
 public:
    DialogBox(Rectangle pos, const std::vector<std::string>& dialogue, Font f)
@@ -61,13 +61,32 @@ public:
        animX = rect.x + padding;
    }
 
+   void start() {
+       borderProgress = 0.0f;
+       animX = rect.x + padding;
+       currentLine = 0;
+       state = BORDER;
+       done = false;
+   }
+
+   void reset() {
+       state = IDLE;
+       done = false;
+   }
+
    void draw(float dt) override {
+       if (state == IDLE) {
+           return;
+       }
+
        DrawBorder();
        if (state != BORDER) {
            DrawContent();
        }
 
-       if (done) return;
+       if (done) {
+           return;
+       }
 
        if (state == BORDER) {
            borderProgress += borderSpeed * dt;
