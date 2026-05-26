@@ -11,7 +11,7 @@ static std::vector<float> BuildCharPositions(Font font, const std::string& line,
    float x = startX;
    for (char c : line) {
        char buf[2] = { c, '\0' };
-       x += MeasureTextEx(font, buf, fontSize, 2.0f).x + 2.0f;
+       x += MeasureTextEx(font, buf, fontSize, 0.0f).x;
        positions.push_back(x);
    }
    return positions;
@@ -24,12 +24,12 @@ class DialogBox : public RenderComponent {
    Font        font;
    float       fontSize = 8.0f; //TAMAÑO DE LA FUENTA
    float       padding = 8.0f;
-   float       textSpeed = 1000.0f; //RAPIDEZA ANIMACION RELLENO
-   float       borderSpeed = 1500.0f; //RAPIDEZA ANIMACION BORDES
+   float       textSpeed = 200.0f; //RAPIDEZA ANIMACION RELLENO
+   float       borderSpeed = 400.0f; //RAPIDEZA ANIMACION BORDES
 
    float borderProgress = 0.0f;
    float totalPerimeter = 0.0f;
-   float animX = 2.5f;
+   float animX = 2.67f;
 
    std::vector<std::string>         lines;        // pares: línea de texto + línea de retorno vacía
    std::vector<std::vector<float>>  charPositions;
@@ -39,8 +39,8 @@ class DialogBox : public RenderComponent {
 
    static constexpr float BORDER_T = 8.0f;
 
-   float TextLineH()   const { return fontSize + 2.5f; }
-   float ReturnLineH() const { return fontSize * 0.25f; }
+   float TextLineH()   const { return fontSize + 2.8f; }
+   float ReturnLineH() const { return fontSize * 1.0f; }
 
 public:
    DialogBox(Rectangle pos, const std::vector<std::string>& dialogue, Font f)
@@ -117,6 +117,7 @@ public:
        }
    }
 
+   bool IsRunning() const { return state != IDLE && !done; }
    bool IsDone() const { return done; }
 
 private:
@@ -174,7 +175,7 @@ private:
                // Línea ya completada
                DrawRectangle(startX, y, totalW, lineH, BLACK);
                if (isText)
-                   DrawTextEx(font, lines[i].c_str(), { startX, y }, fontSize, 2.0f, WHITE);
+                   DrawTextEx(font, lines[i].c_str(), { startX, y }, fontSize, 0.0f, WHITE);
            }
            else {
                // Línea en animación
@@ -185,15 +186,15 @@ private:
                    for (size_t j = 0; j < lines[i].size(); ++j) {
                        if (animX >= charPositions[i][j]) {
                            char buf[2] = { lines[i][j], '\0' };
-                           DrawTextEx(font, buf, { drawX, y }, fontSize, 2.0f, WHITE);
+                           DrawTextEx(font, buf, { drawX, y }, fontSize, 0.0f, WHITE);
                        }
                        char buf[2] = { lines[i][j], '\0' };
-                       drawX += MeasureTextEx(font, buf, fontSize, 2.0f).x + 2.0f;
+                       drawX += MeasureTextEx(font, buf, fontSize, 0.0f).x;
                    }
                }
                else {
                    float fillW = endX - animX;
-                   DrawRectangle(animX, y, fillW, lineH, BLACK);
+                   DrawRectangle(animX, y, fillW + 2.0f, lineH, BLACK);
                }
            }
            y += lineH;

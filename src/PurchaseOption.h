@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "Label.h"
 #include "PhysicsArea.h"
+#include "DialogController.h"
 
 enum {
     BUY_NONE,
@@ -21,6 +22,7 @@ class PurchaseOption : public Entity {
         int slot;
         int item = BUY_NONE;
         int price = 0;
+        DialogController* dialog;
 
         Sprite* sprite;
 

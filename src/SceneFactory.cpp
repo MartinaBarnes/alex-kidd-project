@@ -834,7 +834,10 @@ Scene* SceneFactory::shop() {
     tileMap->physics->setTileMap(physics);
     scene->push(tileMap);
 
-    // buy pogo stick
+    // dialog box
+    DialogController* dialog = new DialogController();
+
+   	// buy pogo stick
     if (GameState::shop[0]) {
         PurchaseOption* pogoStick = new PurchaseOption();
         pogoStick->slot = 0;
@@ -843,6 +846,7 @@ Scene* SceneFactory::shop() {
         pogoStick->sprite->texture = ResourceManager::getTexture("items");
         pogoStick->sprite->frame = Rectangle { 0, 16, 16, 16 };
         pogoStick->placeAt(Vector2 { 104, 86 });
+        pogoStick->dialog = dialog;
         scene->push(pogoStick);
     }
 
@@ -855,6 +859,7 @@ Scene* SceneFactory::shop() {
         extraLife->sprite->texture = ResourceManager::getTexture("items");
         extraLife->sprite->frame = Rectangle { 48, 0, 16, 16 };
         extraLife->placeAt(Vector2 { 136, 86 });
+        extraLife->dialog = dialog;
         scene->push(extraLife);
     }
 
@@ -863,6 +868,8 @@ Scene* SceneFactory::shop() {
 	player->tileMap = tileMap;
 	player->physics->aabb.position.x = 38.0f;
 	player->physics->aabb.position.y = 136.0f;
+	player->physics->onGround = true;
+	player->update(0.16f);
 	scene->push(player);
 
     // exit door
@@ -871,10 +878,9 @@ Scene* SceneFactory::shop() {
     // coin counter
     scene->push(new CoinCounter(Vector2 { 87, 167 + 2 }));
 
-    // dialog box
-    DialogController* dialog = new DialogController();
-    dialog->welcome();
+    // add here to be on top of everything
     scene->push(dialog);
+    dialog->welcome();
 
     // play music
     SetMusicVolume(*scene->music, 0.5f);

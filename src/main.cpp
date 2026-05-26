@@ -57,6 +57,11 @@ int main ()
 		    if (SceneManager::scene) {
 				delete SceneManager::scene;
 			}
+
+            SceneManager::pause = false;
+            RenderingServer::camera.target = Vector2{ 0, 0 };
+            RenderingServer::visible = true;
+
 			switch (SceneManager::queued) {
 			    case SCENE_INTRO:
 					SceneManager::inPlayableLevel = false;
@@ -92,10 +97,6 @@ int main ()
 					break;
 			}
 			SceneManager::queued = SCENE_NONE;
-
-			SceneManager::pause = false;
-			RenderingServer::camera.target = Vector2{ 0, 0 };
-			RenderingServer::visible = true;
 
 			if (SceneManager::inPlayableLevel && !SceneManager::music) {
 			    StopMusicStream(*SceneManager::scene->music);

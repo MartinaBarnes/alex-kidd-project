@@ -34,17 +34,20 @@ void StatusScreen::draw(float dt) {
     Font font = *ResourceManager::getFont("alex-kidd-in-miracle-world-sms");
 
     // draw coins
-    const char* coins = std::to_string(GameState::baums).c_str();
+    std::string coinsStr = std::to_string(GameState::baums);
+    const char* coins = coinsStr.c_str();
     float coinsSize = MeasureTextEx(font, coins, FONT_SIZE, 0).x;
     DrawTextEx(font, coins, Vector2 { COINS_X - coinsSize, COINS_Y }, FONT_SIZE, 0, WHITE);
 
     // draw lives
-    const char* lives = std::to_string(GameState::lives).c_str();
+    std::string livesStr = std::to_string(GameState::lives);
+    const char* lives = livesStr.c_str();
     float livesSize = MeasureTextEx(font, lives, FONT_SIZE, 0).x;
     DrawTextEx(font, lives, Vector2 { LIVES_X - livesSize, LIVES_Y }, FONT_SIZE, 0, yellow);
 
     // draw score
-    const char* score = std::to_string(GameState::score).c_str();
+    std::string scoreStr = std::to_string(GameState::score);
+    const char* score = scoreStr.c_str();
     float scoreSize = MeasureTextEx(font, score, FONT_SIZE, 0).x;
     DrawTextEx(font, score, Vector2 { SCORE_X - scoreSize, LIVES_Y }, FONT_SIZE, 0, yellow);
 }

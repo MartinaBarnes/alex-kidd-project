@@ -2,6 +2,7 @@
 #include "RenderingServer.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
+#include <iostream>
 
 void DialogController::welcome() {
     SceneManager::pause = true;
@@ -17,7 +18,12 @@ void DialogController::update(float dt) {
     if (!SceneManager::pause) {
         return;
     }
+    Sound sound = *ResourceManager::getSound("dialog");
+    if ((welcomeDialog->IsRunning() || thankYouDialog->IsRunning()) && !IsSoundPlaying(sound)) {
+        PlaySound(sound);
+    }
     if (welcomeDialog->IsDone() || thankYouDialog->IsDone()) {
+        StopSound(sound);
         if (delay < MAX_DELAY) {
             delay += dt;
             return;
@@ -26,10 +32,12 @@ void DialogController::update(float dt) {
         thankYouDialog->reset();
         SceneManager::pause = false;
         delay = 0.0f;
+        return;
     }
 }
 
 DialogController::DialogController() {
+    pausable = true;
     Font font = *ResourceManager::getFont("alex-kidd-in-miracle-world-sms");
 
     welcomeDialog = new DialogBox(
@@ -50,6 +58,8 @@ DialogController::DialogController() {
 }
 
 DialogController::~DialogController() {
+    StopSound(*ResourceManager::getSound("dialog"));
+
     RenderingServer::popOverlay(welcomeDialog);
     delete welcomeDialog;
 

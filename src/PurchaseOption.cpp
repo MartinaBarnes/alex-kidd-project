@@ -20,6 +20,7 @@ void PurchaseOption::onPurchase() {
     if (GameState::baums < price) {
         return;
     }
+    dialog->thankYou();
     markedForDeletion = true;
     GameState::shop[slot] = false;
     GameState::baums -= price;
@@ -27,7 +28,6 @@ void PurchaseOption::onPurchase() {
         GameState::lives++;
         return;
     }
-    // TODO: give pogo stick
 }
 
 void PurchaseOption::update(float _) {
@@ -47,7 +47,7 @@ PurchaseOption::PurchaseOption() {
 
     physics = new PhysicsArea();
     physics->aabb.size = Vector2 { 16, 16 };
-    physics->layer = LAYER_WORLD;
+    //physics->layer = LAYER_WORLD;
     physics->mask = LAYER_PLAYER;
     PhysicsServer::push(physics);
 }
