@@ -11,11 +11,11 @@ class StatusScreen : public RenderComponent {
         const int INVENTORY_X = 112;
         const int INVENTORY_Y = 152;
         const int INVENTORY_SLOT_SIZE = 16;
-        const int COINS_X = 67;
-        const int COINS_Y = 160 + 2;
-        const int LIVES_X = 35;
-        const int LIVES_Y = 176 + 2;
-        const int SCORE_X = 163;
+        const float COINS_X = 67.0f;
+        const float COINS_Y = 162.0f;
+        const float LIVES_X = 35.0f;
+        const float LIVES_Y = 178.0f;
+        const float SCORE_X = 163.0f;
         const float MAP_ARROW_BLINK_TIME = 0.1f;
         bool mapArrowBlinked = false;
         float mapArrowBlinkTime = 0.0f;
